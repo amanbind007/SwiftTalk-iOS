@@ -48,7 +48,8 @@ struct HomeView: View {
         VStack {
             List {
                 ForEach(["aman", "bind", "kumar"], id: \.self) { data in
-                    Text(data)
+                    
+                    
                 }
             }
             .searchable(text: $search, prompt: "search")
