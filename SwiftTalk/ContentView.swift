@@ -36,6 +36,8 @@ struct ContentView: View {
         .sheet(isPresented: $showNewView, content: {
             NewTextView()
         })
+        
+        
     }
 }
 
