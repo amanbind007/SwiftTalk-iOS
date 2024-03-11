@@ -8,12 +8,16 @@
 import SwiftUI
 
 struct ListItemView: View {
+    
+    var imageNames = ["red_text", "yellow_text", "green_text", "blue_text", "purple_text", "pink_text"]
+    
     var body: some View {
         HStack{
-            Image(systemName: "photo.artframe")
+            Image(imageNames.randomElement()!, bundle: Bundle(path: "Assests"))
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 80)
+                .frame(height: 60)
+            
             VStack(alignment: .leading){
                 Text("Hello World")
                     .font(.custom("NotoSerif-Regular", size: 22))

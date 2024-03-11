@@ -8,15 +8,11 @@
 import SwiftUI
 
 struct SearchView: View {
-    enum FocusedField {
-        case search
-    }
-
-    @State private var searchText: String = ""
+    @Binding var searchText: String
     
-    @State private var isOn: Bool = false
+    @State private var isAnimationOn: Bool = false
     
-    @FocusState private var focusedField: FocusedField?
+    @FocusState var focus: FocusedField?
     
     var body: some View {
         HStack {
@@ -29,11 +25,11 @@ struct SearchView: View {
                     .font(.custom("NotoSerif-Regular", size: 18))
                     .autocorrectionDisabled()
                     .keyboardType(.default)
-                    .focused($focusedField, equals: .search)
+                    .focused($focus, equals: .search)
                 
                 Spacer()
                 
-                if focusedField == .search {
+                if focus == FocusedField.search {
                     Button(action: {
                         searchText = ""
                         
@@ -50,19 +46,19 @@ struct SearchView: View {
                 RoundedRectangle(cornerRadius: 20)
                     .stroke(lineWidth: 3)
                     .fill(
-                        LinearGradient(colors: isOn ? [.blue, .green] : [.green, .blue], startPoint: .topLeading, endPoint: .bottomTrailing)
+                        LinearGradient(colors: isAnimationOn ? [.blue, .green] : [.green, .blue], startPoint: .topLeading, endPoint: .bottomTrailing)
                     )
                     .onAppear(perform: {
                         withAnimation(.linear(duration: 2.0).repeatForever(autoreverses: true)) {
-                            isOn.toggle()
+                            isAnimationOn.toggle()
                         }
                     })
             }
             
-            if focusedField != nil {
+            if focus != nil {
                 Button("Cancel", role: .cancel) {
                     withAnimation(.linear(duration: 1)) {
-                        focusedField = nil
+                        focus = nil
                         searchText = ""
                     }
                 }
@@ -73,6 +69,6 @@ struct SearchView: View {
     }
 }
 
-#Preview {
-    SearchView()
-}
+//#Preview {
+//    SearchView(searchText: .constant(""), focusedField: )
+//}

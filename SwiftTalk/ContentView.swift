@@ -7,30 +7,49 @@
 
 import SwiftUI
 
+enum FocusedField: Hashable {
+    case search
+}
+
 struct ContentView: View {
+    @State private var searchText: String = ""
+
     @State private var showAddNewTextView = false
+
+    @FocusState private var focusedField: FocusedField?
+
+    @State var isFocused: Bool = false
 
     init() {
         UINavigationBar.appearance().titleTextAttributes = [.font: UIFont(name: "AbrilFatface-Regular", size: 25)!]
 
         UINavigationBar.appearance().largeTitleTextAttributes = [.font: UIFont(name: "AbrilFatface-Regular", size: 40)!]
-        
     }
 
     var body: some View {
         NavigationView(content: {
-            HomeView()
-                .navigationTitle("SwiftTalk")
-                .navigationBarTitleDisplayMode(.automatic)
-                .toolbar(content: {
-                    ToolbarItem {
-                        Button(action: {
-                            showAddNewTextView = true
-                        }, label: {
-                            Image(systemName: "plus.circle")
-                        })
+            VStack {
+                SearchView(searchText: $searchText, focus: _focusedField)
+                List {
+                    ForEach(["aman", "bind", "kumar", "aaman", "abind", "akumar", "baman", "bbind", "bkumar", "caman", "cbind", "ckumar"], id: \.self) { _ in
+
+                        ListItemView()
                     }
-                })
+                    
+                }
+                .listStyle(.plain)
+            }
+            .navigationTitle("SwiftTalk")
+            .navigationBarTitleDisplayMode(focusedField == .search ? .inline : .automatic)
+            .toolbar(content: {
+                ToolbarItem {
+                    Button(action: {
+                        showAddNewTextView = true
+                    }, label: {
+                        Image(systemName: "plus.circle")
+                    })
+                }
+            })
 
         })
         .sheet(isPresented: $showAddNewTextView, content: {
@@ -39,21 +58,15 @@ struct ContentView: View {
     }
 }
 
-struct HomeView: View {
-    var body: some View {
-        VStack {
-            SearchView()
-            List {
-                ForEach(["aman", "bind", "kumar"], id: \.self) { _ in
-
-                    ListItemView()
-                }
-            }
-            .listStyle(.plain)
-
-        }
-    }
-}
+//
+// struct HomeView: View {
+//    @Binding var searchText: String
+//    @FocusState private var focusedField: FocusedField?
+//
+//    var body: some View {
+//        Text("Hello")
+//    }
+// }
 
 #Preview {
     ContentView()
