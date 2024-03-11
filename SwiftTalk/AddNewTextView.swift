@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct NewTextView: View {
+struct AddNewTextView: View {
     @State private var text = ""
     
     @Environment(\.colorScheme) private var theme
@@ -49,5 +49,5 @@ struct NewTextView: View {
 }
 
 #Preview {
-    NewTextView()
+    AddNewTextView()
 }

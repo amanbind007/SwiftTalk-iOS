@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var showNewView = false
-    
-    init(){
-        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.black, .font: UIFont(name: "AbrilFatface-Regular", size: 25)!]
-        
-        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.black, .font: UIFont(name: "AbrilFatface-Regular", size: 40)!]
+    @State private var showAddNewTextView = false
+
+    init() {
+        UINavigationBar.appearance().titleTextAttributes = [.font: UIFont(name: "AbrilFatface-Regular", size: 25)!]
+
+        UINavigationBar.appearance().largeTitleTextAttributes = [.font: UIFont(name: "AbrilFatface-Regular", size: 40)!]
         
     }
 
@@ -25,7 +25,7 @@ struct ContentView: View {
                 .toolbar(content: {
                     ToolbarItem {
                         Button(action: {
-                            showNewView = true
+                            showAddNewTextView = true
                         }, label: {
                             Image(systemName: "plus.circle")
                         })
@@ -33,27 +33,24 @@ struct ContentView: View {
                 })
 
         })
-        .sheet(isPresented: $showNewView, content: {
-            NewTextView()
+        .sheet(isPresented: $showAddNewTextView, content: {
+            AddNewTextView()
         })
-        
-        
     }
 }
 
 struct HomeView: View {
-    @State private var search: String = ""
-
     var body: some View {
         VStack {
+            SearchView()
             List {
-                ForEach(["aman", "bind", "kumar"], id: \.self) { data in
-                    
-                    
+                ForEach(["aman", "bind", "kumar"], id: \.self) { _ in
+
+                    ListItemView()
                 }
             }
-            .searchable(text: $search, prompt: "search")
-            .autocorrectionDisabled()
+            .listStyle(.plain)
+
         }
     }
 }

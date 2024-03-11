@@ -16,13 +16,15 @@ struct ListItemView: View {
                 .frame(width: 80)
             VStack(alignment: .leading){
                 Text("Hello World")
-                    .font(.title3)
+                    .font(.custom("NotoSerif-Regular", size: 22))
+                    
                     
                 Text("\(Date().formatted(date: .abbreviated, time: .shortened))".uppercased())
+                    .font(.custom("NotoSerif-Regular", size: 12))
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     
-                    
+            
             }
             
         }
