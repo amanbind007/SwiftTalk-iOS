@@ -43,10 +43,10 @@ struct SearchView: View {
                 }
             }
             .overlay {
-                RoundedRectangle(cornerRadius: 20)
+                RoundedRectangle(cornerRadius: 25)
                     .stroke(lineWidth: 3)
                     .fill(
-                        LinearGradient(colors: isAnimationOn ? [.blue, .green] : [.green, .blue], startPoint: .topLeading, endPoint: .bottomTrailing)
+                        LinearGradient(colors: isAnimationOn ? [.pink, .purple] : [.purple, .pink], startPoint: .topLeading, endPoint: .bottomTrailing)
                     )
                     .onAppear(perform: {
                         withAnimation(.linear(duration: 2.0).repeatForever(autoreverses: true)) {

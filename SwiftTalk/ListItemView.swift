@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ListItemView: View {
     
-    var imageNames = ["red_text", "yellow_text", "green_text", "blue_text", "purple_text", "pink_text"]
+    var imageNames = ["text_file", "link_file", "word_file", "pdf_file", "image_file"]
     
     var body: some View {
         HStack{
@@ -20,11 +20,11 @@ struct ListItemView: View {
             
             VStack(alignment: .leading){
                 Text("Hello World")
-                    .font(.custom("NotoSerif-Regular", size: 22))
+                    .font(.custom("NotoSerif-Regular", size: 16))
                     
                     
                 Text("\(Date().formatted(date: .abbreviated, time: .shortened))".uppercased())
-                    .font(.custom("NotoSerif-Regular", size: 12))
+                    .font(.custom("NotoSerif-Regular", size: 10))
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     

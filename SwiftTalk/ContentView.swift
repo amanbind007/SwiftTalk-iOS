@@ -31,7 +31,7 @@ struct ContentView: View {
             VStack {
                 SearchView(searchText: $searchText, focus: _focusedField)
                 List {
-                    ForEach(["aman", "bind", "kumar", "aaman", "abind", "akumar", "baman", "bbind", "bkumar", "caman", "cbind", "ckumar"], id: \.self) { _ in
+                    ForEach(["aman", "bind", "kumar"], id: \.self) { _ in
 
                         ListItemView()
                     }
@@ -53,20 +53,17 @@ struct ContentView: View {
 
         })
         .sheet(isPresented: $showAddNewTextView, content: {
-            AddNewTextView()
+            
+                AddNewTextOptionsView()
+                    .presentationDetents([.height(520)])
+                   
+                    
+                    
+           
         })
+        
     }
 }
-
-//
-// struct HomeView: View {
-//    @Binding var searchText: String
-//    @FocusState private var focusedField: FocusedField?
-//
-//    var body: some View {
-//        Text("Hello")
-//    }
-// }
 
 #Preview {
     ContentView()
