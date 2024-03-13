@@ -21,9 +21,9 @@ struct ContentView: View {
     @State var isFocused: Bool = false
 
     init() {
-        UINavigationBar.appearance().titleTextAttributes = [.font: UIFont(name: "AbrilFatface-Regular", size: 25)!]
+        UINavigationBar.appearance().titleTextAttributes = [.font: UIFont(name: Constants.Fonts.AbrilFatfaceR, size: 25)!]
 
-        UINavigationBar.appearance().largeTitleTextAttributes = [.font: UIFont(name: "AbrilFatface-Regular", size: 40)!]
+        UINavigationBar.appearance().largeTitleTextAttributes = [.font: UIFont(name: Constants.Fonts.AbrilFatfaceR, size: 40)!]
     }
 
     var body: some View {
@@ -31,11 +31,10 @@ struct ContentView: View {
             VStack {
                 SearchView(searchText: $searchText, focus: _focusedField)
                 List {
-                    ForEach(["aman", "bind", "kumar"], id: \.self) { _ in
+                    ForEach(["aman", "bind", "kumar", "rajesh", "mithilesh", "chakraborty", "Pandey", "jeevi"], id: \.self) { _ in
 
                         ListItemView()
                     }
-                    
                 }
                 .listStyle(.plain)
             }
@@ -53,15 +52,10 @@ struct ContentView: View {
 
         })
         .sheet(isPresented: $showAddNewTextView, content: {
-            
-                AddNewTextOptionsView()
-                    .presentationDetents([.height(520)])
-                   
-                    
-                    
-           
+            AddNewTextOptionsView()
+                .presentationDetents([.height(520)])
+
         })
-        
     }
 }
 

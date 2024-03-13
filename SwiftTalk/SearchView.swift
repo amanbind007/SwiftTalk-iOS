@@ -22,7 +22,7 @@ struct SearchView: View {
                     .foregroundStyle(.gray)
                 TextField("Search", text: $searchText)
                     .padding(.vertical, 10)
-                    .font(.custom("NotoSerif-Regular", size: 18))
+                    .font(.custom(Constants.Fonts.NotoSerifR, size: 18))
                     .autocorrectionDisabled()
                     .keyboardType(.default)
                     .focused($focus, equals: .search)
@@ -44,7 +44,7 @@ struct SearchView: View {
             }
             .overlay {
                 RoundedRectangle(cornerRadius: 25)
-                    .stroke(lineWidth: 3)
+                    .stroke(lineWidth: 4)
                     .fill(
                         LinearGradient(colors: isAnimationOn ? [.pink, .purple] : [.purple, .pink], startPoint: .topLeading, endPoint: .bottomTrailing)
                     )
@@ -54,6 +54,9 @@ struct SearchView: View {
                         }
                     })
             }
+            .background(Color.orange)
+            .clipShape(RoundedRectangle(cornerRadius: 25))
+            
             
             if focus != nil {
                 Button("Cancel", role: .cancel) {
@@ -69,6 +72,6 @@ struct SearchView: View {
     }
 }
 
-//#Preview {
-//    SearchView(searchText: .constant(""), focusedField: )
-//}
+#Preview {
+    SearchView(searchText: .constant(""))
+}

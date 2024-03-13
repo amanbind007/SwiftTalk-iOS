@@ -8,29 +8,29 @@
 import SwiftUI
 
 struct ListItemView: View {
-    
-    var imageNames = ["text_file", "link_file", "word_file", "pdf_file", "image_file"]
-    
+    var imageNames = [
+                      "image_file_icon",
+                      "link_icon",
+                      "pdf_file_icon",
+                      "text_file_icon",
+                      "word_file_icon"]
+
     var body: some View {
-        HStack{
+        HStack {
             Image(imageNames.randomElement()!, bundle: Bundle(path: "Assests"))
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(height: 60)
-            
-            VStack(alignment: .leading){
+
+            VStack(alignment: .leading) {
                 Text("Hello World")
                     .font(.custom("NotoSerif-Regular", size: 16))
-                    
-                    
+
                 Text("\(Date().formatted(date: .abbreviated, time: .shortened))".uppercased())
                     .font(.custom("NotoSerif-Regular", size: 10))
                     .font(.caption)
                     .foregroundStyle(.secondary)
-                    
-            
             }
-            
         }
     }
 }
