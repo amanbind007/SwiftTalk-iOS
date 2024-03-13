@@ -5,12 +5,13 @@
 //  Created by Aman Bind on 08/03/24.
 //
 
-import SwiftUI
 import AVFoundation
+import SwiftUI
 
 struct AddNewTextView: View {
-    
     @State private var title = ""
+    @State private var isPlaying = false
+    @State private var isPopoverPresented = false
     
     @State private var text = """
     
@@ -47,8 +48,6 @@ struct AddNewTextView: View {
                                 .frame(width: 25, height: 25)
                             
                         })
-                        
-                        
                         
                         Spacer()
                         
@@ -126,12 +125,43 @@ struct AddNewTextView: View {
                     )
                 TextEditor(text: $text)
                     .font(.custom(Constants.Fonts.NotoSerifR, size: 18))
-                    //.scrollContentBackground(.hidden)
+                // .scrollContentBackground(.hidden)
             }
-            VStack{
-                HStack{
+            VStack {
+                HStack {
+                    Image("myPhoto")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 55, height: 55)
+                        .overlay(content: {
+                            FlowerCloud()
+                                .stroke(lineWidth: 3)
+                        })
+                        .clipShape(FlowerCloud())
+                        .onTapGesture {
+                            isPopoverPresented.toggle()
+                        }
+                        .popover(isPresented: $isPopoverPresented, attachmentAnchor: .point(.trailing), arrowEdge: .bottom, content: {
+                            Text("hello")
+                                .presentationCompactAdaptation(.popover)
+                        })
+                    Spacer()
                     
+                    Image(systemName: isPlaying ? "pause.circle.fill" : "play.circle.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 50, height: 50)
+                        .foregroundColor(isPlaying ? .red : .blue)
+                        .clipShape(Circle())
+                        .onTapGesture {
+                            withAnimation {
+                                isPlaying.toggle()
+                            }
+                        }
+                    
+                    Spacer()
                 }
+                .padding(8)
             }
         }
     }

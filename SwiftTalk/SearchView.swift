@@ -54,7 +54,7 @@ struct SearchView: View {
                         }
                     })
             }
-            .background(Color.orange)
+            .background(Color.accent2)
             .clipShape(RoundedRectangle(cornerRadius: 25))
             
             

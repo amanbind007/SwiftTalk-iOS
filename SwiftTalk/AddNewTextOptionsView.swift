@@ -10,13 +10,8 @@ import SwiftUI
 struct AddNewTextOptionsView: View {
     var body: some View {
         VStack {
-            ZStack{
-                
-                
-                
-                
-                VStack{
-                    
+            ZStack {
+                VStack {
                     ScrollView {
                         HStack {
                             Image(Constants.Icons.cameraIcon)
@@ -154,9 +149,8 @@ struct AddNewTextOptionsView: View {
                     )
                 }
                 
-                
                 VStack {
-                    VStack{
+                    VStack {
                         HStack {
                             Text("Add Text")
                                 .font(.custom(Constants.Fonts.AbrilFatfaceR, size: 20))
@@ -171,10 +165,7 @@ struct AddNewTextOptionsView: View {
                     }
                     .background(Material.ultraThin)
                     Spacer()
-                    
                 }
-                
-                
             }
         }
     }
