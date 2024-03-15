@@ -33,81 +33,20 @@ struct AddNewTextView: View {
 
     @Environment(\.colorScheme) private var theme
     @Environment(\.dismiss) private var dismiss
+    
+    @State var animateRotation = false
 
     var body: some View {
         VStack {
+            
+            
+            
             VStack {
-                VStack {
-                    HStack {
-                        Button(action: {
-                            text = ""
-                        }, label: {
-                            Image("back")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 25, height: 25)
-                            
-                        })
-                        
-                        Spacer()
-                        
-                        Image("")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 25, height: 25)
-                        
-                        Image("")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 25, height: 25)
-                        
-                        Text("SwiftTalk")
-                            .font(.custom("AbrilFatface-Regular", size: 25))
-                        
-                        Spacer()
-                        
-                        Button(action: {
-                            text = ""
-                        }, label: {
-                            Image(Constants.Icons.backspaceicon)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 25, height: 25)
-                            
-                        })
-                        .disabled(text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? true : false)
-                        
-                        Button(action: {
-                            text = ""
-                        }, label: {
-                            Image(Constants.Icons.clipboardIcon)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 25, height: 25)
-                            
-                        })
-                        
-                        Button(action: {}, label: {
-                            Image(Constants.Icons.saveIcon)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 25, height: 25)
-                                .grayscale(text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? 1 : 0)
-                        })
-                        .disabled(text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? true : false)
-                    }
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 2)
-                    
-                    Rectangle()
-                        .frame(height: 1)
-                        .foregroundStyle(
-                            LinearGradient(colors: [.pink, .purple], startPoint: .leading, endPoint: .trailing)
-                        )
-                }
-                .background(Material.ultraThin)
-            }
-            VStack {
+                Rectangle()
+                    .frame(height: 1)
+                    .foregroundStyle(
+                        LinearGradient(colors: [.pink, .purple], startPoint: .leading, endPoint: .trailing)
+                    )
                 HStack {
                     Text("Title:")
                         .font(.custom(Constants.Fonts.NotoSerifR, size: 18))
@@ -125,26 +64,39 @@ struct AddNewTextView: View {
                     )
                 TextEditor(text: $text)
                     .font(.custom(Constants.Fonts.NotoSerifR, size: 18))
-                // .scrollContentBackground(.hidden)
+                
             }
             VStack {
                 HStack {
-                    Image("myPhoto")
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 55, height: 55)
-                        .overlay(content: {
-                            FlowerCloud()
-                                .stroke(lineWidth: 3)
-                        })
-                        .clipShape(FlowerCloud())
-                        .onTapGesture {
-                            isPopoverPresented.toggle()
-                        }
-                        .popover(isPresented: $isPopoverPresented, attachmentAnchor: .point(.trailing), arrowEdge: .bottom, content: {
-                            Text("hello")
-                                .presentationCompactAdaptation(.popover)
-                        })
+                    ZStack {
+                        FlowerCloud()
+                            
+                            .fill(LinearGradient(colors: [.pink, .blue, .purple], startPoint: .topLeading, endPoint: .bottomTrailing))
+                            .frame(width: 55, height: 55)
+                            .rotationEffect(.degrees(animateRotation ? 180 : 0))
+                            .onAppear(perform: {
+                                withAnimation(.easeInOut(duration: 1.0).repeatForever(autoreverses: true)) {
+                                    animateRotation.toggle()
+                                }
+                                
+                            })
+                        
+                        Image("myPhoto2")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 45, height: 45)
+                        
+                            .clipShape(Circle())
+                    }
+                    .popover(isPresented: $isPopoverPresented, content: {
+                        VoiceSelectorView()
+                            .presentationCompactAdaptation(.automatic)
+                    })
+                    .onTapGesture {
+                        isPopoverPresented.toggle()
+                    }
+                    
+                    
                     Spacer()
                     
                     Image(systemName: isPlaying ? "pause.circle.fill" : "play.circle.fill")

@@ -13,12 +13,28 @@ struct VoiceSelectorView: View {
     var body: some View {
         List {
             HStack {
-                Image("india_flag")
+                Image("flag_check")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 25, height: 25)
                 
                 Divider()
+                
+                ZStack {
+                    HexagonShape()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 25, height: 25)
+                        .foregroundStyle(
+                            LinearGradient(colors: [.indigo, .blue], startPoint: .topLeading, endPoint: .bottomTrailing)
+                        )
+                    
+                    Text("EN")
+                        .font(.custom("ChangaOne", size: 14))
+                        .foregroundStyle(Color.white)
+                }
+                
+                Divider()
+                
                 ZStack {
                     RippledCircle()
                         
@@ -31,19 +47,6 @@ struct VoiceSelectorView: View {
                             }
                         })
                     
-//                    LinearGradient(colors: [.pink, .blue, .purple], startPoint: .topLeading, endPoint: .bottomTrailing)
-//                        .hueRotation(.degrees(animateGradient ? 45 : 0))
-//                        .clipShape(RippledCircle()
-//
-//                        )
-//                        .aspectRatio(contentMode: .fit)
-//                        .frame(width: 30, height: 30)
-                    ////                        .onAppear(perform: {
-                    ////                            withAnimation(.easeInOut(duration: 1.0).repeatForever(autoreverses: true)) {
-                    ////                                animateGradient.toggle()
-                    ////                            }
-                    ////                        })
-                    
                     Image("myPhoto2")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -53,6 +56,7 @@ struct VoiceSelectorView: View {
                 }
                 
                 Text("Vinnet")
+                    .font(.custom(Constants.Fonts.NotoSerifR, size: 14))
                 
                 Spacer()
                 

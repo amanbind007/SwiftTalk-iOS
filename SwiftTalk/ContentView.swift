@@ -20,6 +20,8 @@ struct ContentView: View {
 
     @State var isFocused: Bool = false
 
+    @State private var showThirdView = false
+
     init() {
         UINavigationBar.appearance().titleTextAttributes = [.font: UIFont(name: Constants.Fonts.AbrilFatfaceR, size: 25)!]
 
@@ -56,6 +58,7 @@ struct ContentView: View {
                 .presentationDetents([.height(520)])
 
         })
+        
     }
 }
 

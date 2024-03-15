@@ -12,6 +12,7 @@ class Constants {
         static let NotoSerifSB = "NotoSerif-SemiBold"
         static let NotoSerifR = "NotoSerif-Regular"
         static let AbrilFatfaceR = "AbrilFatface-Regular"
+        static let ChangaOneR = "ChangaOne"
     }
 
     enum Icons {

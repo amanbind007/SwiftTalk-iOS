@@ -8,147 +8,64 @@
 import SwiftUI
 
 struct AddNewTextOptionsView: View {
+    
     var body: some View {
-        VStack {
+        NavigationStack {
             ZStack {
-                VStack {
-                    ScrollView {
-                        HStack {
-                            Image(Constants.Icons.cameraIcon)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: 50)
-                            
-                            VStack(alignment: .leading) {
-                                Text("Camera Scan")
-                                    .underline()
-                                    .font(.custom(Constants.Fonts.NotoSerifSB, size: 14))
-                                
-                                Text("Scan physical text using your camera")
-                                    .font(.custom(Constants.Fonts.NotoSerifR, size: 13))
-                                    .lineSpacing(0.1)
-                            }
-                            Spacer()
-                        }
-                        .padding(10)
-                        .background(Color.accent1)
-                        .clipShape(RoundedRectangle(cornerRadius: 20.0))
-                        .padding([.horizontal], 8)
-                        .padding([.top], 52)
+                // List of Options for adding text
+                ScrollView {
+                    NavigationLink {
                         
-                        HStack {
-                            Image(Constants.Icons.imageFileIcon)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: 50)
+                        //AddNewTextView()
                             
-                            VStack(alignment: .leading) {
-                                Text("Photo Library")
-                                    .underline()
-                                    .font(.custom(Constants.Fonts.NotoSerifSB, size: 14))
                                 
-                                Text("Get text from the photos in you library")
-                                    .font(.custom(Constants.Fonts.NotoSerifR, size: 13))
-                                    .lineSpacing(0.1)
-                            }
-                            Spacer()
-                        }
-                        .padding(10)
-                        .background(Color.accent1)
-                        .clipShape(RoundedRectangle(cornerRadius: 20.0))
-                        .padding(.horizontal, 8)
-                        
-                        HStack {
-                            Image(Constants.Icons.wordFileIcon)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: 50)
-                            
-                            VStack(alignment: .leading) {
-                                Text("Word Documents")
-                                    .underline()
-                                    .font(.custom(Constants.Fonts.NotoSerifSB, size: 14))
-                                
-                                Text("Add documents from your local storage or cloud")
-                                    .font(.custom(Constants.Fonts.NotoSerifR, size: 13))
-                            }
-                            Spacer()
-                        }
-                        .padding(10)
-                        .background(Color.accent1)
-                        .clipShape(RoundedRectangle(cornerRadius: 20.0))
-                        .padding(.horizontal, 8)
-                        
-                        HStack {
-                            Image(Constants.Icons.textFileInputIcon)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: 50)
-                            
-                            VStack(alignment: .leading) {
-                                Text("Text")
-                                    .underline()
-                                    .font(.custom(Constants.Fonts.NotoSerifSB, size: 14))
-                                
-                                Text("Input or paste text to read")
-                                    .font(.custom(Constants.Fonts.NotoSerifR, size: 13))
-                            }
-                            Spacer()
-                        }
-                        .padding(10)
-                        .background(Color.accent1)
-                        .clipShape(RoundedRectangle(cornerRadius: 20.0))
-                        .padding(.horizontal, 8)
-                        
-                        HStack {
-                            Image(Constants.Icons.pdfFileIcon)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: 50)
-                            
-                            VStack(alignment: .leading) {
-                                Text("PDF Documents")
-                                    .underline()
-                                    .font(.custom(Constants.Fonts.NotoSerifSB, size: 14))
-                                
-                                Text("Add PDFs from your local storage or cloud")
-                                    .font(.custom(Constants.Fonts.NotoSerifR, size: 13))
-                            }
-                            Spacer()
-                        }
-                        .padding(10)
-                        .background(Color.accent1)
-                        .clipShape(RoundedRectangle(cornerRadius: 20.0))
-                        .padding(.horizontal, 8)
-                        
-                        HStack {
-                            Image(Constants.Icons.webIcon)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: 50)
-                            
-                            VStack(alignment: .leading) {
-                                Text("Webpage")
-                                    .underline()
-                                    .font(.custom(Constants.Fonts.NotoSerifSB, size: 14))
-                                
-                                Text("Listen to the contents of a webpage")
-                                    .font(.custom(Constants.Fonts.NotoSerifR, size: 13))
-                            }
-                            Spacer()
-                        }
-                        .padding(10)
-                        .background(Color.accent1)
-                        .clipShape(RoundedRectangle(cornerRadius: 20.0))
-                        .padding(.horizontal, 8)
-                        
-                        Spacer()
+                    } label: {
+                        AddNewTextOptionCardView(title: "Camera Scan", description: "Scan physical text using your camera", imageName: Constants.Icons.cameraIcon)
+                            .padding([.top], 52)
                     }
-                    .background(
-                        Color.accent2
-                    )
+                    
+                    NavigationLink {
+                        //AddNewTextView()
+                                
+                    } label: {
+                        AddNewTextOptionCardView(title: "Photo Library", description: "Get text from the photos in you library", imageName: Constants.Icons.imageFileIcon)
+                    }
+                    
+                    NavigationLink {
+                        //AddNewTextView()
+                                
+                    } label: {
+                        AddNewTextOptionCardView(title: "Word Documents", description: "Add documents from your local storage or cloud", imageName: Constants.Icons.wordFileIcon)
+                    }
+                    
+                    NavigationLink {
+                        AddNewTextView()
+                                
+                    } label: {
+                        AddNewTextOptionCardView(title: "Text", description: "Input or paste text to read", imageName: Constants.Icons.textFileInputIcon)
+                    }
+                    
+                    NavigationLink {
+                        //AddNewTextView()
+                                
+                    } label: {
+                        AddNewTextOptionCardView(title: "PDF Documents", description: "Add PDFs from your local storage or cloud", imageName: Constants.Icons.pdfFileIcon)
+                    }
+                    
+                    NavigationLink {
+                        //AddNewTextView()
+                                
+                    } label: {
+                        AddNewTextOptionCardView(title: "Webpage", description: "Listen to the contents of a webpage", imageName: Constants.Icons.webIcon)
+                    }
+
+                    Spacer()
                 }
+                .background(
+                    Color.accent2
+                )
                 
+                // Custom Top Bar View
                 VStack {
                     VStack {
                         HStack {
