@@ -38,9 +38,6 @@ struct AddNewTextView: View {
 
     var body: some View {
         VStack {
-            
-            
-            
             VStack {
                 Rectangle()
                     .frame(height: 1)
@@ -64,7 +61,6 @@ struct AddNewTextView: View {
                     )
                 TextEditor(text: $text)
                     .font(.custom(Constants.Fonts.NotoSerifR, size: 18))
-                
             }
             VStack {
                 HStack {
@@ -95,7 +91,6 @@ struct AddNewTextView: View {
                     .onTapGesture {
                         isPopoverPresented.toggle()
                     }
-                    
                     
                     Spacer()
                     

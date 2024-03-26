@@ -14,11 +14,9 @@ enum FocusedField: Hashable {
 struct ContentView: View {
     @State private var searchText: String = ""
 
-    @State private var showAddNewTextView = false
+    @State private var showAddNewTextOptionsView = false
 
     @FocusState private var focusedField: FocusedField?
-
-    @State var isFocused: Bool = false
 
     @State private var showThirdView = false
 
@@ -44,8 +42,10 @@ struct ContentView: View {
             .navigationBarTitleDisplayMode(focusedField == .search ? .inline : .automatic)
             .toolbar(content: {
                 ToolbarItem {
+                    
+                    //This button triggers the Sheet view
                     Button(action: {
-                        showAddNewTextView = true
+                        showAddNewTextOptionsView = true
                     }, label: {
                         Image(systemName: "plus.circle")
                     })
@@ -53,11 +53,13 @@ struct ContentView: View {
             })
 
         })
-        .sheet(isPresented: $showAddNewTextView, content: {
+        .sheet(isPresented: $showAddNewTextOptionsView, content: {
             AddNewTextOptionsView()
                 .presentationDetents([.height(520)])
 
         })
+        
+        
         
     }
 }

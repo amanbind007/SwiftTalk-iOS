@@ -8,63 +8,47 @@
 import SwiftUI
 
 struct AddNewTextOptionsView: View {
-    
+    // Track selected option
+    @State private var selectedOption: AddNewTextOption?
+
     var body: some View {
         NavigationStack {
             ZStack {
                 // List of Options for adding text
                 ScrollView {
-                    NavigationLink {
-                        
-                        //AddNewTextView()
-                            
-                                
-                    } label: {
-                        AddNewTextOptionCardView(title: "Camera Scan", description: "Scan physical text using your camera", imageName: Constants.Icons.cameraIcon)
-                            .padding([.top], 52)
+                    ForEach(AddNewTextOption.allCases) { option in
+                        NavigationLink {
+                            switch option {
+                            case .camera:
+                                AddNewTextView()
+                            // Some View For getting text from camera
+                            case .photoLibrary:
+                                AddNewTextView()
+                            // Some View to get text from Photo Library
+                            case .wordDocument:
+                                AddNewTextView()
+                            // Some View to get text from Word Doc
+                            case .textInput:
+                                AddNewTextView()
+                            case .pdfDocument:
+                                AddNewTextView()
+                            // Some View to get text from PDFs
+                            case .webpage:
+                                AddNewTextView()
+                                // Some View to get text from Webpage
+                            }
+                        } label: {
+                            AddNewTextOptionCardView(title: option.title, description: option.description, imageName: option.imageName)
+                                .padding([.top], 52)
+                        }
+                        .tag(option) // Assign unique tag for identification
                     }
-                    
-                    NavigationLink {
-                        //AddNewTextView()
-                                
-                    } label: {
-                        AddNewTextOptionCardView(title: "Photo Library", description: "Get text from the photos in you library", imageName: Constants.Icons.imageFileIcon)
-                    }
-                    
-                    NavigationLink {
-                        //AddNewTextView()
-                                
-                    } label: {
-                        AddNewTextOptionCardView(title: "Word Documents", description: "Add documents from your local storage or cloud", imageName: Constants.Icons.wordFileIcon)
-                    }
-                    
-                    NavigationLink {
-                        AddNewTextView()
-                                
-                    } label: {
-                        AddNewTextOptionCardView(title: "Text", description: "Input or paste text to read", imageName: Constants.Icons.textFileInputIcon)
-                    }
-                    
-                    NavigationLink {
-                        //AddNewTextView()
-                                
-                    } label: {
-                        AddNewTextOptionCardView(title: "PDF Documents", description: "Add PDFs from your local storage or cloud", imageName: Constants.Icons.pdfFileIcon)
-                    }
-                    
-                    NavigationLink {
-                        //AddNewTextView()
-                                
-                    } label: {
-                        AddNewTextOptionCardView(title: "Webpage", description: "Listen to the contents of a webpage", imageName: Constants.Icons.webIcon)
-                    }
-
                     Spacer()
                 }
                 .background(
                     Color.accent2
                 )
-                
+
                 // Custom Top Bar View
                 VStack {
                     VStack {
@@ -73,7 +57,6 @@ struct AddNewTextOptionsView: View {
                                 .font(.custom(Constants.Fonts.AbrilFatfaceR, size: 20))
                                 .offset(y: 10)
                         }
-                        
                         Rectangle()
                             .frame(height: 1)
                             .foregroundStyle(
@@ -81,9 +64,44 @@ struct AddNewTextOptionsView: View {
                             )
                     }
                     .background(Material.ultraThin)
+
                     Spacer()
                 }
             }
+        }
+    }
+}
+
+enum AddNewTextOption: String, CaseIterable, Identifiable {
+    case camera = "Camera Scan"
+    case photoLibrary = "Photo Library"
+    case wordDocument = "Word Documents"
+    case textInput = "Text"
+    case pdfDocument = "PDF Documents"
+    case webpage = "Webpage"
+
+    var id: String { self.rawValue }
+
+    var title: String { self.rawValue }
+    var description: String {
+        switch self {
+        case .camera: return "Scan physical text using your camera"
+        case .photoLibrary: return "Get text from the photos in your library"
+        case .wordDocument: return "Add documents from your local storage or cloud"
+        case .textInput: return "Input or paste text to read"
+        case .pdfDocument: return "Add PDFs from your local storage or cloud"
+        case .webpage: return "Listen to the contents of a webpage"
+        }
+    }
+
+    var imageName: String {
+        switch self {
+        case .camera: return Constants.Icons.cameraIcon
+        case .photoLibrary: return Constants.Icons.imageFileIcon
+        case .wordDocument: return Constants.Icons.wordFileIcon
+        case .textInput: return Constants.Icons.textFileInputIcon
+        case .pdfDocument: return Constants.Icons.pdfFileIcon
+        case .webpage: return Constants.Icons.webIcon
         }
     }
 }
