@@ -14,40 +14,46 @@ struct AddNewTextOptionsView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                // List of Options for adding text
-                ScrollView {
-                    ForEach(AddNewTextOption.allCases) { option in
-                        NavigationLink {
-                            switch option {
-                            case .camera:
-                                AddNewTextView()
-                            // Some View For getting text from camera
-                            case .photoLibrary:
-                                AddNewTextView()
-                            // Some View to get text from Photo Library
-                            case .wordDocument:
-                                AddNewTextView()
-                            // Some View to get text from Word Doc
-                            case .textInput:
-                                AddNewTextView()
-                            case .pdfDocument:
-                                AddNewTextView()
-                            // Some View to get text from PDFs
-                            case .webpage:
-                                AddNewTextView()
-                                // Some View to get text from Webpage
+                
+                VStack{
+                    Spacer(minLength: 44)
+                    // List of Options for adding text
+                    ScrollView {
+                        ForEach(AddNewTextOption.allCases) { option in
+                            NavigationLink {
+                                switch option {
+                                case .camera:
+                                    AddNewTextView()
+                                    // Some View For getting text from camera
+                                case .photoLibrary:
+                                    AddNewTextView()
+                                    // Some View to get text from Photo Library
+                                case .wordDocument:
+                                    AddNewTextView()
+                                    // Some View to get text from Word Doc
+                                case .textInput:
+                                    AddNewTextView()
+                                case .pdfDocument:
+                                    AddNewTextView()
+                                    // Some View to get text from PDFs
+                                case .webpage:
+                                    AddNewTextView()
+                                    // Some View to get text from Webpage
+                                }
+                            } label: {
+                                AddNewTextOptionCardView(title: option.title, description: option.description, imageName: option.imageName)
+                                    .padding([.top], 2)
                             }
-                        } label: {
-                            AddNewTextOptionCardView(title: option.title, description: option.description, imageName: option.imageName)
-                                .padding([.top], 52)
+                            .tag(option) // Assign unique tag for identification
                         }
-                        .tag(option) // Assign unique tag for identification
+                        .offset(y:8)
+                        Spacer()
                     }
-                    Spacer()
+                    .background(
+                        Color.accent2
+                    )
+                    
                 }
-                .background(
-                    Color.accent2
-                )
 
                 // Custom Top Bar View
                 VStack {
