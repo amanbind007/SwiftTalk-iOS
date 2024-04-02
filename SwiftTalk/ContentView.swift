@@ -12,6 +12,7 @@ enum FocusedField: Hashable {
 }
 
 struct ContentView: View {
+    
     @State private var searchText: String = ""
 
     @State private var showAddNewTextOptionsView = false

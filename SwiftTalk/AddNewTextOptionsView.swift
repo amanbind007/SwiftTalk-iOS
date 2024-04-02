@@ -8,51 +8,37 @@
 import SwiftUI
 
 struct AddNewTextOptionsView: View {
+    
+    @Environment(\.presentationMode) var presentationMode
     // Track selected option
     @State private var selectedOption: AddNewTextOption?
 
     var body: some View {
         NavigationStack {
             ZStack {
-                
-                VStack{
+                VStack {
                     Spacer(minLength: 44)
                     // List of Options for adding text
                     ScrollView {
                         ForEach(AddNewTextOption.allCases) { option in
-                            NavigationLink {
-                                switch option {
-                                case .camera:
-                                    AddNewTextView()
-                                    // Some View For getting text from camera
-                                case .photoLibrary:
-                                    AddNewTextView()
-                                    // Some View to get text from Photo Library
-                                case .wordDocument:
-                                    AddNewTextView()
-                                    // Some View to get text from Word Doc
-                                case .textInput:
-                                    AddNewTextView()
-                                case .pdfDocument:
-                                    AddNewTextView()
-                                    // Some View to get text from PDFs
-                                case .webpage:
-                                    AddNewTextView()
-                                    // Some View to get text from Webpage
-                                }
-                            } label: {
+                            Button(action: {
+                                // self.dismiss()
+                                self.selectedOption = option
+                                // Call function to close sheet and present new view
+
+                                self.closeSheetAndPresentNewView()
+                            }) {
                                 AddNewTextOptionCardView(title: option.title, description: option.description, imageName: option.imageName)
                                     .padding([.top], 2)
                             }
-                            .tag(option) // Assign unique tag for identification
+                            .tag(option)
                         }
-                        .offset(y:8)
+                        .offset(y: 8)
                         Spacer()
                     }
                     .background(
                         Color.accent2
                     )
-                    
                 }
 
                 // Custom Top Bar View
@@ -73,6 +59,34 @@ struct AddNewTextOptionsView: View {
 
                     Spacer()
                 }
+            }
+        }
+    }
+
+    func closeSheetAndPresentNewView() {
+        if let option = selectedOption {
+            if #available(iOS 15.0, *) {
+                presentationMode.wrappedValue.dismiss()
+            } else {
+                presentationMode.wrappedValue.dismiss()
+            }
+            // Present new view based on option
+            switch option {
+            case .camera:
+                // Present AddNewTextView for camera
+                NavigationLink(destination: AddNewTextView()) { EmptyView() }
+            case .photoLibrary:
+                // Present AddNewTextView for Photo Library
+                NavigationLink(destination: AddNewTextView()) { EmptyView() }
+            // ... and so on for other options
+            case .wordDocument:
+                NavigationLink(destination: AddNewTextView()) { EmptyView() }
+            case .textInput:
+                NavigationLink(destination: AddNewTextView()) { EmptyView() }
+            case .pdfDocument:
+                NavigationLink(destination: AddNewTextView()) { EmptyView() }
+            case .webpage:
+                NavigationLink(destination: AddNewTextView()) { EmptyView() }
             }
         }
     }
