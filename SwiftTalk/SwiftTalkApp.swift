@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct SwiftTalkApp: App {
+    @State var navigationStateVM = NavigationStateViewModel()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeView()
+                .environment(navigationStateVM)
         }
     }
 }

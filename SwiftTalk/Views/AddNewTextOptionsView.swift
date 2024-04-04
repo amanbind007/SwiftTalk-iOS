@@ -12,6 +12,8 @@ struct AddNewTextOptionsView: View {
     @Environment(\.presentationMode) var presentationMode
     // Track selected option
     @State private var selectedOption: AddNewTextOption?
+    
+    @Binding var showAddNewTextOptionsView : Bool
 
     var body: some View {
         NavigationStack {

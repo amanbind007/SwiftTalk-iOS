@@ -11,7 +11,7 @@ enum FocusedField: Hashable {
     case search
 }
 
-struct ContentView: View {
+struct HomeView: View {
     
     @State private var searchText: String = ""
 
@@ -55,7 +55,7 @@ struct ContentView: View {
 
         })
         .sheet(isPresented: $showAddNewTextOptionsView, content: {
-            AddNewTextOptionsView()
+            AddNewTextOptionsView(showAddNewTextOptionsView: $showAddNewTextOptionsView)
                 .presentationDetents([.height(520)])
 
         })
@@ -66,5 +66,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    HomeView()
 }
