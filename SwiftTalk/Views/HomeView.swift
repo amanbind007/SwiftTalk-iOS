@@ -12,14 +12,11 @@ enum FocusedField: Hashable {
 }
 
 struct HomeView: View {
-    
     @State private var searchText: String = ""
-
-    @State private var showAddNewTextOptionsView = false
 
     @FocusState private var focusedField: FocusedField?
 
-    @State private var showThirdView = false
+    @State var navigationStateVM = NavigationStateViewModel()
 
     init() {
         UINavigationBar.appearance().titleTextAttributes = [.font: UIFont(name: Constants.Fonts.AbrilFatfaceR, size: 25)!]
@@ -28,7 +25,27 @@ struct HomeView: View {
     }
 
     var body: some View {
-        NavigationView(content: {
+        NavigationStack(path: $navigationStateVM.targetDestination) {
+            NavigationLink(value: navigationStateVM.targetDestination) {
+                EmptyView()
+            }
+            .navigationDestination(for: AddNewTextOption.self) { target in
+                switch target {
+                case .textInput:
+                    AddNewTextView()
+                case .pdfDocument:
+                    EmptyView()
+                case .camera:
+                    EmptyView()
+                case .photoLibrary:
+                    EmptyView()
+                case .webpage:
+                    EmptyView()
+                case .wordDocument:
+                    EmptyView()
+                }
+            }
+
             VStack {
                 SearchView(searchText: $searchText, focus: _focusedField)
                 List {
@@ -43,25 +60,20 @@ struct HomeView: View {
             .navigationBarTitleDisplayMode(focusedField == .search ? .inline : .automatic)
             .toolbar(content: {
                 ToolbarItem {
-                    
-                    //This button triggers the Sheet view
+                    // This button triggers the Sheet view
                     Button(action: {
-                        showAddNewTextOptionsView = true
+                        navigationStateVM.showAddNewTextOptionsView.toggle()
                     }, label: {
                         Image(systemName: "plus.circle")
                     })
                 }
             })
-
-        })
-        .sheet(isPresented: $showAddNewTextOptionsView, content: {
-            AddNewTextOptionsView(showAddNewTextOptionsView: $showAddNewTextOptionsView)
+        }
+        .sheet(isPresented: $navigationStateVM.showAddNewTextOptionsView, content: {
+            AddNewTextOptionsView(viewModel: navigationStateVM)
                 .presentationDetents([.height(520)])
 
         })
-        
-        
-        
     }
 }
 
