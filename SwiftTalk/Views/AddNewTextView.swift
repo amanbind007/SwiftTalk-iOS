@@ -13,8 +13,9 @@ struct AddNewTextView: View {
     @State private var isPlaying = false
     @State private var isPopoverPresented = false
     
-    @State private var text = """
+    let pasteboard = UIPasteboard.general
     
+    @State private var text = """
     
     Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 
@@ -34,10 +35,12 @@ struct AddNewTextView: View {
     @Environment(\.colorScheme) private var theme
     @Environment(\.dismiss) private var dismiss
     
-    @State var animateRotation = false
-
+    @State var degreesRotating = 0.0
+    
     var body: some View {
         VStack {
+            // TextFileds for title and Contents
+            
             VStack {
                 Rectangle()
                     .frame(height: 1)
@@ -62,35 +65,39 @@ struct AddNewTextView: View {
                 TextEditor(text: $text)
                     .font(.custom(Constants.Fonts.NotoSerifR, size: 18))
             }
+            
+            // Bottom Control Panel
+            
             VStack {
                 HStack {
                     ZStack {
-                        FlowerCloud()
+                        RippledCircle()
                             
                             .fill(LinearGradient(colors: [.pink, .blue, .purple], startPoint: .topLeading, endPoint: .bottomTrailing))
                             .frame(width: 55, height: 55)
-                            .rotationEffect(.degrees(animateRotation ? 180 : 0))
+                            .rotationEffect(.degrees(degreesRotating))
                             .onAppear(perform: {
-                                withAnimation(.easeInOut(duration: 1.0).repeatForever(autoreverses: true)) {
-                                    animateRotation.toggle()
+                                withAnimation(.linear(duration: 1)
+                                    .speed(0.5).repeatForever(autoreverses: false))
+                                {
+                                    degreesRotating = 360.0
                                 }
                                 
                             })
+                            .onTapGesture {
+                                isPopoverPresented.toggle()
+                            }
                         
                         Image("myPhoto2")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 45, height: 45)
-                        
                             .clipShape(Circle())
                     }
                     .popover(isPresented: $isPopoverPresented, content: {
                         VoiceSelectorView()
                             .presentationCompactAdaptation(.automatic)
                     })
-                    .onTapGesture {
-                        isPopoverPresented.toggle()
-                    }
                     
                     Spacer()
                     
@@ -111,9 +118,55 @@ struct AddNewTextView: View {
                 .padding(8)
             }
         }
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle("SwiftTalk")
+        .navigationBarBackButtonHidden()
+        .toolbar(content: {
+            ToolbarItem(placement: .topBarLeading) {
+                Button(role: .cancel) {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.left")
+                    Text("Back")
+                }
+            }
+            
+            ToolbarItemGroup {
+                HStack {
+                    Button(role: .destructive) {
+                        text = ""
+                    } label: {
+                        Image(Constants.Icons.backspaceicon)
+                            .resizable()
+                            .frame(width: 25, height: 25)
+                    }
+                    
+                    Button(role: .none) {
+                        text = pasteboard.string!
+                    } label: {
+                        Image(Constants.Icons.clipboardIcon)
+                            .resizable()
+                            .frame(width: 25, height: 25)
+                    }
+                    
+                    Button {
+                        // Save the text in persistence storage and dismiss View
+                        
+                        dismiss()
+                    } label: {
+                        Image(Constants.Icons.saveIcon)
+                            .resizable()
+                            .frame(width: 25, height: 25)
+                    }
+                }
+            }
+            
+        })
     }
 }
 
 #Preview {
-    AddNewTextView()
+    NavigationStack {
+        AddNewTextView()
+    }
 }
