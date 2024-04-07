@@ -142,7 +142,10 @@ struct AddNewTextView: View {
                     }
                     
                     Button(role: .none) {
-                        text = pasteboard.string!
+                        if let pasteString = pasteboard.string {
+                            text = pasteString
+                        }
+                        
                     } label: {
                         Image(Constants.Icons.clipboardIcon)
                             .resizable()
