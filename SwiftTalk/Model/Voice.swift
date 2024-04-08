@@ -7,11 +7,13 @@
 
 import Foundation
 
-struct Voice: Identifiable {
+struct Voice: Identifiable{
     let id = UUID()
     let languageCode: String
     let voiceName: String
     let flagName: String
     let country: String
-    
+    let language: String
 }
+
+
