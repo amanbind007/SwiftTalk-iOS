@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct VoiceSpeedSelector: View {
+struct VoiceSpeedPitchSelectorView: View {
     @State var voiceSpeedSliderValue = 1.0
     @State var voicePitchSliderValue = 1.0
     var body: some View {
