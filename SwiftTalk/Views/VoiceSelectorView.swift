@@ -77,59 +77,88 @@ struct VoiceSelectorView: View {
         Voice(languageCode: "zh-TW", voiceName: "Meijia", flagName: "taiwan-flag-round-circle-icon", country: "Taiwan", language: "ZH")
     ]
     var body: some View {
-        List {
+        ZStack{
             
-            ForEach(voices) { voice in
-                HStack {
-                    Image(voice.flagName)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 25, height: 25)
+            VStack{
+                Spacer(minLength: 20)
+                
+                List {
                     
-                    Divider()
-                    
-                    ZStack {
-                        HexagonShape()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 25, height: 25)
-                            .foregroundStyle(
-                                LinearGradient(colors: [.indigo, .blue], startPoint: .topLeading, endPoint: .bottomTrailing)
-                            )
-                        
-                        Text(voice.language)
-                            .font(.custom("ChangaOne", size: 14))
-                            .foregroundStyle(Color.white)
-                    }
-                    
-                    Divider()
-                    
-                    ZStack {
-                        RippledCircle()
+                    ForEach(voices) { voice in
+                        HStack {
+                            Image(voice.flagName)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 25, height: 25)
                             
-                            .fill(LinearGradient(colors: [.pink, .blue, .purple], startPoint: .topLeading, endPoint: .bottomTrailing))
-                            .frame(width: 30, height: 30)
-                        
-                        Image("myPhoto2")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 25, height: 25)
-                        
-                            .clipShape(RippledCircle())
-                    }
-                    
-                    Text(voice.voiceName)
-                        .font(.custom(Constants.Fonts.NotoSerifR, size: 14))
-                    
-                    Spacer()
-                    
-                    Image(systemName: selectedVoice == voice.voiceName ? "checkmark.circle.fill" : "circle")
-                        .foregroundStyle(selectedVoice == voice.voiceName ? Color.green : Color.red)
-                        .onTapGesture {
-                            selectedVoice = voice.voiceName
+                            Divider()
+                            
+                            ZStack {
+                                HexagonShape()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 25, height: 25)
+                                    .foregroundStyle(
+                                        LinearGradient(colors: [.indigo, .blue], startPoint: .topLeading, endPoint: .bottomTrailing)
+                                    )
+                                
+                                Text(voice.language)
+                                    .font(.custom("ChangaOne", size: 14))
+                                    .foregroundStyle(Color.white)
+                            }
+                            
+                            Divider()
+                            
+                            ZStack {
+                                RippledCircle()
+                                
+                                    .fill(LinearGradient(colors: [.pink, .blue, .purple], startPoint: .topLeading, endPoint: .bottomTrailing))
+                                    .frame(width: 30, height: 30)
+                                
+                                Image("myPhoto2")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 25, height: 25)
+                                
+                                    .clipShape(RippledCircle())
+                            }
+                            
+                            Text(voice.voiceName)
+                                .font(.custom(Constants.Fonts.NotoSerifR, size: 14))
+                            
+                            Spacer()
+                            
+                            Image(systemName: selectedVoice == voice.voiceName ? "checkmark.circle.fill" : "circle")
+                                .foregroundStyle(selectedVoice == voice.voiceName ? Color.green : Color.red)
+                                .onTapGesture {
+                                    selectedVoice = voice.voiceName
+                                }
                         }
+                        
+                    }
                 }
+            }
+            
+            VStack {
+                VStack {
+                    HStack {
+                        Text("Select Voice")
+                            .font(.custom(Constants.Fonts.AbrilFatfaceR, size: 20))
+                            .offset(y: 10)
+                    }
+                    Rectangle()
+                        .frame(height: 1)
+                        .foregroundStyle(
+                            LinearGradient(colors: [.pink, .purple], startPoint: .leading, endPoint: .trailing)
+                        )
+                }
+                .background(Material.ultraThin)
+                
+                Spacer()
+                
                 
             }
+            
+            
         }
     }
 }
