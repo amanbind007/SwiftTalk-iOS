@@ -16,7 +16,6 @@ struct AddNewTextView: View {
 
     var body: some View {
         VStack {
-            
             // TextFileds for title and Contents
             VStack {
                 Rectangle()
@@ -39,42 +38,72 @@ struct AddNewTextView: View {
                     .foregroundStyle(
                         LinearGradient(colors: [.pink, .purple], startPoint: .leading, endPoint: .trailing)
                     )
-                TextEditor(text: $addNewTextVM.text)
-                    .font(.custom(Constants.Fonts.NotoSerifR, size: 18))
+                if addNewTextVM.isPlaying {
+                    VStack(alignment: .leading) {
+                        ScrollView {
+                            Text(addNewTextVM.text)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .font(.custom(Constants.Fonts.NotoSerifR, size: 18))
+                        }
+                    }
+                    .padding(.horizontal, 5)
+                    .padding(.top, 8)
+                    
+                } else {
+                    TextEditor(text: $addNewTextVM.text)
+                        .font(.custom(Constants.Fonts.NotoSerifR, size: 18))
+                        .disabled(true)
+                }
             }
             
             // Bottom Control Panel
             VStack {
                 HStack {
-                    ZStack {
-                        RippledCircle()
-                            .fill(LinearGradient(colors: [.pink, .blue, .purple], startPoint: .topLeading, endPoint: .bottomTrailing))
-                            .frame(width: 55, height: 55)
-                            .rotationEffect(.degrees(addNewTextVM.degreesRotating))
-                            .onAppear(perform: {
-                                withAnimation(.linear(duration: 1)
-                                    .speed(0.5).repeatForever(autoreverses: false))
-                                {
-                                    addNewTextVM.degreesRotating = 360.0
-                                }
-                                
-                            })
-                            .onTapGesture {
-                                addNewTextVM.isPopoverPresented.toggle()
-                            }
+                    
+                    Button(action: {
+                        addNewTextVM.isVoiceSelectorPresented.toggle()
                         
-                        Image("myPhoto2")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 45, height: 45)
-                            .clipShape(Circle())
-                            .onTapGesture {
-                                addNewTextVM.isPopoverPresented.toggle()
-                            }
-                    }
-                    .popover(isPresented: $addNewTextVM.isPopoverPresented, content: {
+                    }, label: {
+                        ZStack {
+                            RippledCircle()
+                                .fill(LinearGradient(colors: [.pink, .blue, .purple], startPoint: .topLeading, endPoint: .bottomTrailing))
+                                .frame(width: 55, height: 55)
+                                .rotationEffect(.degrees(addNewTextVM.degreesRotating))
+                                .onAppear(perform: {
+                                    withAnimation(.linear(duration: 1)
+                                        .speed(0.5).repeatForever(autoreverses: false))
+                                    {
+                                        addNewTextVM.degreesRotating = 360.0
+                                    }
+                                    
+                                })
+                                
+                            
+                            Image("myPhoto2")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 45, height: 45)
+                                .clipShape(Circle())
+                                
+                        }
+                    })
+                    
+                    .sheet(isPresented: $addNewTextVM.isVoiceSelectorPresented, content: {
                         VoiceSelectorView()
                             .presentationCompactAdaptation(.automatic)
+                    })
+                    .sheet(isPresented: $addNewTextVM.isVoiceSpeedSelectorPresented, content: {
+                        VoiceSpeedPitchSelectorView()
+                            .presentationDetents([.height(280)])
+                    })
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        //Go forward
+                    }, label: {
+                        Image(systemName: "goforward")
+                            .imageScale(.large)
                     })
                     
                     Spacer()
@@ -92,6 +121,34 @@ struct AddNewTextView: View {
                         }
                     
                     Spacer()
+                    
+                    Button(action: {
+                        
+                        
+                    }, label: {
+                        Image(systemName: "gobackward")
+                            .imageScale(.large)
+                    })
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        
+                        addNewTextVM.isVoiceSpeedSelectorPresented = true
+                        
+                    }, label: {
+                        FlowerCloud()
+                            .fill(
+                                .linearGradient(colors: [.yellow, .green], startPoint: .top, endPoint: .bottomTrailing)
+                            )
+                            .frame(width: 55, height: 55)
+                            .overlay {
+                                Text("2.5x")
+                                    .font(.title3)
+                                    .bold()
+                                    .foregroundStyle(Color.black)
+                            }
+                    })
                 }
                 .padding(8)
             }
@@ -135,12 +192,10 @@ struct AddNewTextView: View {
                         
                         dismiss()
                     } label: {
-                        
                         Image(Constants.Icons.saveIcon)
                             .resizable()
                             .frame(width: 25, height: 25)
                             .grayscale(addNewTextVM.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? 1 : 0)
-                            
                     }
                     .disabled(addNewTextVM.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? true : false)
                 }
