@@ -11,6 +11,8 @@ struct AddNewTextOptionsView: View {
     let viewModel: NavigationStateViewModel
     @State private var selectedOption: AddNewTextOption?
 
+    @State var webTextSheet: Bool = false
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -20,8 +22,13 @@ struct AddNewTextOptionsView: View {
                     ScrollView {
                         ForEach(AddNewTextOption.allCases) { option in
                             Button(action: {
-                                self.viewModel.showAddNewTextOptionsView = false
-                                self.viewModel.targetDestination.append(option)
+                                if option == .webpage {
+                                    webTextSheet.toggle()
+                                }
+                                else {
+                                    self.viewModel.showAddNewTextOptionsView = false
+                                    self.viewModel.targetDestination.append(option)
+                                }
                             }) {
                                 AddNewTextOptionCardView(title: option.title, description: option.description, imageName: option.imageName)
                                     .padding([.top], 2)
@@ -34,6 +41,10 @@ struct AddNewTextOptionsView: View {
                         Color.accent2
                     )
                 }
+                .sheet(isPresented: $webTextSheet, content: {
+                    TextFromLinkSheetView()
+                        .presentationDetents([.height(260)])
+                })
 
                 // Custom Top Bar View
                 VStack {
@@ -57,7 +68,6 @@ struct AddNewTextOptionsView: View {
         }
     }
 }
-
 
 #Preview {
     AddNewTextOptionsView(viewModel: NavigationStateViewModel())
