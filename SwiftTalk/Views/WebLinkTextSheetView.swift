@@ -7,22 +7,17 @@
 
 import SwiftUI
 
-struct TextFromLinkSheetView: View {
-    
+struct WebLinkTextSheetView: View {
     @State var link: String = ""
     
+    let pasteboard = UIPasteboard.general
+    
     var body: some View {
-        
-        
-        
-        ZStack{
-            
-            
-            VStack{
-                
+        ZStack {
+            VStack {
                 Spacer()
                 Text("Paste a web address link to get contents of a webpage")
-                    .frame(maxWidth: .infinity,alignment:.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .font(.custom(Constants.Fonts.NotoSerifR, size: 12))
                     .padding()
                 
@@ -32,11 +27,13 @@ struct TextFromLinkSheetView: View {
                 
                     .padding(.horizontal)
                 
-                HStack{
+                HStack {
                     Spacer()
                     
                     Button(action: {
-                        
+                        if let pasteString = pasteboard.string {
+                            link = pasteString
+                        }
                     }, label: {
                         Text("Paste")
                             .padding(.horizontal, 45)
@@ -46,18 +43,13 @@ struct TextFromLinkSheetView: View {
                                 RoundedRectangle(cornerRadius: 10)
                                     .stroke(lineWidth: 2)
                                     .frame(width: 150)
-                                
                             )
-                        
-                    
                         
                     })
                     
                     Spacer()
                     
-                    Button(action: {
-                        
-                    }, label: {
+                    Button(action: {}, label: {
                         Text("Go")
                             .padding(.horizontal, 45)
                             .padding(.vertical, 3)
@@ -66,9 +58,6 @@ struct TextFromLinkSheetView: View {
                             .background(
                                 RoundedRectangle(cornerRadius: 10)
                                     .frame(width: 150)
-                                    
-                                    
-                                
                             )
                     })
                     
@@ -79,13 +68,7 @@ struct TextFromLinkSheetView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .font(.custom(Constants.Fonts.NotoSerifR, size: 12))
                     .padding()
-                
-                    
-                
-                
             }
-            
-            
             
             VStack {
                 VStack {
@@ -104,12 +87,10 @@ struct TextFromLinkSheetView: View {
                 
                 Spacer()
             }
-            
         }
-       
     }
 }
 
 #Preview {
-    TextFromLinkSheetView()
+    WebLinkTextSheetView()
 }
