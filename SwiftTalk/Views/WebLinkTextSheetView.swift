@@ -38,7 +38,8 @@ struct WebLinkTextSheetView: View {
                         Text("Paste")
                             .padding(.horizontal, 45)
                             .padding(.vertical, 3)
-                            .font(.custom(Constants.Fonts.NotoSerifR, size: 16))
+                            .font(.custom(Constants.Fonts.NotoSerifSB, size: 16))
+                            .foregroundColor(.blue)
                             .background(
                                 RoundedRectangle(cornerRadius: 10)
                                     .stroke(lineWidth: 2)
@@ -53,7 +54,7 @@ struct WebLinkTextSheetView: View {
                         Text("Go")
                             .padding(.horizontal, 45)
                             .padding(.vertical, 3)
-                            .font(.custom(Constants.Fonts.NotoSerifR, size: 16))
+                            .font(.custom(Constants.Fonts.NotoSerifSB, size: 16))
                             .foregroundColor(.white)
                             .background(
                                 RoundedRectangle(cornerRadius: 10)
@@ -65,6 +66,7 @@ struct WebLinkTextSheetView: View {
                 }
                 
                 Text("NOTE: We cannot get the content if the webpage requires a login")
+                    .foregroundStyle(Color.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .font(.custom(Constants.Fonts.NotoSerifR, size: 12))
                     .padding()
