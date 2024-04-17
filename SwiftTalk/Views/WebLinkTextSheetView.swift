@@ -8,68 +8,84 @@
 import SwiftUI
 
 struct WebLinkTextSheetView: View {
-    @State var link: String = ""
-    
-    let pasteboard = UIPasteboard.general
+    @State var addNewTextVM = AddNewTextViewModel()
     
     var body: some View {
         ZStack {
-            VStack {
-                Spacer()
-                Text("Paste a web address link to get contents of a webpage")
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .font(.custom(Constants.Fonts.NotoSerifR, size: 12))
-                    .padding()
-                
-                TextField("Paste the web link here", text: $link)
-                    .font(.custom(Constants.Fonts.NotoSerifR, size: 14))
-                    .textFieldStyle(.roundedBorder)
-                
-                    .padding(.horizontal)
-                
-                HStack {
-                    Spacer()
+            ZStack {
+                VStack {
+                    Spacer(minLength: 50)
+                    Text("Paste a web address link to get contents of a webpage")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .font(.custom(Constants.Fonts.NotoSerifR, size: 12))
+                        .padding()
                     
-                    Button(action: {
-                        if let pasteString = pasteboard.string {
-                            link = pasteString
-                        }
-                    }, label: {
-                        Text("Paste")
-                            .padding(.horizontal, 45)
-                            .padding(.vertical, 3)
-                            .font(.custom(Constants.Fonts.NotoSerifSB, size: 16))
-                            .foregroundColor(.blue)
-                            .background(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(lineWidth: 2)
-                                    .frame(width: 150)
-                            )
+                    TextField("Paste the web link here", text: $addNewTextVM.link)
+                        .font(.custom(Constants.Fonts.NotoSerifR, size: 14))
+                        .textFieldStyle(.roundedBorder)
+                    
+                        .padding(.horizontal)
+                    
+                    HStack {
+                        Spacer()
                         
-                    })
+                        Button(action: {
+                            if let pasteString = addNewTextVM.pasteboard.string {
+                                addNewTextVM.link = pasteString
+                            }
+                        }, label: {
+                            Text("Paste")
+                                .padding(.horizontal, 45)
+                                .padding(.vertical, 3)
+                                .font(.custom(Constants.Fonts.NotoSerifSB, size: 16))
+                                .foregroundColor(.blue)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(lineWidth: 2)
+                                        .frame(width: 150)
+                                )
+                            
+                        })
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            print(addNewTextVM.getTextFromLink())
+                        }, label: {
+                            Text("Go")
+                                .padding(.horizontal, 45)
+                                .padding(.vertical, 3)
+                                .font(.custom(Constants.Fonts.NotoSerifSB, size: 16))
+                                .foregroundColor(.white)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .frame(width: 150)
+                                )
+                        })
+                        
+                        Spacer()
+                    }
                     
-                    Spacer()
-                    
-                    Button(action: {}, label: {
-                        Text("Go")
-                            .padding(.horizontal, 45)
-                            .padding(.vertical, 3)
-                            .font(.custom(Constants.Fonts.NotoSerifSB, size: 16))
-                            .foregroundColor(.white)
-                            .background(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .frame(width: 150)
-                            )
-                    })
+                    Text("NOTE: We cannot get the content if the webpage requires a login")
+                        .foregroundStyle(Color.secondary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .font(.custom(Constants.Fonts.NotoSerifR, size: 12))
+                        .padding()
                     
                     Spacer()
                 }
                 
-                Text("NOTE: We cannot get the content if the webpage requires a login")
-                    .foregroundStyle(Color.secondary)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .font(.custom(Constants.Fonts.NotoSerifR, size: 12))
-                    .padding()
+                if addNewTextVM.isParsingWebText {
+                    RoundedRectangle(cornerRadius: 0)
+                        .frame(width: 2000, height: 2000)
+                        .foregroundStyle(Material.thick)
+                        .opacity(0.7)
+                        .ignoresSafeArea()
+                        .overlay {
+                            ProgressView()
+                                .scaledToFit()
+                        }
+                }
             }
             
             VStack {
