@@ -5,44 +5,65 @@
 //  Created by Aman Bind on 18/04/24.
 //
 
-import Foundation
+import PhotosUI
 import SwiftUI
-import UIKit
 
 struct ImagePickerView: UIViewControllerRepresentable {
-    @Binding var selectedImage: UIImage?
+    @Binding var selectedImages: [UIImage]
+    @Binding var isimagePickerSheet: Bool
 
-    func makeUIViewController(context: Context) -> UIImagePickerController {
-        let picker = UIImagePickerController()
+    func makeUIViewController(context: Context) -> PHPickerViewController {
+        var config = PHPickerConfiguration()
+        config.filter = .images
+        config.selectionLimit = 0
+        let picker = PHPickerViewController(configuration: config)
         picker.delegate = context.coordinator
-        picker.sourceType = .photoLibrary
         return picker
     }
 
-    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
+    func updateUIViewController(_ uiViewController: PHPickerViewController, context: Context) {
+        // No update needed for PHPickerViewController
+    }
 
-    
     func makeCoordinator() -> Coordinator {
         Coordinator(parent: self)
     }
+}
 
-    class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-        let parent: ImagePickerView
+class Coordinator: NSObject, PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        let imageItems = results
+            .map { $0.itemProvider }
+            .filter { $0.canLoadObject(ofClass: UIImage.self) } // filter for possible UIImages
 
-        init(parent: ImagePickerView) {
-            self.parent = parent
-        }
+        let dispatchGroup = DispatchGroup()
 
-        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-            if let selectedImage = info[.originalImage] as? UIImage {
-                parent.selectedImage = selectedImage
+        for imageItem in imageItems {
+            dispatchGroup.enter() // signal IN
+
+            imageItem.loadObject(ofClass: UIImage.self) { image, _ in
+                if let image = image as? UIImage {
+                    self.parent.selectedImages.append(image)
+                }
+                dispatchGroup.leave() // signal OUT
             }
-            picker.dismiss(animated: true)
         }
+        self.parent.isimagePickerSheet.toggle()
+
+        // This is called at the end; after all signals are matched (IN/OUT)
+//        dispatchGroup.notify(queue: .main) {
+//            print(images)
+//            // DO whatever you want with `images` array
+//        }
+    }
+
+    let parent: ImagePickerView
+
+    init(parent: ImagePickerView) {
+        self.parent = parent
     }
 }
 
-
-#Preview(body: {
-    ImagePickerView(selectedImage: .constant(UIImage(named: Constants.Icons.imageFileIcon)))
-})
+// #Preview{
+//    ImagePickerView(selectedImages: .constant())
+// }
