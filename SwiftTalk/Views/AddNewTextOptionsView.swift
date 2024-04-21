@@ -5,13 +5,17 @@
 //  Created by Aman Bind on 11/03/24.
 //
 
+import PhotosUI
 import SwiftUI
 
 struct AddNewTextOptionsView: View {
     let viewModel: NavigationStateViewModel
     @State private var selectedOption: AddNewTextOption?
 
-    @State var webTextSheet: Bool = false
+    @State var showWebTextSheet: Bool = false
+    @State var showImagePickerSheet: Bool = false
+
+    @State var addNewTextVM = AddNewTextViewModel()
 
     var body: some View {
         NavigationStack {
@@ -19,11 +23,15 @@ struct AddNewTextOptionsView: View {
                 VStack {
                     Spacer(minLength: 44)
                     // List of Options for adding text
+
                     ScrollView {
                         ForEach(AddNewTextOption.allCases) { option in
                             Button(action: {
                                 if option == .webpage {
-                                    webTextSheet.toggle()
+                                    showWebTextSheet.toggle()
+                                }
+                                else if option == .photoLibrary {
+                                    showImagePickerSheet.toggle()
                                 }
                                 else {
                                     self.viewModel.showAddNewTextOptionsView = false
@@ -41,9 +49,13 @@ struct AddNewTextOptionsView: View {
                         Color.accent2
                     )
                 }
-                .sheet(isPresented: $webTextSheet, content: {
-                    TextFromLinkSheetView()
+                .sheet(isPresented: $showWebTextSheet, content: {
+                    WebLinkTextSheetView()
                         .presentationDetents([.height(260)])
+                })
+                .sheet(isPresented: $showImagePickerSheet, content: {
+                    ImagePickerView(selectedImages: $addNewTextVM.selectedImages, showimagePickerSheet: $showImagePickerSheet)
+                        .ignoresSafeArea(edges: .bottom)
                 })
 
                 // Custom Top Bar View
