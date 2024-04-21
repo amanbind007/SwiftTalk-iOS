@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ImagePickerView: UIViewControllerRepresentable {
     @Binding var selectedImages: [UIImage]
-    @Binding var isimagePickerSheet: Bool
+    @Binding var showImagePickerSheet: Bool
 
     func makeUIViewController(context: Context) -> PHPickerViewController {
         var config = PHPickerConfiguration()
@@ -48,7 +48,7 @@ class Coordinator: NSObject, PHPickerViewControllerDelegate {
                 dispatchGroup.leave() // signal OUT
             }
         }
-        self.parent.isimagePickerSheet.toggle()
+        self.parent.showImagePickerSheet.toggle()
 
         // This is called at the end; after all signals are matched (IN/OUT)
 //        dispatchGroup.notify(queue: .main) {
