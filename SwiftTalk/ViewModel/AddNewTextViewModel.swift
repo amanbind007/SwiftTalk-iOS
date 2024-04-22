@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import PDFKit
 import PhotosUI
 import SwiftSoup
 import SwiftUI
@@ -33,6 +34,8 @@ class AddNewTextViewModel {
     // Image Text Sheet View Properties
     var selectedImages: [UIImage] = []
     var isProcessingImages: Bool = false
+    
+    // File Export Sheet View Properties
     
     func getTextFromLink() {
         isParsingWebText = true
@@ -64,6 +67,21 @@ class AddNewTextViewModel {
             }.resume()
         } else {
             isParsingWebText = false
+        }
+    }
+    
+    func convertPDFToText(yourDocumentURL: URL) {
+        if let pdf = PDFDocument(url: yourDocumentURL) {
+            let pageCount = pdf.pageCount
+            let documentContent = NSMutableAttributedString()
+
+            for i in 0 ..< pageCount {
+                guard let page = pdf.page(at: i) else { continue }
+                guard let pageContent = page.attributedString else { continue }
+                documentContent.append(pageContent)
+            }
+            
+            print(documentContent.string)
         }
     }
 }
