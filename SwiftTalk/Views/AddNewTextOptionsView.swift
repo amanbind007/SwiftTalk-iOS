@@ -14,6 +14,7 @@ struct AddNewTextOptionsView: View {
 
     @State var showWebTextSheet: Bool = false
     @State var showImagePickerSheet: Bool = false
+    @State var showFileImporterSheet: Bool = false
 
     @State var addNewTextVM = AddNewTextViewModel()
 
@@ -32,6 +33,9 @@ struct AddNewTextOptionsView: View {
                                 }
                                 else if option == .photoLibrary {
                                     showImagePickerSheet.toggle()
+                                }
+                                else if option == .pdfDocument {
+                                    showFileImporterSheet.toggle()
                                 }
                                 else {
                                     self.viewModel.showAddNewTextOptionsView = false
@@ -54,9 +58,20 @@ struct AddNewTextOptionsView: View {
                         .presentationDetents([.height(260)])
                 })
                 .sheet(isPresented: $showImagePickerSheet, content: {
-                    ImagePickerView(selectedImages: $addNewTextVM.selectedImages, showimagePickerSheet: $showImagePickerSheet)
+                    ImagePickerView(selectedImages: $addNewTextVM.selectedImages, showImagePickerSheet: $showImagePickerSheet)
                         .ignoresSafeArea(edges: .bottom)
                 })
+                .fileImporter(isPresented: $showFileImporterSheet, allowedContentTypes: [.pdf]) { result in
+                    
+                    do {
+                        let url = try result.get()
+                        addNewTextVM.convertPDFToText(yourDocumentURL: url)
+                    }
+                    catch{
+                        print(error)
+                    }
+                    
+                }
 
                 // Custom Top Bar View
                 VStack {
