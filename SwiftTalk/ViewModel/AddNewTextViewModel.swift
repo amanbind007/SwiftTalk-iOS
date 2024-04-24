@@ -11,7 +11,9 @@ import PhotosUI
 import SwiftSoup
 import SwiftUI
 import UIKit
+import OfficeFileReader
 import Vision
+
 
 @Observable
 class AddNewTextViewModel {
@@ -84,4 +86,20 @@ class AddNewTextViewModel {
             print(documentContent.string)
         }
     }
+    
+    func convertDocToText(yourDocumentURL: URL) {
+        do {
+            let data = try Data(contentsOf: yourDocumentURL)
+            let file = try DocFile(data: data)
+            print(file.characters as Any)
+            
+        }catch{
+            print(error)
+        }
+        
+    }
+    
+
 }
+
+
