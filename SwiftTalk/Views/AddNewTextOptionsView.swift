@@ -14,9 +14,12 @@ struct AddNewTextOptionsView: View {
 
     @State var showWebTextSheet: Bool = false
     @State var showImagePickerSheet: Bool = false
-    @State var showFileImporterSheet: Bool = false
+    @State var showPDFFileImporterSheet: Bool = false
+    @State var showDocFileImporterSheet: Bool = false
 
     @State var addNewTextVM = AddNewTextViewModel()
+
+    let docUTType = UTType(importedAs: "com.amanbind.swifttalk.doc" , conformingTo: .data)
 
     var body: some View {
         NavigationStack {
@@ -28,19 +31,22 @@ struct AddNewTextOptionsView: View {
                     ScrollView {
                         ForEach(AddNewTextOption.allCases) { option in
                             Button(action: {
-                                if option == .webpage {
-                                    showWebTextSheet.toggle()
-                                }
-                                else if option == .photoLibrary {
+                                switch option {
+                                case .camera:
+                                    break
+                                case .photoLibrary:
                                     showImagePickerSheet.toggle()
-                                }
-                                else if option == .pdfDocument {
-                                    showFileImporterSheet.toggle()
-                                }
-                                else {
+                                case .wordDocument:
+                                    showDocFileImporterSheet.toggle()
+                                case .textInput:
                                     self.viewModel.showAddNewTextOptionsView = false
                                     self.viewModel.targetDestination.append(option)
+                                case .pdfDocument:
+                                    showPDFFileImporterSheet.toggle()
+                                case .webpage:
+                                    showWebTextSheet.toggle()
                                 }
+
                             }) {
                                 AddNewTextOptionCardView(title: option.title, description: option.description, imageName: option.imageName)
                                     .padding([.top], 2)
@@ -61,16 +67,25 @@ struct AddNewTextOptionsView: View {
                     ImagePickerView(selectedImages: $addNewTextVM.selectedImages, showImagePickerSheet: $showImagePickerSheet)
                         .ignoresSafeArea(edges: .bottom)
                 })
-                .fileImporter(isPresented: $showFileImporterSheet, allowedContentTypes: [.pdf]) { result in
-                    
+                .fileImporter(isPresented: $showPDFFileImporterSheet, allowedContentTypes: [.pdf]) { result in
+
                     do {
                         let url = try result.get()
                         addNewTextVM.convertPDFToText(yourDocumentURL: url)
                     }
-                    catch{
+                    catch {
                         print(error)
                     }
-                    
+                }
+                .fileImporter(isPresented: $showDocFileImporterSheet, allowedContentTypes: [docUTType]) { result in
+
+                    do {
+                        let url = try result.get()
+                        addNewTextVM.convertDocToText(yourDocumentURL: url)
+                    }
+                    catch {
+                        print(error)
+                    }
                 }
 
                 // Custom Top Bar View
