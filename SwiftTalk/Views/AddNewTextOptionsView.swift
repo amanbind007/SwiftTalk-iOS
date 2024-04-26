@@ -64,7 +64,7 @@ struct AddNewTextOptionsView: View {
                         .presentationDetents([.height(260)])
                 })
                 .sheet(isPresented: $showImagePickerSheet, content: {
-                    ImagePickerView(selectedImages: $addNewTextVM.selectedImages, showImagePickerSheet: $showImagePickerSheet)
+                    ImagePickerView(selectedImages: $addNewTextVM.selectedImages, showImagePickerSheet: $showImagePickerSheet, viewModel: viewModel)
                         .ignoresSafeArea(edges: .bottom)
                 })
                 .fileImporter(isPresented: $showPDFFileImporterSheet, allowedContentTypes: [.pdf]) { result in

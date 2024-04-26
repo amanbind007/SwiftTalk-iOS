@@ -11,6 +11,8 @@ import SwiftUI
 struct ImagePickerView: UIViewControllerRepresentable {
     @Binding var selectedImages: [UIImage]
     @Binding var showImagePickerSheet: Bool
+    
+    let viewModel: NavigationStateViewModel
 
     func makeUIViewController(context: Context) -> PHPickerViewController {
         var config = PHPickerConfiguration()
@@ -49,6 +51,9 @@ class Coordinator: NSObject, PHPickerViewControllerDelegate {
             }
         }
         self.parent.showImagePickerSheet.toggle()
+        self.parent.viewModel.showAddNewTextOptionsView = false
+        self.parent.viewModel.targetDestination.append(.textInput)
+        
 
         // This is called at the end; after all signals are matched (IN/OUT)
 //        dispatchGroup.notify(queue: .main) {
