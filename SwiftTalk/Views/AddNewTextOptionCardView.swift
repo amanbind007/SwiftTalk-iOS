@@ -37,10 +37,6 @@ struct AddNewTextOptionCardView: View {
             }
             Spacer()
         }
-        .padding(10)
-        .background(Color.accent1)
-        .clipShape(RoundedRectangle(cornerRadius: 20.0))
-        .padding([.horizontal], 8)
         
     }
 }
