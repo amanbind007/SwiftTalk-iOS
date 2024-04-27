@@ -9,102 +9,91 @@ import PhotosUI
 import SwiftUI
 
 struct AddNewTextOptionsView: View {
-    let viewModel: NavigationStateViewModel
-    @State private var selectedOption: AddNewTextOption?
+    @Environment(\.dismiss) var dismiss
+    
+    @Binding var viewModel: NavigationStateViewModel
+    @Binding var addNewTextVM: AddNewTextViewModel
 
     @State var showWebTextSheet: Bool = false
     @State var showImagePickerSheet: Bool = false
     @State var showPDFFileImporterSheet: Bool = false
     @State var showDocFileImporterSheet: Bool = false
 
-    @State var addNewTextVM = AddNewTextViewModel()
-
-    let docUTType = UTType(importedAs: "com.amanbind.swifttalk.doc" , conformingTo: .data)
+    let docUTType = UTType(importedAs: "com.amanbind.swifttalk.doc", conformingTo: .data)
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                VStack {
-                    Spacer(minLength: 44)
-                    // List of Options for adding text
-
-                    ScrollView {
-                        ForEach(AddNewTextOption.allCases) { option in
-                            Button(action: {
-                                switch option {
-                                case .camera:
-                                    break
-                                case .photoLibrary:
-                                    showImagePickerSheet.toggle()
-                                case .wordDocument:
-                                    showDocFileImporterSheet.toggle()
-                                case .textInput:
-                                    self.viewModel.showAddNewTextOptionsView = false
-                                    self.viewModel.targetDestination.append(option)
-                                case .pdfDocument:
-                                    showPDFFileImporterSheet.toggle()
-                                case .webpage:
-                                    showWebTextSheet.toggle()
-                                }
-
-                            }) {
-                                AddNewTextOptionCardView(title: option.title, description: option.description, imageName: option.imageName)
-                                    .padding([.top], 2)
-                            }
+        NavigationView {
+            List {
+                ForEach(AddNewTextOption.allCases) { option in
+                    Button(action: {
+                        switch option {
+                        case .camera:
+                            break
+                        case .photoLibrary:
+                            showImagePickerSheet.toggle()
+                        case .wordDocument:
+                            showDocFileImporterSheet.toggle()
+                        case .textInput:
+                            self.viewModel.showAddNewTextOptionsView = false
+                            self.viewModel.targetDestination.append(option)
+                        case .pdfDocument:
+                            showPDFFileImporterSheet.toggle()
+                        case .webpage:
+                            showWebTextSheet.toggle()
                         }
-                        .offset(y: 8)
-                        Spacer()
+
+                    }) {
+                        AddNewTextOptionCardView(title: option.title, description: option.description, imageName: option.imageName)
                     }
-                    .background(
-                        Color.accent2
-                    )
                 }
-                .sheet(isPresented: $showWebTextSheet, content: {
-                    WebLinkTextSheetView()
-                        .presentationDetents([.height(260)])
-                })
-                .sheet(isPresented: $showImagePickerSheet, content: {
-                    ImagePickerView(selectedImages: $addNewTextVM.selectedImages, showImagePickerSheet: $showImagePickerSheet, viewModel: viewModel)
+            }
+            .offset(y: -30)
+            .navigationTitle("Add Text")
+            .navigationBarTitleDisplayMode(.inline)
+            .ignoresSafeArea(edges: .bottom)
+            .toolbar(content: {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") {
+                        dismiss()
+                    }
+                }
+            })
+            .sheet(isPresented: $showWebTextSheet, content: {
+                WebLinkTextSheetView()
+                    .presentationDetents([.height(260)])
+            })
+
+            .sheet(isPresented: $showImagePickerSheet, content: {
+                ZStack {
+                    ImagePickerView(showImagePickerSheet: $showImagePickerSheet, addNewTextVM: $addNewTextVM, viewModel: $viewModel)
                         .ignoresSafeArea(edges: .bottom)
-                })
-                .fileImporter(isPresented: $showPDFFileImporterSheet, allowedContentTypes: [.pdf]) { result in
 
-                    do {
-                        let url = try result.get()
-                        addNewTextVM.convertPDFToText(yourDocumentURL: url)
-                    }
-                    catch {
-                        print(error)
+                    if addNewTextVM.isProcessingImages {
+                        Color.white.opacity(0.5)
+
+                        ProgressView()
+                            .frame(width: .infinity, height: .infinity)
                     }
                 }
-                .fileImporter(isPresented: $showDocFileImporterSheet, allowedContentTypes: [docUTType]) { result in
+            })
+            .fileImporter(isPresented: $showPDFFileImporterSheet, allowedContentTypes: [.pdf]) { result in
 
-                    do {
-                        let url = try result.get()
-                        addNewTextVM.convertDocToText(yourDocumentURL: url)
-                    }
-                    catch {
-                        print(error)
-                    }
+                do {
+                    let url = try result.get()
+                    addNewTextVM.convertPDFToText(yourDocumentURL: url)
                 }
+                catch {
+                    print(error)
+                }
+            }
+            .fileImporter(isPresented: $showDocFileImporterSheet, allowedContentTypes: [docUTType]) { result in
 
-                // Custom Top Bar View
-                VStack {
-                    VStack {
-                        HStack {
-                            Text("Add Text")
-                                .font(.custom(Constants.Fonts.AbrilFatfaceR, size: 20))
-                                .offset(y: 10)
-                        }
-                        Rectangle()
-                            .frame(height: 1)
-                            .foregroundStyle(
-                                LinearGradient(colors: [.pink, .purple], startPoint: .leading, endPoint: .trailing)
-                            )
-                    }
-                    .background(Material.ultraThin)
-
-                    Spacer()
+                do {
+                    let url = try result.get()
+                    addNewTextVM.convertDocToText(yourDocumentURL: url)
+                }
+                catch {
+                    print(error)
                 }
             }
         }
@@ -112,5 +101,5 @@ struct AddNewTextOptionsView: View {
 }
 
 #Preview {
-    AddNewTextOptionsView(viewModel: NavigationStateViewModel())
+    AddNewTextOptionsView(viewModel: .constant(NavigationStateViewModel()), addNewTextVM: .constant(AddNewTextViewModel()))
 }
