@@ -8,11 +8,27 @@
 import SwiftUI
 
 struct ImagePickerView: View {
+    
+
+    @Binding var showImagePickerSheet: Bool
+    @Bindable var addNewTextVM: AddNewTextViewModel
+    @Binding var navigationState: NavigationStateViewModel
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            ImagePicker(showImagePickerSheet: $showImagePickerSheet, addNewTextVM: addNewTextVM, viewModel: $navigationState)
+                .ignoresSafeArea(edges: .bottom)
+
+            if addNewTextVM.isProcessingImages {
+                Color.white.opacity(0.5)
+
+                ProgressView()
+                    .frame(width: .infinity, height: .infinity)
+            }
+        }
     }
 }
 
 #Preview {
-    ImagePickerView()
+    ImagePickerView(showImagePickerSheet: .constant(true), addNewTextVM: AddNewTextViewModel(), navigationState: .constant(NavigationStateViewModel()))
 }

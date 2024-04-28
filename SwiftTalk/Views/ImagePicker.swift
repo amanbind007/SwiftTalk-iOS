@@ -8,7 +8,7 @@
 import PhotosUI
 import SwiftUI
 
-struct ImagePickerView: UIViewControllerRepresentable {
+struct ImagePicker: UIViewControllerRepresentable {
     @Binding var showImagePickerSheet: Bool
     @Bindable var addNewTextVM: AddNewTextViewModel
 
@@ -65,9 +65,9 @@ class Coordinator: NSObject, PHPickerViewControllerDelegate {
         }
     }
 
-    let parent: ImagePickerView
+    let parent: ImagePicker
 
-    init(parent: ImagePickerView) {
+    init(parent: ImagePicker) {
         self.parent = parent
     }
 }
