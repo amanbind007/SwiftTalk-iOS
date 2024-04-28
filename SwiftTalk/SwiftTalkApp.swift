@@ -9,11 +9,12 @@ import SwiftUI
 
 @main
 struct SwiftTalkApp: App {
-    @State var navigationStateVM = NavigationStateViewModel()
+    @State var addNewTextVM = AddNewTextViewModel()
     var body: some Scene {
         WindowGroup {
             HomeView()
-                .environment(navigationStateVM)
+                .environment(addNewTextVM)
+                
         }
     }
 }

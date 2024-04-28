@@ -1,74 +1,18 @@
 //
-//  imagePickerView.swift
+//  ImagePickerView.swift
 //  SwiftTalk
 //
-//  Created by Aman Bind on 18/04/24.
+//  Created by Aman Bind on 28/04/24.
 //
 
-import PhotosUI
 import SwiftUI
 
-struct ImagePickerView: UIViewControllerRepresentable {
-    @Binding var selectedImages: [UIImage]
-    @Binding var showImagePickerSheet: Bool
-    
-    let viewModel: NavigationStateViewModel
-
-    func makeUIViewController(context: Context) -> PHPickerViewController {
-        var config = PHPickerConfiguration()
-        config.filter = .images
-        config.selectionLimit = 0
-        let picker = PHPickerViewController(configuration: config)
-        picker.delegate = context.coordinator
-        return picker
-    }
-
-    func updateUIViewController(_ uiViewController: PHPickerViewController, context: Context) {
-        // No update needed for PHPickerViewController
-    }
-
-    func makeCoordinator() -> Coordinator {
-        Coordinator(parent: self)
+struct ImagePickerView: View {
+    var body: some View {
+        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
 }
 
-class Coordinator: NSObject, PHPickerViewControllerDelegate {
-    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        let imageItems = results
-            .map { $0.itemProvider }
-            .filter { $0.canLoadObject(ofClass: UIImage.self) } // filter for possible UIImages
-
-        let dispatchGroup = DispatchGroup()
-
-        for imageItem in imageItems {
-            dispatchGroup.enter() // signal IN
-
-            imageItem.loadObject(ofClass: UIImage.self) { image, _ in
-                if let image = image as? UIImage {
-                    self.parent.selectedImages.append(image)
-                }
-                dispatchGroup.leave() // signal OUT
-            }
-        }
-        self.parent.showImagePickerSheet.toggle()
-        self.parent.viewModel.showAddNewTextOptionsView = false
-        self.parent.viewModel.targetDestination.append(.textInput)
-        
-
-        // This is called at the end; after all signals are matched (IN/OUT)
-//        dispatchGroup.notify(queue: .main) {
-//            print(images)
-//            // DO whatever you want with `images` array
-//        }
-    }
-
-    let parent: ImagePickerView
-
-    init(parent: ImagePickerView) {
-        self.parent = parent
-    }
+#Preview {
+    ImagePickerView()
 }
-
-// #Preview{
-//    ImagePickerView(selectedImages: .constant())
-// }
