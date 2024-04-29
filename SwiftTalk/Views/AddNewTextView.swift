@@ -12,7 +12,10 @@ struct AddNewTextView: View {
     @Environment(\.colorScheme) private var theme
     @Environment(\.dismiss) private var dismiss
     
-    @State var addNewTextVM = AddNewTextViewModel()
+    var textSource: AddNewTextOption
+    
+    // @Environment(AddNewTextViewModel.self) var addNewTextVM
+    @Bindable var addNewTextVM: AddNewTextViewModel
 
     var body: some View {
         VStack {
@@ -59,7 +62,6 @@ struct AddNewTextView: View {
             // Bottom Control Panel
             VStack {
                 HStack {
-                    
                     Button(action: {
                         addNewTextVM.isVoiceSelectorPresented.toggle()
                         
@@ -78,13 +80,11 @@ struct AddNewTextView: View {
                                     
                                 })
                                 
-                            
                             Image("myPhoto2")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 45, height: 45)
                                 .clipShape(Circle())
-                                
                         }
                     })
                     
@@ -100,7 +100,7 @@ struct AddNewTextView: View {
                     Spacer()
                     
                     Button(action: {
-                        //Go forward
+                        // Go forward
                     }, label: {
                         Image(systemName: "goforward")
                             .imageScale(.large)
@@ -122,10 +122,7 @@ struct AddNewTextView: View {
                     
                     Spacer()
                     
-                    Button(action: {
-                        
-                        
-                    }, label: {
+                    Button(action: {}, label: {
                         Image(systemName: "gobackward")
                             .imageScale(.large)
                     })
@@ -133,7 +130,6 @@ struct AddNewTextView: View {
                     Spacer()
                     
                     Button(action: {
-                        
                         addNewTextVM.isVoiceSpeedSelectorPresented = true
                         
                     }, label: {
@@ -207,6 +203,6 @@ struct AddNewTextView: View {
 
 #Preview {
     NavigationStack {
-        AddNewTextView()
+        AddNewTextView(textSource: .textInput, addNewTextVM: AddNewTextViewModel())
     }
 }

@@ -8,36 +8,36 @@
 import SwiftUI
 
 struct HomeView: View {
-    
     @State private var searchText: String = ""
-    @State var navigationStateVM = NavigationStateViewModel()
-    @State var addNewTextVM = AddNewTextViewModel()
+    @State var navigationState = NavigationStateViewModel()
+
+    @Environment(AddNewTextViewModel.self) var addNewTextVM
 
     init() {
-        UINavigationBar.appearance().titleTextAttributes = [.font: UIFont(name: Constants.Fonts.AbrilFatfaceR, size: 20)!]
+        UINavigationBar.appearance().titleTextAttributes = [.font: UIFont(name: Constants.Fonts.AbrilFatfaceR, size: 25)!]
 
         UINavigationBar.appearance().largeTitleTextAttributes = [.font: UIFont(name: Constants.Fonts.AbrilFatfaceR, size: 40)!]
     }
 
     var body: some View {
-        NavigationStack(path: $navigationStateVM.targetDestination) {
-            NavigationLink(value: navigationStateVM.targetDestination) {
+        NavigationStack(path: $navigationState.targetDestination) {
+            NavigationLink(value: navigationState.targetDestination) {
                 EmptyView()
             }
             .navigationDestination(for: AddNewTextOption.self) { target in
                 switch target {
                 case .textInput:
-                    AddNewTextView(addNewTextVM: addNewTextVM)
+                    AddNewTextView(textSource: target, addNewTextVM: addNewTextVM)
                 case .pdfDocument:
-                    EmptyView()
+                    AddNewTextView(textSource: target, addNewTextVM: addNewTextVM)
                 case .camera:
-                    EmptyView()
+                    AddNewTextView(textSource: target, addNewTextVM: addNewTextVM)
                 case .photoLibrary:
-                    EmptyView()
+                    AddNewTextView(textSource: target, addNewTextVM: addNewTextVM)
                 case .webpage:
-                    EmptyView()
+                    AddNewTextView(textSource: target, addNewTextVM: addNewTextVM)
                 case .wordDocument:
-                    EmptyView()
+                    AddNewTextView(textSource: target, addNewTextVM: addNewTextVM)
                 }
             }
 
@@ -56,15 +56,15 @@ struct HomeView: View {
                 ToolbarItem {
                     // This button triggers the Sheet view
                     Button(action: {
-                        navigationStateVM.showAddNewTextOptionsView.toggle()
+                        navigationState.showAddNewTextOptionsView.toggle()
                     }, label: {
                         Image(systemName: "plus.circle")
                     })
                 }
             })
         }
-        .sheet(isPresented: $navigationStateVM.showAddNewTextOptionsView, content: {
-            AddNewTextOptionsView(viewModel: $navigationStateVM, addNewTextVM: $addNewTextVM)
+        .sheet(isPresented: $navigationState.showAddNewTextOptionsView, content: {
+            AddNewTextOptionsView(navigationState: $navigationState, addNewTextVM: addNewTextVM)
                 .presentationDetents([.height(520)])
 
         })

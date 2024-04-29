@@ -10,9 +10,9 @@ import SwiftUI
 
 struct AddNewTextOptionsView: View {
     @Environment(\.dismiss) var dismiss
-    
-    @Binding var viewModel: NavigationStateViewModel
-    @Binding var addNewTextVM: AddNewTextViewModel
+
+    @Binding var navigationState: NavigationStateViewModel
+    @Bindable var addNewTextVM: AddNewTextViewModel
 
     @State var showWebTextSheet: Bool = false
     @State var showImagePickerSheet: Bool = false
@@ -34,8 +34,8 @@ struct AddNewTextOptionsView: View {
                         case .wordDocument:
                             showDocFileImporterSheet.toggle()
                         case .textInput:
-                            self.viewModel.showAddNewTextOptionsView = false
-                            self.viewModel.targetDestination.append(option)
+                            self.navigationState.showAddNewTextOptionsView = false
+                            self.navigationState.targetDestination.append(option)
                         case .pdfDocument:
                             showPDFFileImporterSheet.toggle()
                         case .webpage:
@@ -56,25 +56,16 @@ struct AddNewTextOptionsView: View {
                     Button("Cancel") {
                         dismiss()
                     }
+                    .font(.custom(Constants.Fonts.NotoSerifR, size: 16))
                 }
             })
             .sheet(isPresented: $showWebTextSheet, content: {
-                WebLinkTextSheetView()
+                WebLinkTextSheetView(addNewTextVM: addNewTextVM)
                     .presentationDetents([.height(260)])
             })
-
             .sheet(isPresented: $showImagePickerSheet, content: {
-                ZStack {
-                    ImagePickerView(showImagePickerSheet: $showImagePickerSheet, addNewTextVM: $addNewTextVM, viewModel: $viewModel)
-                        .ignoresSafeArea(edges: .bottom)
-
-                    if addNewTextVM.isProcessingImages {
-                        Color.white.opacity(0.5)
-
-                        ProgressView()
-                            .frame(width: .infinity, height: .infinity)
-                    }
-                }
+                ImagePickerView(showImagePickerSheet: $showImagePickerSheet, addNewTextVM: addNewTextVM, navigationState: $navigationState)
+                    .ignoresSafeArea(edges: .bottom)
             })
             .fileImporter(isPresented: $showPDFFileImporterSheet, allowedContentTypes: [.pdf]) { result in
 
@@ -101,5 +92,5 @@ struct AddNewTextOptionsView: View {
 }
 
 #Preview {
-    AddNewTextOptionsView(viewModel: .constant(NavigationStateViewModel()), addNewTextVM: .constant(AddNewTextViewModel()))
+    AddNewTextOptionsView(navigationState: .constant(NavigationStateViewModel()), addNewTextVM: AddNewTextViewModel())
 }
