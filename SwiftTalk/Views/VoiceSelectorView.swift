@@ -9,7 +9,8 @@ import SwiftUI
 
 struct VoiceSelectorView: View {
     @State var selectedVoice: String?
-    
+    @Environment(\.dismiss) var dismiss
+
     let voices: [Voice] = [
         Voice(languageCode: "ar-001", voiceName: "Majed", flagName: "saudi-arabia-flag-round-circle-icon", country: "Saudi Arabia", language: "AR"),
         Voice(languageCode: "bg-BG", voiceName: "Daria", flagName: "bulgaria-flag-round-circle-icon", country: "Bulgaria", language: "BG"),
@@ -75,35 +76,26 @@ struct VoiceSelectorView: View {
         Voice(languageCode: "zh-HK", voiceName: "Sinji", flagName: "hong-kong-flag-round-circle-icon", country: "Hong Kong", language: "ZH"),
         Voice(languageCode: "zh-TW", voiceName: "Meijia", flagName: "taiwan-flag-round-circle-icon", country: "Taiwan", language: "ZH")
     ]
+    
     var body: some View {
-        ZStack {
-            VStack {
-                Spacer(minLength: 20)
-                
-                List {
-                    ForEach(voices) { voice in
-                        VoiceSelectorListItemView(voice: voice, selectedVoice: $selectedVoice)
-                    }
+        NavigationStack {
+            List {
+                ForEach(voices) { voice in
+                    VoiceSelectorListItemView(voice: voice, selectedVoice: $selectedVoice)
                 }
             }
-            
-            VStack {
-                VStack {
-                    HStack {
-                        Text("Select Voice")
-                            .font(.custom(Constants.Fonts.AbrilFatfaceR, size: 20))
-                            .offset(y: 10)
+            .navigationTitle("Select Voice")
+            .navigationBarTitleDisplayMode(.inline)
+            .offset(y: -25)
+            .ignoresSafeArea(edges: [.bottom])
+            .toolbar(content: {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") {
+                        dismiss()
                     }
-                    Rectangle()
-                        .frame(height: 1)
-                        .foregroundStyle(
-                            LinearGradient(colors: [.pink, .purple], startPoint: .leading, endPoint: .trailing)
-                        )
+                    .font(.custom(Constants.Fonts.NotoSerifR, size: 16))
                 }
-                .background(Material.ultraThin)
-                
-                Spacer()
-            }
+            })
         }
     }
 }

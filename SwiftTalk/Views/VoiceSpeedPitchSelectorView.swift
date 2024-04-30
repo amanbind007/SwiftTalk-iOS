@@ -10,13 +10,13 @@ import SwiftUI
 struct VoiceSpeedPitchSelectorView: View {
     @State var voiceSpeedSliderValue = 1.0
     @State var voicePitchSliderValue = 1.0
+    
+    @Environment(\.dismiss) var dismiss
+    
     var body: some View {
-        ZStack {
-            Color.accent2
-                .ignoresSafeArea()
+        NavigationStack {
+            Spacer(minLength: 5)
             VStack {
-                Spacer(minLength: 30)
-                
                 HStack {
                     switch voiceSpeedSliderValue {
                     case 0.5...1.0:
@@ -70,26 +70,19 @@ struct VoiceSpeedPitchSelectorView: View {
                 }
                 .padding()
                 .offset(y: -20)
-                
             }
-            
-            VStack {
-                VStack {
-                    HStack {
-                        Text("Select Voice")
-                            .font(.custom(Constants.Fonts.AbrilFatfaceR, size: 20))
-                            .offset(y: 10)
+            .navigationTitle("Change Voice Metric")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar(content: {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") {
+                        dismiss()
                     }
-                    Rectangle()
-                        .frame(height: 1)
-                        .foregroundStyle(
-                            LinearGradient(colors: [.pink, .purple], startPoint: .leading, endPoint: .trailing)
-                        )
+                    .font(.custom(Constants.Fonts.NotoSerifR, size: 16))
                 }
-                .background(Material.ultraThin)
-                
-                Spacer()
-            }
+            })
+            
+            Spacer()
         }
     }
     
