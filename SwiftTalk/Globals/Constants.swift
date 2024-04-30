@@ -28,5 +28,6 @@ class Constants {
         static let textFileInputIcon = "text_input_file_icon"
         static let webIcon = "web_icon"
         static let wordFileIcon = "word_file_icon"
+        static let pptFileIcon = "ppt_file_icon"
     }
 }
