@@ -20,6 +20,7 @@ enum AddNewTextOption: String, CaseIterable, Identifiable {
     case textInput = "Text"
     case pdfDocument = "PDF Documents"
     case webpage = "Webpage"
+    case textFile = "Text Document"
 
     var id: String { self.rawValue }
 
@@ -32,6 +33,7 @@ enum AddNewTextOption: String, CaseIterable, Identifiable {
         case .textInput: return "Input or paste text to read"
         case .pdfDocument: return "Add PDFs from your local storage or cloud"
         case .webpage: return "Listen to the contents of a webpage"
+        case .textFile: return "Add text documents from your local storage or cloud"
         }
     }
 
@@ -43,6 +45,7 @@ enum AddNewTextOption: String, CaseIterable, Identifiable {
         case .textInput: return Constants.Icons.textFileInputIcon
         case .pdfDocument: return Constants.Icons.pdfFileIcon
         case .webpage: return Constants.Icons.webIcon
+        case .textFile: return Constants.Icons.textFileIcon
         }
     }
 }

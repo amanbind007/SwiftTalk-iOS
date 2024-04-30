@@ -18,8 +18,11 @@ struct AddNewTextOptionsView: View {
     @State var showImagePickerSheet: Bool = false
     @State var showPDFFileImporterSheet: Bool = false
     @State var showDocFileImporterSheet: Bool = false
+    @State var showTextFileImporterSheet: Bool = false
 
     let docUTType = UTType(importedAs: "com.amanbind.swifttalk.doc", conformingTo: .data)
+    let docxUTType = UTType(importedAs: "com.amanbind.swifttalk.docx", conformingTo: .data)
+    
 
     var body: some View {
         NavigationView {
@@ -40,6 +43,8 @@ struct AddNewTextOptionsView: View {
                             showPDFFileImporterSheet.toggle()
                         case .webpage:
                             showWebTextSheet.toggle()
+                        case .textFile:
+                            showTextFileImporterSheet.toggle()
                         }
 
                     }) {
@@ -77,11 +82,20 @@ struct AddNewTextOptionsView: View {
                     print(error)
                 }
             }
-            .fileImporter(isPresented: $showDocFileImporterSheet, allowedContentTypes: [docUTType]) { result in
+            .fileImporter(isPresented: $showDocFileImporterSheet, allowedContentTypes: [docUTType, docxUTType]) { result in
 
                 do {
                     let url = try result.get()
                     addNewTextVM.convertDocToText(yourDocumentURL: url)
+                }
+                catch {
+                    print(error)
+                }
+            }
+            .fileImporter(isPresented: $showTextFileImporterSheet, allowedContentTypes: [.text, .plainText, .utf8PlainText]) { result in
+                do {
+                    let url = try result.get()
+                    addNewTextVM.getTextFromTextFile(textFile: url)
                 }
                 catch {
                     print(error)

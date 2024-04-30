@@ -6,14 +6,12 @@
 //
 
 import Foundation
+import OfficeFileReader
 import PDFKit
-import PhotosUI
 import SwiftSoup
 import SwiftUI
 import UIKit
-import OfficeFileReader
 import Vision
-
 
 @Observable
 class AddNewTextViewModel {
@@ -91,15 +89,67 @@ class AddNewTextViewModel {
         do {
             let data = try Data(contentsOf: yourDocumentURL)
             let file = try DocFile(data: data)
-            print(file.characters as Any)
             
-        }catch{
+            if let characters = file.characters {
+                print(characters.text.trimmingCharacters(in: .whitespaces) as Any)
+            }
+            
+        } catch {
             print(error)
         }
-        
     }
     
-
+    func getTextFromTextFile(textFile: URL) {
+        do {
+            let text = try String(contentsOf: textFile)
+            print(text)
+        } catch {
+            print(error)
+        }
+    }
+    
+    func getTextFromImages() {
+        // let image = UIImage(named: "quote")
+        
+        text = ""
+        isProcessingImages = true
+        
+        for image in selectedImages {
+            if let cgImage = image.cgImage {
+                // Request handler
+                let handler = VNImageRequestHandler(cgImage: cgImage)
+                    
+                let recognizeRequest = VNRecognizeTextRequest { request, _ in
+                        
+                    // Parse the results as text
+                    guard let result = request.results as? [VNRecognizedTextObservation] else {
+                        return
+                    }
+                        
+                    // Extract the data
+                    let stringArray = result.compactMap { result in
+                        result.topCandidates(1).first?.string
+                    }
+                        
+                    // Update the UI
+                    DispatchQueue.main.async {
+                        self.text.append(stringArray.joined(separator: "\n"))
+                    }
+                }
+                    
+                // Process the request
+                recognizeRequest.recognitionLevel = .accurate
+                recognizeRequest.automaticallyDetectsLanguage = true
+                
+                do {
+                    try handler.perform([recognizeRequest])
+                } catch {
+                    print(error)
+                }
+                print(text)
+                
+                isProcessingImages = false
+            }
+        }
+    }
 }
-
-
