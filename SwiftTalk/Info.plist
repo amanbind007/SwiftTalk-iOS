@@ -14,67 +14,15 @@
 				<string>com.amanbind.swifttalk.doc</string>
 			</array>
 		</dict>
-		<dict>
-			<key>CFBundleTypeName</key>
-			<string>Docx File</string>
-			<key>LSHandlerRank</key>
-			<string>Default</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>com.amanbind.swifttalk.docx</string>
-			</array>
-		</dict>
 	</array>
 	<key>UIAppFonts</key>
 	<array>
-		<string>AbrilFatface-Regular.ttf</string>
 		<string>NotoSerif-Regular.ttf</string>
 		<string>NotoSerif-SemiBold.ttf</string>
 		<string>ChangaOne-Regular.ttf</string>
 	</array>
 	<key>UTExportedTypeDeclarations</key>
-	<array>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>Doc File</string>
-			<key>UTTypeIconFiles</key>
-			<array/>
-			<key>UTTypeIdentifier</key>
-			<string>com.amanbind.swifttalk.doc</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>doc</string>
-					<string>DOC</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>Docx File</string>
-			<key>UTTypeIconFiles</key>
-			<array/>
-			<key>UTTypeIdentifier</key>
-			<string>com.amanbind.swifttalk.docx</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>docx</string>
-					<string>DOCX</string>
-				</array>
-			</dict>
-		</dict>
-	</array>
+	<array/>
 	<key>UTImportedTypeDeclarations</key>
 	<array>
 		<dict>
@@ -94,26 +42,6 @@
 				<array>
 					<string>doc</string>
 					<string>DOC</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>Docx File</string>
-			<key>UTTypeIconFiles</key>
-			<array/>
-			<key>UTTypeIdentifier</key>
-			<string>com.amanbind.swifttalk.docx</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>docx</string>
-					<string>DOCX</string>
 				</array>
 			</dict>
 		</dict>
