@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct VoiceSpeedPitchSelectorView: View {
-    @State var voiceSpeedSliderValue = 1.0
-    @State var voicePitchSliderValue = 1.0
+    @AppStorage("voiceSpeed") var voiceSpeedSliderValue = 1.0
+    @AppStorage("voicePitch") var voicePitchSliderValue = 1.0
     
     @Environment(\.dismiss) var dismiss
     

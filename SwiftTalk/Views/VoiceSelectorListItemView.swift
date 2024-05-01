@@ -10,7 +10,8 @@ import SwiftUI
 struct VoiceSelectorListItemView: View {
     
     var voice: Voice
-    @Binding var selectedVoice: String?
+    
+    @AppStorage("selectedVoice") var selectedVoice = "Trinoids"
     
     var body: some View {
         HStack {
@@ -59,11 +60,13 @@ struct VoiceSelectorListItemView: View {
                 .foregroundStyle(selectedVoice == voice.voiceName ? Color.green : Color.red)
                 .onTapGesture {
                     selectedVoice = voice.voiceName
+                    
+                    
                 }
         }
     }
 }
 
 #Preview {
-    VoiceSelectorListItemView(voice: Voice(languageCode: "ar-001", voiceName: "Majed", flagName: "saudi-arabia-flag-round-circle-icon", country: "Saudi Arabia", language: "AR"), selectedVoice: .constant("Majed"))
+    VoiceSelectorListItemView(voice: Voice(languageCode: "ar-001", voiceName: "Majed", flagName: "saudi-arabia-flag-round-circle-icon", country: "Saudi Arabia", language: "AR"))
 }
