@@ -5,23 +5,23 @@
 //  Created by Aman Bind on 10/04/24.
 //
 
-import Foundation
 import AVFAudio
+import Foundation
 import SwiftUI
 
-
 class SpeechSynthesizer: NSObject, AVSpeechSynthesizerDelegate {
-    
-    @Environment(AddNewTextViewModel.self) var addNewTextVM
-
     let synthesizer = AVSpeechSynthesizer()
-    
-    func play(){
-        if addNewTextVM.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            
+
+    @AppStorage("language") var language = "en-US"
+
+    func playPause(text: String, voice: String) {
+        if !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            print(text)
+            let utterrence = AVSpeechUtterance(string: text)
+            utterrence.voice = AVSpeechSynthesisVoice(language: language)
+
+            synthesizer.speak(utterrence)
+            print(text)
         }
     }
-    
-    
-    
 }
