@@ -12,6 +12,7 @@ struct VoiceSelectorListItemView: View {
     var voice: Voice
     
     @AppStorage("selectedVoice") var selectedVoice = "Trinoids"
+    @AppStorage("language") var language = "en-US"
     
     var body: some View {
         HStack {
@@ -60,7 +61,7 @@ struct VoiceSelectorListItemView: View {
                 .foregroundStyle(selectedVoice == voice.voiceName ? Color.green : Color.red)
                 .onTapGesture {
                     selectedVoice = voice.voiceName
-                    
+                    language = voice.languageCode
                     
                 }
         }

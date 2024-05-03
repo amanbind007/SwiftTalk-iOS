@@ -20,12 +20,11 @@ struct ImagePicker: UIViewControllerRepresentable {
         config.selectionLimit = 0
         let picker = PHPickerViewController(configuration: config)
         picker.delegate = context.coordinator
+
         return picker
     }
 
-    func updateUIViewController(_ uiViewController: PHPickerViewController, context: Context) {
-        // No update needed for PHPickerViewController
-    }
+    func updateUIViewController(_ picker: PHPickerViewController, context: Context) {}
 
     func makeCoordinator() -> Coordinator {
         Coordinator(parent: self)

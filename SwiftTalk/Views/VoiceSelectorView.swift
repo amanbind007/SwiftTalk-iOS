@@ -9,8 +9,6 @@ import SwiftUI
 
 struct VoiceSelectorView: View {
     @Environment(\.dismiss) var dismiss
-    
-    @AppStorage("SelectedVoice") var voice = "Trinoids"
 
     let voices: [Voice] = [
         Voice(languageCode: "ar-001", voiceName: "Majed", flagName: "saudi-arabia-flag-round-circle-icon", country: "Saudi Arabia", language: "AR"),
@@ -77,7 +75,7 @@ struct VoiceSelectorView: View {
         Voice(languageCode: "zh-HK", voiceName: "Sinji", flagName: "hong-kong-flag-round-circle-icon", country: "Hong Kong", language: "ZH"),
         Voice(languageCode: "zh-TW", voiceName: "Meijia", flagName: "taiwan-flag-round-circle-icon", country: "Taiwan", language: "ZH")
     ]
-    
+
     var body: some View {
         NavigationStack {
             List {
