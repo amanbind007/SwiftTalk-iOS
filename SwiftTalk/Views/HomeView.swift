@@ -14,9 +14,9 @@ struct HomeView: View {
     @Environment(AddNewTextViewModel.self) var addNewTextVM
 
     init() {
-        UINavigationBar.appearance().titleTextAttributes = [.font: UIFont(name: Constants.Fonts.AbrilFatfaceR, size: 25)!]
+        UINavigationBar.appearance().titleTextAttributes = [.font: UIFont(name: Constants.Fonts.NotoSerifSB, size: 18)!]
 
-        UINavigationBar.appearance().largeTitleTextAttributes = [.font: UIFont(name: Constants.Fonts.AbrilFatfaceR, size: 40)!]
+        UINavigationBar.appearance().largeTitleTextAttributes = [.font: UIFont(name: Constants.Fonts.NotoSerifSB, size: 40)!]
     }
 
     var body: some View {
@@ -37,6 +37,8 @@ struct HomeView: View {
                 case .webpage:
                     AddNewTextView(textSource: target, addNewTextVM: addNewTextVM)
                 case .wordDocument:
+                    AddNewTextView(textSource: target, addNewTextVM: addNewTextVM)
+                case .textFile:
                     AddNewTextView(textSource: target, addNewTextVM: addNewTextVM)
                 }
             }
