@@ -14,6 +14,8 @@ struct VoiceSelectorListItemView: View {
     @AppStorage("selectedVoice") var selectedVoice = "Trinoids"
     @AppStorage("language") var language = "en-US"
     
+    @State var moveAround = false
+    
     var body: some View {
         HStack {
             Image(voice.flagName)
@@ -24,46 +26,61 @@ struct VoiceSelectorListItemView: View {
             Divider()
             
             ZStack {
-                HexagonShape()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 25, height: 25)
-                    .foregroundStyle(
-                        LinearGradient(colors: [.indigo, .blue], startPoint: .topLeading, endPoint: .bottomTrailing)
-                    )
+                
                 
                 Text(voice.language)
                     .font(.custom("ChangaOne", size: 14))
                     .foregroundStyle(Color.white)
+                    .padding(5)
+                    .overlay {
+                        
+                        HexagonShape()
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundStyle(
+                                LinearGradient(colors: [.indigo, .blue], startPoint: .topLeading, endPoint: .bottomTrailing)
+                            )
+                            
+                    }
             }
             
             Divider()
             
             ZStack {
-                RippledCircle()
+                Circle()
+                    .stroke(style: StrokeStyle(lineWidth: 2, lineCap: .round, lineJoin: .round, miterLimit: 0, dash: [2, 4], dashPhase: moveAround ? -100: 225))
+                    .fill(LinearGradient(colors: [.red, .green], startPoint: .topLeading, endPoint: .bottomTrailing))
+                    .frame(width: 26, height: 26)
+                    .onAppear(perform: {
+                        withAnimation(.linear
+                            .speed(0.05).repeatForever(autoreverses: false))
+                        {
+                            moveAround = true
+                        }
+                    })
+                    
+                    
                 
-                    .fill(LinearGradient(colors: [.pink, .blue, .purple], startPoint: .topLeading, endPoint: .bottomTrailing))
-                    .frame(width: 30, height: 30)
-                
-                Image("myPhoto2")
+                Image(systemName: "play.circle.fill")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 25, height: 25)
-                
-                    .clipShape(RippledCircle())
+                    .frame(width: 22, height: 22)
+                    .clipShape(Circle())
             }
+            
             
             Text(voice.voiceName)
                 .font(.custom(Constants.Fonts.NotoSerifR, size: 14))
             
             Spacer()
             
-            Image(systemName: selectedVoice == voice.voiceName ? "checkmark.circle.fill" : "circle")
-                .foregroundStyle(selectedVoice == voice.voiceName ? Color.green : Color.red)
+            Image(systemName: selectedVoice == voice.voiceName ? "checkmark.circle.fill" : "circle.fill")
+                .foregroundStyle(selectedVoice == voice.voiceName ? Color.green : Color.secondary)
                 .onTapGesture {
                     selectedVoice = voice.voiceName
                     language = voice.languageCode
                     
                 }
+                
         }
     }
 }
