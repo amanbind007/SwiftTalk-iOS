@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct VoiceSelectorListItemView: View {
-    
     var voice: Voice
     
     @AppStorage("selectedVoice") var selectedVoice = "Trinoids"
@@ -26,20 +25,16 @@ struct VoiceSelectorListItemView: View {
             Divider()
             
             ZStack {
-                
-                
                 Text(voice.language)
                     .font(.custom("ChangaOne", size: 14))
                     .foregroundStyle(Color.white)
                     .padding(5)
                     .overlay {
-                        
                         HexagonShape()
                             .aspectRatio(contentMode: .fit)
                             .foregroundStyle(
                                 LinearGradient(colors: [.indigo, .blue], startPoint: .topLeading, endPoint: .bottomTrailing)
                             )
-                            
                     }
             }
             
@@ -47,26 +42,21 @@ struct VoiceSelectorListItemView: View {
             
             ZStack {
                 Circle()
-                    .stroke(style: StrokeStyle(lineWidth: 2, lineCap: .round, lineJoin: .round, miterLimit: 0, dash: [2, 4], dashPhase: moveAround ? -100: 225))
-                    .fill(LinearGradient(colors: [.red, .green], startPoint: .topLeading, endPoint: .bottomTrailing))
-                    .frame(width: 26, height: 26)
-                    .onAppear(perform: {
-                        withAnimation(.linear
-                            .speed(0.05).repeatForever(autoreverses: false))
-                        {
-                            moveAround = true
-                        }
-                    })
-                    
-                    
-                
+                    .phaseAnimator([false, true]) { _, moveAround in
+                        Circle()
+                            .stroke(style: StrokeStyle(lineWidth: 2, lineCap: .round, lineJoin: .round, miterLimit: 0, dash: [1, 3], dashPhase: moveAround ? -10 : 150))
+                            .frame(width: 26, height: 26)
+                            .foregroundStyle(.linearGradient(colors: [.red, .green], startPoint: .topLeading, endPoint: .bottomTrailing))
+                    } animation: { _ in
+                        .linear.speed(0.05).repeatForever(autoreverses: false)
+                    }
+
                 Image(systemName: "play.circle.fill")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 22, height: 22)
                     .clipShape(Circle())
             }
-            
             
             Text(voice.voiceName)
                 .font(.custom(Constants.Fonts.NotoSerifR, size: 14))
@@ -78,9 +68,7 @@ struct VoiceSelectorListItemView: View {
                 .onTapGesture {
                     selectedVoice = voice.voiceName
                     language = voice.languageCode
-                    
                 }
-                
         }
     }
 }
