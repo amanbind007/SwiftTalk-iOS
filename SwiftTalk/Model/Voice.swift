@@ -14,6 +14,12 @@ struct Voice: Identifiable{
     let flagName: String
     let country: String
     let language: String
+    let demoText: String
+    
+//    func getAllVoices()->[Voice] {
+//        
+//    }
+    
 }
 
 
