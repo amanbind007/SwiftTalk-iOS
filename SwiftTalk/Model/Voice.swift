@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Voice: Identifiable{
+struct Voice: Identifiable {
     let id = UUID()
     let languageCode: String
     let voiceName: String
@@ -15,11 +15,4 @@ struct Voice: Identifiable{
     let country: String
     let language: String
     let demoText: String
-    
-//    func getAllVoices()->[Voice] {
-//        
-//    }
-    
 }
-
-
