@@ -10,7 +10,7 @@ import SwiftData
 
 @Model
 class TextData {
-    var textTitle: String
+    var textTitle: String?
     var text: String
     var textSource: String
     var iconType: String
