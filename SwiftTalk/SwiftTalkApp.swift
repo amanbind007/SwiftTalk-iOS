@@ -6,15 +6,19 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct SwiftTalkApp: App {
     @State var addNewTextVM = AddNewTextViewModel()
+
     var body: some Scene {
         WindowGroup {
             HomeView()
                 .environment(addNewTextVM)
                 
         }
+        .modelContainer(for: TextData.self)
+        
     }
 }
