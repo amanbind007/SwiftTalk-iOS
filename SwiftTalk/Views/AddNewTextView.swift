@@ -9,13 +9,21 @@ import AVFoundation
 import SwiftUI
 
 struct AddNewTextView: View {
+    @Environment(\.modelContext) var modelContext
+        
     @Environment(\.colorScheme) private var theme
     @Environment(\.dismiss) private var dismiss
     
     var textSource: AddNewTextOption
     
+    var speechManager = SpeechSynthesizer()
+    
+    @AppStorage("SelectedVoice") var voice = "Trinoids"
+    
     // @Environment(AddNewTextViewModel.self) var addNewTextVM
     @Bindable var addNewTextVM: AddNewTextViewModel
+    
+    @State var showAlertTextNotSaved: Bool = false
 
     var body: some View {
         VStack {
@@ -29,7 +37,7 @@ struct AddNewTextView: View {
                 HStack {
                     Text("Title:")
                         .font(.custom(Constants.Fonts.NotoSerifR, size: 18))
-                    TextField("", text: $addNewTextVM.title)
+                    TextField("", text: $addNewTextVM.title ?? "")
                         .font(.custom(Constants.Fonts.NotoSerifR, size: 18))
                 }
                 .scrollContentBackground(.hidden)
@@ -41,22 +49,22 @@ struct AddNewTextView: View {
                     .foregroundStyle(
                         LinearGradient(colors: [.pink, .purple], startPoint: .leading, endPoint: .trailing)
                     )
-                if addNewTextVM.isPlaying {
-                    VStack(alignment: .leading) {
-                        ScrollView {
-                            Text(addNewTextVM.text)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .font(.custom(Constants.Fonts.NotoSerifR, size: 18))
-                        }
-                    }
-                    .padding(.horizontal, 5)
-                    .padding(.top, 8)
-                    
-                } else {
-                    TextEditor(text: $addNewTextVM.text)
-                        .font(.custom(Constants.Fonts.NotoSerifR, size: 18))
-                        .disabled(true)
-                }
+//                if addNewTextVM.isPlaying {
+//                    VStack(alignment: .leading) {
+//                        ScrollView {
+//                            Text(addNewTextVM.text)
+//                                .frame(maxWidth: .infinity, alignment: .leading)
+//                                .font(.custom(Constants.Fonts.NotoSerifR, size: 18))
+//                        }
+//                    }
+//                    .padding(.horizontal, 5)
+//                    .padding(.top, 8)
+//
+//                } else {
+                TextEditor(text: $addNewTextVM.text)
+                    .font(.custom(Constants.Fonts.NotoSerifR, size: 18))
+                
+//                }
             }
             
             // Bottom Control Panel
@@ -118,6 +126,8 @@ struct AddNewTextView: View {
                             withAnimation {
                                 addNewTextVM.isPlaying.toggle()
                             }
+                            
+                            speechManager.play(text: addNewTextVM.text, voice: voice)
                         }
                     
                     Spacer()
@@ -157,40 +167,49 @@ struct AddNewTextView: View {
                 Button(role: .cancel) {
                     dismiss()
                 } label: {
-                    Image(systemName: "chevron.left")
-                    Text("Back")
+                    HStack {
+                        Image(systemName: "chevron.left")
+                        Text("Back")
+                    }
+                }
+            }
+            
+            ToolbarItem(placement: .topBarLeading) {
+                Button(role: .destructive) {
+                    addNewTextVM.text = ""
+                } label: {
+                    Image(systemName: "delete.backward")
+                        .foregroundStyle(Color.red)
                 }
             }
             
             ToolbarItemGroup {
                 HStack {
-                    Button(role: .destructive) {
-                        addNewTextVM.text = ""
-                    } label: {
-                        Image(Constants.Icons.backspaceicon)
-                            .resizable()
-                            .frame(width: 25, height: 25)
-                    }
-                    
                     Button(role: .none) {
                         if let pasteString = addNewTextVM.pasteboard.string {
                             addNewTextVM.text = pasteString
                         }
                         
                     } label: {
-                        Image(Constants.Icons.clipboardIcon)
-                            .resizable()
-                            .frame(width: 25, height: 25)
+                        Image(systemName: "list.clipboard")
                     }
                     
                     Button {
-                        // Save the text in persistence storage and dismiss View
+                        // Save the text in persistence storage and dismiss View if title is present
                         
-                        dismiss()
+                        if let text = addNewTextVM.text {
+                            if verifyText(text: text) {
+                                let textData = TextData(textTitle: addNewTextVM.title, text: text, textSource: textSource, iconType: textSource.imageName, dateTime: Date().timeIntervalSince1970)
+                                modelContext.save()
+                                dismiss()
+                            }
+                        }
+                        
+                           
+                        
                     } label: {
-                        Image(Constants.Icons.saveIcon)
-                            .resizable()
-                            .frame(width: 25, height: 25)
+                        Image(systemName: "square.and.arrow.down")
+                            
                             .grayscale(addNewTextVM.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? 1 : 0)
                     }
                     .disabled(addNewTextVM.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? true : false)
@@ -198,6 +217,14 @@ struct AddNewTextView: View {
             }
             
         })
+        
+    }
+    
+    func verifyText(text: String) -> Bool {
+        if text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            return false
+        }
+        return true
     }
 }
 
