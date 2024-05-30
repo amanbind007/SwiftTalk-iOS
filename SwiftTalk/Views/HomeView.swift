@@ -5,12 +5,13 @@
 //  Created by Aman Bind on 07/03/24.
 //
 
+import SwiftData
 import SwiftUI
 
 struct HomeView: View {
     @State private var searchText: String = ""
     @State var navigationState = NavigationStateViewModel()
-
+    @Query var textDatas: [TextData]
     @Environment(AddNewTextViewModel.self) var addNewTextVM
 
     init() {
@@ -45,9 +46,8 @@ struct HomeView: View {
 
             VStack {
                 List {
-                    ForEach(["aman", "bind", "kumar", "rajesh", "mithilesh", "chakraborty", "Pandey", "jeevi"], id: \.self) { _ in
-
-                        ListItemView()
+                    ForEach(textDatas, id: \.id) { textData in
+                        ListItemView(textData: textData)
                     }
                 }
                 .listStyle(.sidebar)
@@ -75,4 +75,5 @@ struct HomeView: View {
 
 #Preview {
     HomeView()
+        .modelContainer(for: TextData.self)
 }

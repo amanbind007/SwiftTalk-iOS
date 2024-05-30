@@ -5,28 +5,39 @@
 //  Created by Aman Bind on 10/03/24.
 //
 
+import SwiftData
 import SwiftUI
 
 struct ListItemView: View {
+    let textData: TextData
+
     var imageNames = [
-                      "image_file_icon",
-                      "link_icon",
-                      "pdf_file_icon",
-                      "text_file_icon",
-                      "word_file_icon"]
+        "image_file_icon",
+        "link_icon",
+        "pdf_file_icon",
+        "text_file_icon",
+        "word_file_icon",
+    ]
 
     var body: some View {
         HStack {
-            Image(imageNames.randomElement()!, bundle: Bundle(path: "Assests"))
+            Image(textData.iconType, bundle: Bundle(path: "Assests"))
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(height: 60)
+                .frame(width: 60, height: 60)
+                .fixedSize()
 
             VStack(alignment: .leading) {
-                Text("Hello World")
-                    .font(.custom("NotoSerif-Regular", size: 16))
+                Text(textData.textTitle ?? "")
+                    .font(.custom("NotoSerif-Regular", size: 14))
+                    .bold()
+                    .frame(width: .infinity, height: 1, alignment: .leading)
 
-                Text("\(Date().formatted(date: .abbreviated, time: .shortened))".uppercased())
+                Text(textData.text)
+                    .font(.custom("NotoSerif-Regular", size: 12))
+                    .frame(width: .infinity, height: textData.textTitle == nil ? 50 : 40, alignment: .leading)
+
+                Text("\(Date(timeIntervalSince1970: textData.dateTime).formatted(date: .abbreviated, time: .shortened))".uppercased())
                     .font(.custom("NotoSerif-Regular", size: 10))
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -36,5 +47,6 @@ struct ListItemView: View {
 }
 
 #Preview {
-    ListItemView()
+    ListItemView(textData: TextDataPreviewProvider.textData1)
+        .modelContainer(for: TextData.self)
 }
