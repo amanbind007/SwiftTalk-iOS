@@ -9,6 +9,8 @@ import SwiftData
 import SwiftUI
 
 struct HomeView: View {
+    @Environment(\.modelContext) var modelContext
+
     @State private var searchText: String = ""
     @State var navigationState = NavigationStateViewModel()
     @Query var textDatas: [TextData]
@@ -28,26 +30,47 @@ struct HomeView: View {
             .navigationDestination(for: AddNewTextOption.self) { target in
                 switch target {
                 case .textInput:
-                    AddNewTextView(textSource: target, addNewTextVM: addNewTextVM)
+                    AddNewTextView(textSource: .textInput, addNewTextVM: addNewTextVM, text: nil, title: nil)
                 case .pdfDocument:
-                    AddNewTextView(textSource: target, addNewTextVM: addNewTextVM)
+                    AddNewTextView(textSource: .pdfDocument, addNewTextVM: addNewTextVM, text: nil, title: nil)
                 case .camera:
-                    AddNewTextView(textSource: target, addNewTextVM: addNewTextVM)
+                    AddNewTextView(textSource: .camera, addNewTextVM: addNewTextVM, text: nil, title: nil)
                 case .photoLibrary:
-                    AddNewTextView(textSource: target, addNewTextVM: addNewTextVM)
+                    AddNewTextView(textSource: .photoLibrary, addNewTextVM: addNewTextVM, text: nil, title: nil)
                 case .webpage:
-                    AddNewTextView(textSource: target, addNewTextVM: addNewTextVM)
+                    AddNewTextView(textSource: .webpage, addNewTextVM: addNewTextVM, text: nil, title: nil)
                 case .wordDocument:
-                    AddNewTextView(textSource: target, addNewTextVM: addNewTextVM)
+                    AddNewTextView(textSource: .wordDocument, addNewTextVM: addNewTextVM, text: nil, title: nil)
                 case .textFile:
-                    AddNewTextView(textSource: target, addNewTextVM: addNewTextVM)
+                    AddNewTextView(textSource: .textFile, addNewTextVM: addNewTextVM, text: nil, title: nil)
                 }
             }
 
             VStack {
                 List {
                     ForEach(textDatas, id: \.id) { textData in
-                        ListItemView(textData: textData)
+                        
+                        NavigationLink(destination: {
+                            AddNewTextView(textSource: textData.textSource, addNewTextVM: addNewTextVM, text: textData.text, title: textData.textTitle)
+                        }, label: {
+                            ListItemView(textData: textData)
+                                .swipeActions(edge: .trailing) {
+                                    Button(role: .destructive) {
+                                        // Deleting fish from persistence storage on swipe
+                                        modelContext.delete(textData)
+                                        do {
+                                            try modelContext.save()
+                                        }
+                                        catch {
+                                            print(error.localizedDescription)
+                                        }
+                                    } label: {
+                                        Label("Delete", systemImage: "trash")
+                                    }
+                                }
+                        })
+                            
+                            
                     }
                 }
                 .listStyle(.sidebar)
