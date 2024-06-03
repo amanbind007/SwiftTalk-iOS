@@ -6,6 +6,7 @@
 //
 
 import AVFoundation
+import SwiftData
 import SwiftUI
 
 struct AddNewTextView: View {
@@ -24,6 +25,17 @@ struct AddNewTextView: View {
     @Bindable var addNewTextVM: AddNewTextViewModel
     
     @State var showAlertTextNotSaved: Bool = false
+    
+    init(textSource: AddNewTextOption, addNewTextVM: AddNewTextViewModel, text: String?, title: String?) {
+        if let text = text {
+            addNewTextVM.text = text
+        }
+        if let title = title {
+            addNewTextVM.title = title
+        }
+        self.addNewTextVM = addNewTextVM
+        self.textSource = textSource
+    }
 
     var body: some View {
         VStack {
@@ -32,7 +44,11 @@ struct AddNewTextView: View {
                 Rectangle()
                     .frame(height: 1)
                     .foregroundStyle(
-                        LinearGradient(colors: [.pink, .purple], startPoint: .leading, endPoint: .trailing)
+                        LinearGradient(
+                            colors: [.pink, .purple],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
                     )
                 HStack {
                     Text("Title:")
@@ -47,24 +63,15 @@ struct AddNewTextView: View {
                 Rectangle()
                     .frame(height: 1)
                     .foregroundStyle(
-                        LinearGradient(colors: [.pink, .purple], startPoint: .leading, endPoint: .trailing)
+                        LinearGradient(
+                            colors: [.pink, .purple],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
                     )
-//                if addNewTextVM.isPlaying {
-//                    VStack(alignment: .leading) {
-//                        ScrollView {
-//                            Text(addNewTextVM.text)
-//                                .frame(maxWidth: .infinity, alignment: .leading)
-//                                .font(.custom(Constants.Fonts.NotoSerifR, size: 18))
-//                        }
-//                    }
-//                    .padding(.horizontal, 5)
-//                    .padding(.top, 8)
-//
-//                } else {
+                
                 TextEditor(text: $addNewTextVM.text)
                     .font(.custom(Constants.Fonts.NotoSerifR, size: 18))
-                
-//                }
             }
             
             // Bottom Control Panel
@@ -76,18 +83,15 @@ struct AddNewTextView: View {
                     }, label: {
                         ZStack {
                             RippledCircle()
-                                .fill(LinearGradient(colors: [.pink, .blue, .purple], startPoint: .topLeading, endPoint: .bottomTrailing))
+                                .fill(
+                                    LinearGradient(
+                                        colors: [.pink, .blue, .purple],
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    )
+                                )
                                 .frame(width: 55, height: 55)
-                                .rotationEffect(.degrees(addNewTextVM.degreesRotating))
-                                .onAppear(perform: {
-                                    withAnimation(.linear(duration: 1)
-                                        .speed(0.5).repeatForever(autoreverses: false))
-                                    {
-                                        addNewTextVM.degreesRotating = 360.0
-                                    }
-                                    
-                                })
-                                
+
                             Image("myPhoto2")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
@@ -145,7 +149,11 @@ struct AddNewTextView: View {
                     }, label: {
                         FlowerCloud()
                             .fill(
-                                .linearGradient(colors: [.yellow, .green], startPoint: .top, endPoint: .bottomTrailing)
+                                .linearGradient(
+                                    colors: [.yellow, .green],
+                                    startPoint: .top,
+                                    endPoint: .bottomTrailing
+                                )
                             )
                             .frame(width: 55, height: 55)
                             .overlay {
@@ -165,7 +173,24 @@ struct AddNewTextView: View {
         .toolbar(content: {
             ToolbarItem(placement: .topBarLeading) {
                 Button(role: .cancel) {
-                    dismiss()
+                    if verifyText(text: addNewTextVM.text) {
+                        let textData = TextData(
+                            textTitle: addNewTextVM.title,
+                            text: addNewTextVM.text,
+                            textSource: textSource,
+                            iconType: textSource.imageName,
+                            dateTime: Date().timeIntervalSince1970
+                        )
+                        do {
+                            modelContext.insert(textData)
+                            try modelContext.save()
+                            dismiss()
+                        } catch {
+                            print(error)
+                            dismiss()
+                        }
+                    }
+                    
                 } label: {
                     HStack {
                         Image(systemName: "chevron.left")
@@ -196,16 +221,24 @@ struct AddNewTextView: View {
                     
                     Button {
                         // Save the text in persistence storage and dismiss View if title is present
-                        
-                        if let text = addNewTextVM.text {
-                            if verifyText(text: text) {
-                                let textData = TextData(textTitle: addNewTextVM.title, text: text, textSource: textSource, iconType: textSource.imageName, dateTime: Date().timeIntervalSince1970)
-                                modelContext.save()
+                        if verifyText(text: addNewTextVM.text) {
+                            let textData = TextData(
+                                textTitle: addNewTextVM.title,
+                                text: addNewTextVM.text,
+                                textSource: textSource,
+                                iconType: textSource.imageName,
+                                dateTime: Date().timeIntervalSince1970
+                            )
+                            do {
+                                modelContext.insert(textData)
+                                try modelContext.save()
+                                print("saved")
+                                dismiss()
+                            } catch {
+                                print(error)
                                 dismiss()
                             }
                         }
-                        
-                           
                         
                     } label: {
                         Image(systemName: "square.and.arrow.down")
@@ -217,7 +250,6 @@ struct AddNewTextView: View {
             }
             
         })
-        
     }
     
     func verifyText(text: String) -> Bool {
@@ -228,8 +260,9 @@ struct AddNewTextView: View {
     }
 }
 
-#Preview {
-    NavigationStack {
-        AddNewTextView(textSource: .textInput, addNewTextVM: AddNewTextViewModel())
-    }
-}
+// #Preview {
+//    NavigationStack {
+//        AddNewTextView(textSource: .camera, addNewTextVM: AddNewTextViewModel())
+//            .modelContainer(for: TextData.self)
+//    }
+// }
