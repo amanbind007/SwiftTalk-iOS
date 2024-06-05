@@ -25,6 +25,7 @@ struct AddNewTextView: View {
     @Bindable var addNewTextVM: AddNewTextViewModel
     
     @State var showAlertTextNotSaved: Bool = false
+    @State var showAlertNoText: Bool = false
     
     init(textSource: AddNewTextOption, addNewTextVM: AddNewTextViewModel, text: String?, title: String?) {
         if let text = text {
@@ -70,7 +71,7 @@ struct AddNewTextView: View {
                         )
                     )
                 
-                TextEditor(text: $addNewTextVM.text)
+                TextEditor(text: $addNewTextVM.text ?? "")
                     .font(.custom(Constants.Fonts.NotoSerifR, size: 18))
             }
             
@@ -131,7 +132,9 @@ struct AddNewTextView: View {
                                 addNewTextVM.isPlaying.toggle()
                             }
                             
-                            speechManager.play(text: addNewTextVM.text, voice: voice)
+                            if let text = addNewTextVM.text {
+                                speechManager.play(text: text, voice: voice)
+                            }
                         }
                     
                     Spacer()
@@ -170,85 +173,101 @@ struct AddNewTextView: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("SwiftTalk")
         .navigationBarBackButtonHidden()
+        
         .toolbar(content: {
-            ToolbarItem(placement: .topBarLeading) {
-                Button(role: .cancel) {
-                    if verifyText(text: addNewTextVM.text) {
-                        let textData = TextData(
-                            textTitle: addNewTextVM.title,
-                            text: addNewTextVM.text,
-                            textSource: textSource,
-                            iconType: textSource.imageName,
-                            dateTime: Date().timeIntervalSince1970
-                        )
-                        do {
-                            modelContext.insert(textData)
-                            try modelContext.save()
-                            dismiss()
-                        } catch {
-                            print(error)
+            ToolbarItemGroup(placement: .topBarLeading) {
+                HStack {
+                    Button(role: .cancel) {
+                        if let text = addNewTextVM.text {
+                            if verifyText(text: text) {
+                                showAlertTextNotSaved = true
+                            }
+                        }
+                        else{
                             dismiss()
                         }
+                    } label: {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                            Text("Back")
+                        }
                     }
-                    
-                } label: {
-                    HStack {
-                        Image(systemName: "chevron.left")
-                        Text("Back")
+                
+                    Button(role: .destructive) {
+                        addNewTextVM.text = ""
+                    } label: {
+                        Image(systemName: "delete.backward")
+                            .foregroundStyle(Color.red)
                     }
                 }
             }
             
-            ToolbarItem(placement: .topBarLeading) {
-                Button(role: .destructive) {
-                    addNewTextVM.text = ""
-                } label: {
-                    Image(systemName: "delete.backward")
-                        .foregroundStyle(Color.red)
-                }
-            }
-            
-            ToolbarItemGroup {
+        })
+        .toolbar(content: {
+            ToolbarItemGroup(placement: .topBarTrailing) {
                 HStack {
                     Button(role: .none) {
                         if let pasteString = addNewTextVM.pasteboard.string {
                             addNewTextVM.text = pasteString
                         }
-                        
+
                     } label: {
                         Image(systemName: "list.clipboard")
                     }
                     
-                    Button {
-                        // Save the text in persistence storage and dismiss View if title is present
-                        if verifyText(text: addNewTextVM.text) {
-                            let textData = TextData(
-                                textTitle: addNewTextVM.title,
-                                text: addNewTextVM.text,
-                                textSource: textSource,
-                                iconType: textSource.imageName,
-                                dateTime: Date().timeIntervalSince1970
-                            )
-                            do {
-                                modelContext.insert(textData)
-                                try modelContext.save()
-                                print("saved")
-                                dismiss()
-                            } catch {
-                                print(error)
+                    if let text = addNewTextVM.text {
+                        Button {
+                            // Save the text in persistence storage and dismiss View if title is present
+                            if verifyText(text: text) {
+                                let textData = TextData(textTitle: addNewTextVM.title, text: text, textSource: textSource, iconType: textSource.imageName, dateTime: Date().timeIntervalSince1970)
+                                do {
+                                    modelContext.insert(textData)
+                                    try modelContext.save()
+                                    dismiss()
+                                } catch {
+                                    print(error)
+                                    dismiss()
+                                }
                                 dismiss()
                             }
-                        }
-                        
-                    } label: {
-                        Image(systemName: "square.and.arrow.down")
                             
-                            .grayscale(addNewTextVM.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? 1 : 0)
+                        } label: {
+                            Image(systemName: "square.and.arrow.down")
+                            
+                                .grayscale(text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? 1 : 0)
+                        }
+                        .disabled(text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? true : false)
                     }
-                    .disabled(addNewTextVM.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? true : false)
                 }
             }
-            
+        })
+        .alert(isPresented: $showAlertTextNotSaved, content: {
+            Alert(
+                title: Text("Not Saved"),
+                message: Text("Do you want to save this text?"),
+                primaryButton: .default(Text("Yes, save it!"),
+                                        action: {
+                                            let textData = TextData(
+                                                textTitle: addNewTextVM.title,
+                                                text: addNewTextVM.text!,
+                                                textSource: textSource,
+                                                iconType: textSource.imageName,
+                                                dateTime: Date().timeIntervalSince1970
+                                            )
+                                            do {
+                                                modelContext.insert(textData)
+                                                try modelContext.save()
+                                                dismiss()
+                                            } catch {
+                                                print(error)
+                                                dismiss()
+                                            }
+                                            dismiss()
+                                        }),
+                secondaryButton: .cancel {
+                    dismiss()
+                }
+            )
         })
     }
     
@@ -256,13 +275,14 @@ struct AddNewTextView: View {
         if text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             return false
         }
+        
         return true
     }
 }
 
-// #Preview {
-//    NavigationStack {
-//        AddNewTextView(textSource: .camera, addNewTextVM: AddNewTextViewModel())
-//            .modelContainer(for: TextData.self)
-//    }
-// }
+#Preview {
+    NavigationStack {
+        AddNewTextView(textSource: .camera, addNewTextVM: AddNewTextViewModel(), text: "Hello", title: "world")
+            .modelContainer(for: TextData.self)
+    }
+}
