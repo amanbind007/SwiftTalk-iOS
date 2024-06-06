@@ -9,14 +9,16 @@ import Foundation
 import SwiftData
 
 @Model
-class TextData {
+class TextData: Identifiable {
+    var id: UUID
     var textTitle: String?
     var text: String
-    var textSource: String
+    var textSource: AddNewTextOption
     var iconType: String
-    var dateTime: Date
+    var dateTime: Double
 
-    init(textTitle: String, text: String, textSource: String, iconType: String, dateTime: Date) {
+    init(textTitle: String?, text: String, textSource: AddNewTextOption, iconType: String, dateTime: Double) {
+        self.id = UUID()
         self.textTitle = textTitle
         self.text = text
         self.textSource = textSource
