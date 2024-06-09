@@ -9,6 +9,7 @@ import SwiftUI
 
 struct WebLinkTextSheetView: View {
     @Bindable var addNewTextVM: AddNewTextViewModel
+    @Binding var navigationState: NavigationStateViewModel
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -24,8 +25,17 @@ struct WebLinkTextSheetView: View {
                         .font(.custom(Constants.Fonts.NotoSerifR, size: 14))
                         .textFieldStyle(.roundedBorder)
                         .padding(.horizontal)
-                        .shadow(color: .green, radius: 5)
-                        .padding([.bottom])
+                        .padding([.bottom], 3)
+                        .autocorrectionDisabled()
+                        .textInputAutocapitalization(.never)
+                    
+                    if let message = addNewTextVM.errorMessage {
+                        Text(message+" OR incorrect link")
+                            .font(.custom(Constants.Fonts.NotoSerifR, size: 12))
+                            .foregroundStyle(Color.red)
+                            .frame(width: .infinity, alignment: .trailing)
+                        
+                    }
                     
                     HStack {
                         Spacer()
@@ -100,5 +110,5 @@ struct WebLinkTextSheetView: View {
 }
     
 #Preview {
-    WebLinkTextSheetView(addNewTextVM: AddNewTextViewModel())
+    WebLinkTextSheetView(addNewTextVM: AddNewTextViewModel(), navigationState: .constant(NavigationStateViewModel()))
 }
