@@ -37,36 +37,51 @@ class AddNewTextViewModel {
     
     // File Export Sheet View Properties
     
-    func getTextFromLink() {
-        isParsingWebText = true
-        
+    func getTextFromLink(completion: @escaping (Bool) -> Void) {
+        var text = ""
+        self.isParsingWebText = true
+
         if let url = URL(string: link) {
-            URLSession.shared.dataTask(with: URLRequest(url: url)) { data, _, error in
+            let session = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, _, error in
                 if let error = error {
                     print(error.localizedDescription)
+                    self.errorMessage = error.localizedDescription
                     self.isParsingWebText = false
+                    completion(false)
                 } else {
                     if let data = data {
                         let html = String(data: data, encoding: .utf8)!
                         
                         do {
                             let doc: Document = try SwiftSoup.parse(html)
-                            guard let body = doc.body() else { return }
-                            let text = try body.text()
+                            guard let body = doc.body() else {
+                                completion(false)
+                                return
+                            }
+                            text = try body.text()
                             
-                            self.text = text
-                            
-                            self.isParsingWebText = false
+                            DispatchQueue.main.async {
+                                self.errorMessage = nil
+                                DataCoordinator.shared.saveObject(text: text, title: nil, textSource: .webpage)
+                                self.isParsingWebText = false
+                                completion(text != "")
+                            }
                             
                         } catch {
-                            print(error)
+                            print(error.localizedDescription)
+                            self.errorMessage = error.localizedDescription
                             self.isParsingWebText = false
+                            completion(false)
                         }
+                    } else {
+                        completion(false)
                     }
                 }
-            }.resume()
+            }
+            
+            session.resume()
         } else {
-            isParsingWebText = false
+            completion(false)
         }
     }
     

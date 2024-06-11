@@ -9,7 +9,8 @@ import SwiftUI
 
 struct WebLinkTextSheetView: View {
     @Bindable var addNewTextVM: AddNewTextViewModel
-    @Binding var navigationState: NavigationStateViewModel
+    @Binding var showAddNewTextOptionsView: Bool
+    @Binding var showWebTextSheet: Bool
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -30,11 +31,10 @@ struct WebLinkTextSheetView: View {
                         .textInputAutocapitalization(.never)
                     
                     if let message = addNewTextVM.errorMessage {
-                        Text(message+" OR incorrect link")
+                        Text(message + " OR incorrect link")
                             .font(.custom(Constants.Fonts.NotoSerifR, size: 12))
                             .foregroundStyle(Color.red)
                             .frame(width: .infinity, alignment: .trailing)
-                        
                     }
                     
                     HStack {
@@ -58,7 +58,14 @@ struct WebLinkTextSheetView: View {
                         Spacer()
                         
                         Button(action: {
-                            print(addNewTextVM.getTextFromLink())
+                            addNewTextVM.getTextFromLink { success in
+                                if success {
+                                    showWebTextSheet = false
+                                    showAddNewTextOptionsView = false
+                                } else {
+                                    print("Failed to retrieve text.")
+                                }
+                            }
                         }, label: {
                             Text("Go")
                                 .padding(.horizontal, 45)
@@ -110,5 +117,9 @@ struct WebLinkTextSheetView: View {
 }
     
 #Preview {
-    WebLinkTextSheetView(addNewTextVM: AddNewTextViewModel(), navigationState: .constant(NavigationStateViewModel()))
+    WebLinkTextSheetView(
+        addNewTextVM: AddNewTextViewModel(),
+        showAddNewTextOptionsView: .constant(true),
+        showWebTextSheet: .constant(true)
+    )
 }
