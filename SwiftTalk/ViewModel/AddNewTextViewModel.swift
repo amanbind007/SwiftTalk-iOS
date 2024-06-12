@@ -11,6 +11,7 @@ import PDFKit
 import SwiftSoup
 import SwiftUI
 import UIKit
+import UniformTypeIdentifiers
 import Vision
 
 @Observable
@@ -22,14 +23,15 @@ class AddNewTextViewModel {
     
     let pasteboard = UIPasteboard.general
 
-    var title = ""
-    var text = """
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce iaculis interdum ex. Donec faucibus orci purus, at sagittis lorem placerat at. Morbi sodales porta massa in blandit. Cras eget varius lacus. Cras ac libero quis velit semper dapibus. Maecenas viverra mauris nec maximus egestas. In hac habitasse platea dictumst. Quisque hendrerit scelerisque lorem sit amet pellentesque. Mauris luctus ipsum in pharetra finibus. Sed rutrum finibus dui. Mauris ullamcorper ut ante vel congue. Nullam ac justo sagittis, tincidunt velit id, consequat velit. Vivamus purus turpis, condimentum eu blandit nec, ullamcorper et erat. Fusce velit eros, ornare at lectus quis, interdum varius urna.
-    """
+    var title: String?
+    var text: String?
+    
+    var textData: TextData?
     
     // Web Link Text Sheet View Properties
     var link: String = ""
     var isParsingWebText: Bool = false
+    var errorMessage: String?
     
     // Image Text Sheet View Properties
     var selectedImages: [UIImage] = []
@@ -84,9 +86,21 @@ class AddNewTextViewModel {
             completion(false)
         }
     }
+
+    func convertFileToText(fileType: FileTypes, documentURL: URL) {
+        switch fileType {
+        case .pdf:
+            self.convertPDFToText(pdfDocumentURL: documentURL)
+        case .doc:
+            self.convertDocToText(wordDocumentURL: documentURL)
+        case .text:
+            self.getTextFromTextFile(textFileURL: documentURL)
+        }
+    }
     
-    func convertPDFToText(yourDocumentURL: URL) {
-        if let pdf = PDFDocument(url: yourDocumentURL) {
+    func convertPDFToText(pdfDocumentURL: URL) {
+        var text = ""
+        if let pdf = PDFDocument(url: pdfDocumentURL) {
             let pageCount = pdf.pageCount
             let documentContent = NSMutableAttributedString()
 
@@ -96,17 +110,25 @@ class AddNewTextViewModel {
                 documentContent.append(pageContent)
             }
             
-            print(documentContent.string)
+            text = documentContent.string
+            DispatchQueue.main.async {
+                DataCoordinator.shared.saveObject(text: text, title: nil, textSource: .pdfDocument)
+            }
         }
     }
     
-    func convertDocToText(yourDocumentURL: URL) {
+    func convertDocToText(wordDocumentURL: URL) {
+        var text = ""
         do {
-            let data = try Data(contentsOf: yourDocumentURL)
+            let data = try Data(contentsOf: wordDocumentURL)
             let file = try DocFile(data: data)
             
             if let characters = file.characters {
-                print(characters.text.trimmingCharacters(in: .whitespaces) as Any)
+                // print(characters.text.trimmingCharacters(in: .whitespaces) as Any)
+                text = characters.text.trimmingCharacters(in: .whitespaces)
+                DispatchQueue.main.async {
+                    DataCoordinator.shared.saveObject(text: text, title: nil, textSource: .wordDocument)
+                }
             }
             
         } catch {
@@ -114,10 +136,13 @@ class AddNewTextViewModel {
         }
     }
     
-    func getTextFromTextFile(textFile: URL) {
+    func getTextFromTextFile(textFileURL: URL) {
         do {
-            let text = try String(contentsOf: textFile)
+            let text = try String(contentsOf: textFileURL)
             print(text)
+            DispatchQueue.main.async {
+                DataCoordinator.shared.saveObject(text: text, title: nil, textSource: .textFile)
+            }
         } catch {
             print(error)
         }
@@ -126,10 +151,10 @@ class AddNewTextViewModel {
     func getTextFromImages() {
         // let image = UIImage(named: "quote")
         
-        text = ""
-        isProcessingImages = true
+        var text = ""
+        self.isProcessingImages = true
         
-        for image in selectedImages {
+        for image in self.selectedImages {
             if let cgImage = image.cgImage {
                 // Request handler
                 let handler = VNImageRequestHandler(cgImage: cgImage)
@@ -148,7 +173,7 @@ class AddNewTextViewModel {
                         
                     // Update the UI
                     DispatchQueue.main.async {
-                        self.text.append(stringArray.joined(separator: "\n"))
+                        text.append(stringArray.joined(separator: "\n"))
                     }
                 }
                     
@@ -161,10 +186,14 @@ class AddNewTextViewModel {
                 } catch {
                     print(error)
                 }
-                print(text)
+                // print(text)
                 
-                isProcessingImages = false
+                self.isProcessingImages = false
             }
+        }
+        
+        DispatchQueue.main.async {
+            DataCoordinator.shared.saveObject(text: text, title: nil, textSource: .photoLibrary)
         }
     }
 }
