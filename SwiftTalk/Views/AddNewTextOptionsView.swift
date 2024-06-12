@@ -5,24 +5,40 @@
 //  Created by Aman Bind on 11/03/24.
 //
 
-import PhotosUI
 import SwiftUI
+import UniformTypeIdentifiers
+
+enum FileTypes {
+    case text
+    case doc
+    case pdf
+
+    var allowedContentType: [UTType] {
+        switch self {
+        case .text:
+            return [.text, .plainText, .utf8PlainText]
+        case .doc:
+            return [UTType(importedAs: "com.amanbind.swifttalk.doc", conformingTo: .data)]
+        case .pdf:
+            return [.pdf]
+        }
+    }
+}
 
 struct AddNewTextOptionsView: View {
     @Environment(\.dismiss) var dismiss
-
     @Binding var navigationState: NavigationStateViewModel
+
+    @Binding var showAddNewTextOptionsView: Bool
     @Bindable var addNewTextVM: AddNewTextViewModel
 
     @State var showWebTextSheet: Bool = false
     @State var showImagePickerSheet: Bool = false
-    @State var showPDFFileImporterSheet: Bool = false
-    @State var showDocFileImporterSheet: Bool = false
-    @State var showTextFileImporterSheet: Bool = false
+    @State var showFileImporterSheet: Bool = false
+
+    @State var fileType: FileTypes?
 
     let docUTType = UTType(importedAs: "com.amanbind.swifttalk.doc", conformingTo: .data)
-    let docxUTType = UTType(importedAs: "com.amanbind.swifttalk.docx", conformingTo: .data)
-    
 
     var body: some View {
         NavigationView {
@@ -33,18 +49,22 @@ struct AddNewTextOptionsView: View {
                         case .camera:
                             break
                         case .photoLibrary:
-                            showImagePickerSheet.toggle()
+                            showImagePickerSheet = true
                         case .wordDocument:
-                            showDocFileImporterSheet.toggle()
+                            fileType = .doc
+                            showFileImporterSheet = true
                         case .textInput:
-                            self.navigationState.showAddNewTextOptionsView = false
+                            self.showAddNewTextOptionsView = false
+
                             self.navigationState.targetDestination.append(option)
                         case .pdfDocument:
-                            showPDFFileImporterSheet.toggle()
+                            fileType = .pdf
+                            showFileImporterSheet = true
                         case .webpage:
-                            showWebTextSheet.toggle()
+                            showWebTextSheet = true
                         case .textFile:
-                            showTextFileImporterSheet.toggle()
+                            fileType = .text
+                            showFileImporterSheet = true
                         }
 
                     }) {
@@ -52,6 +72,20 @@ struct AddNewTextOptionsView: View {
                     }
                 }
             }
+
+            .fileImporter(
+                isPresented: $showFileImporterSheet,
+                allowedContentTypes: fileType?.allowedContentType ?? []
+            ) { result in
+                do {
+                    let url = try result.get()
+                    addNewTextVM.convertFileToText(fileType: fileType!, documentURL: url)
+                }
+                catch {
+                    print(error)
+                }
+            }
+
             .offset(y: -30)
             .navigationTitle("Add Text")
             .navigationBarTitleDisplayMode(.inline)
@@ -65,46 +99,17 @@ struct AddNewTextOptionsView: View {
                 }
             })
             .sheet(isPresented: $showWebTextSheet, content: {
-                WebLinkTextSheetView(addNewTextVM: addNewTextVM)
-                    .presentationDetents([.height(260)])
+                WebLinkTextSheetView(addNewTextVM: addNewTextVM, showAddNewTextOptionsView: $showAddNewTextOptionsView, showWebTextSheet: $showWebTextSheet)
+                    .presentationDetents([.height(280)])
             })
             .sheet(isPresented: $showImagePickerSheet, content: {
-                ImagePickerView(showImagePickerSheet: $showImagePickerSheet, addNewTextVM: addNewTextVM, navigationState: $navigationState)
+                ImagePickerView(showImagePickerSheet: $showImagePickerSheet, addNewTextVM: addNewTextVM, showAddNewTextOptionsView: $showAddNewTextOptionsView)
                     .ignoresSafeArea(edges: .bottom)
             })
-            .fileImporter(isPresented: $showPDFFileImporterSheet, allowedContentTypes: [.pdf]) { result in
-
-                do {
-                    let url = try result.get()
-                    addNewTextVM.convertPDFToText(yourDocumentURL: url)
-                }
-                catch {
-                    print(error)
-                }
-            }
-            .fileImporter(isPresented: $showDocFileImporterSheet, allowedContentTypes: [docUTType, docxUTType]) { result in
-
-                do {
-                    let url = try result.get()
-                    addNewTextVM.convertDocToText(yourDocumentURL: url)
-                }
-                catch {
-                    print(error)
-                }
-            }
-            .fileImporter(isPresented: $showTextFileImporterSheet, allowedContentTypes: [.text, .plainText, .utf8PlainText]) { result in
-                do {
-                    let url = try result.get()
-                    addNewTextVM.getTextFromTextFile(textFile: url)
-                }
-                catch {
-                    print(error)
-                }
-            }
         }
     }
 }
 
 #Preview {
-    AddNewTextOptionsView(navigationState: .constant(NavigationStateViewModel()), addNewTextVM: AddNewTextViewModel())
+    AddNewTextOptionsView(navigationState: .constant(NavigationStateViewModel()), showAddNewTextOptionsView: .constant(true), addNewTextVM: AddNewTextViewModel())
 }
