@@ -10,7 +10,10 @@ import SwiftUI
 import UIKit
 
 struct TextView: UIViewRepresentable {
+    @Environment(\.colorScheme) var theme
+
     @Binding var text: String
+    @Binding var highlightedRange: NSRange
 
     func makeCoordinator() -> TextViewCoordinator {
         TextViewCoordinator(parent: self)
@@ -18,14 +21,31 @@ struct TextView: UIViewRepresentable {
 
     func makeUIView(context: Context) -> some UITextView {
         let textView = UITextView()
+        textView.delegate = context.coordinator
         textView.text = text
-        textView.font = UIFont(name: Constants.Fonts.NotoSerifR, size: 18)
-        textView.selectedRange = NSRange(location: 1, length: 3)
+        textView.font = UIFont.systemFont(ofSize: CGFloat(18), weight: .heavy)
+        textView.isScrollEnabled = true
+        textView.textAlignment = .left
+        textView.autocorrectionType = .no
+        textView.autocapitalizationType = .sentences
 
         return textView
     }
 
-    func updateUIView(_ uiView: UIViewType, context: Context) {}
+    func updateUIView(_ uiView: UIViewType, context: Context) {
+        uiView.font = UIFont.systemFont(ofSize: CGFloat(18), weight: .heavy)
+        let attrStr = NSMutableAttributedString(string: text)
+        
+        attrStr.addAttribute(NSAttributedString.Key.font, value: UIFont(name: Constants.Fonts.NotoSerifR, size: 18)!, range: NSRange(location: 0, length: attrStr.length))
+
+
+        attrStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.black, range: NSRange(location: 0, length: attrStr.length))
+        
+        attrStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor(.green), range: highlightedRange)
+        
+        uiView.attributedText = attrStr
+        uiView.scrollRangeToVisible(highlightedRange)
+    }
 }
 
 class TextViewCoordinator: NSObject, UITextViewDelegate {
@@ -34,8 +54,14 @@ class TextViewCoordinator: NSObject, UITextViewDelegate {
     init(parent: TextView) {
         self.parent = parent
     }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        DispatchQueue.main.async {
+            self.parent.text = textView.text
+        }
+    }
 }
 
 #Preview {
-    TextView(text: .constant("Hello"))
+    TextView(text: .constant(""), highlightedRange: .constant(NSRange()))
 }
