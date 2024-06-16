@@ -5,16 +5,18 @@
 //  Created by Aman Bind on 12/04/24.
 //
 
-import SwiftUI
 import AVFoundation
+import SwiftUI
 
 struct VoiceSelectorListItemView: View {
     var voice: Voice
     
     @AppStorage("selectedVoice") var selectedVoice = "Trinoids"
+    @AppStorage("selectedVoiceFlag") var selectedVoiceFlagIcon = "usa-flag-round-circle-icon"
     @AppStorage("language") var language = "en-US"
     
-    @State var play = false
+    @State var isPlaying = false
+    @Binding var speechManager: SpeechSynthesizer
     
     var body: some View {
         HStack {
@@ -23,6 +25,7 @@ struct VoiceSelectorListItemView: View {
                 .onTapGesture {
                     selectedVoice = voice.voiceName
                     language = voice.languageCode
+                    selectedVoiceFlagIcon = voice.flagName
                 }
                 .imageScale(.large)
             Divider()
@@ -55,35 +58,37 @@ struct VoiceSelectorListItemView: View {
             Spacer()
             
             Button(action: {
-                play.toggle()
-                if play {
-                    playDemoVoice(voice: voice)
+                if isPlaying {
+                    speechManager.stopDemo()
+                    isPlaying = false
+                } else {
+                    speechManager.playDemo(text: voice.demoText, voice: voice.voiceName, languageCode: voice.languageCode)
+                    isPlaying = true
                 }
             }, label: {
                 ZStack {
-                    Image(systemName: play ? "stop.circle.fill" : "play.circle.fill")
+                    Image(systemName: isPlaying && speechManager.currentlyPlayingVoice == voice.voiceName ? "stop.circle.fill" : "play.circle.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 24, height: 24)
                         .clipShape(Circle())
-                        .foregroundStyle(play ? .red : .blue)
+                        .foregroundStyle(isPlaying && speechManager.currentlyPlayingVoice == voice.voiceName ? .red : .blue)
                 }
             })
         }
     }
-    
-    func playDemoVoice(voice: Voice){
-        let synthesizer = AVSpeechSynthesizer()
-        let utterrence = AVSpeechUtterance(string: voice.demoText)
-        utterrence.voice = AVSpeechSynthesisVoice(language: voice.languageCode)
-
-        synthesizer.speak(utterrence)
-        synthesizer.pauseSpeaking(at: .immediate)
-    }
-    
-    
 }
 
 #Preview {
-    VoiceSelectorListItemView(voice: Voice(languageCode: "ar-001", voiceName: "Majed", flagName: "saudi-arabia-flag-round-circle-icon", country: "Saudi Arabia", language: "AR", demoText: "مرحبا بالعالم! هذا هو صوت م أجِد لتجربة ميزة تحويل النص إلى كلام"))
+    VoiceSelectorListItemView(
+        voice: Voice(
+            languageCode: "ar-001",
+            voiceName: "Majed",
+            flagName: "saudi-arabia-flag-round-circle-icon",
+            country: "Saudi Arabia",
+            language: "AR",
+            demoText: "مرحبا بالعالم! هذا هو صوت م أجِد لتجربة ميزة تحويل النص إلى كلام"
+        ),
+        speechManager: .constant(SpeechSynthesizer())
+    )
 }

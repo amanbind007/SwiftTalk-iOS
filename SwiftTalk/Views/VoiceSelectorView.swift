@@ -10,6 +10,8 @@ import SwiftUI
 struct VoiceSelectorView: View {
     @Environment(\.dismiss) var dismiss
 
+    @State var speechManager = SpeechSynthesizer()
+
     let voices: [Voice] = [
         Voice(languageCode: "ar-001", voiceName: "Majed", flagName: "saudi-arabia-flag-round-circle-icon", country: "Saudi Arabia", language: "AR", demoText: "مرحبا بالعالم! هذا هو صوت م أجِد لتجربة ميزة تحويل النص إلى كلام"),
         Voice(languageCode: "bg-BG", voiceName: "Daria", flagName: "bulgaria-flag-round-circle-icon", country: "Bulgaria", language: "BG", demoText: "Здравейте света! Това е гласът на Дария за вашето изживяване с текст към говор."),
@@ -80,7 +82,7 @@ struct VoiceSelectorView: View {
         NavigationStack {
             List {
                 ForEach(voices) { voice in
-                    VoiceSelectorListItemView(voice: voice)
+                    VoiceSelectorListItemView(voice: voice, speechManager: $speechManager)
                 }
             }
             .navigationTitle("Select Voice")
@@ -89,7 +91,7 @@ struct VoiceSelectorView: View {
             .ignoresSafeArea(edges: [.bottom])
             .toolbar(content: {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
+                    Button("Close") {
                         dismiss()
                     }
                     .font(.custom(Constants.Fonts.NotoSerifR, size: 16))
