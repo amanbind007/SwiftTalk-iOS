@@ -41,7 +41,7 @@ struct VoiceSelectorListItemView: View {
                     .font(.custom("ChangaOne", size: 14))
                     .foregroundStyle(Color.white)
                     .padding(5)
-                    .overlay {
+                    .background {
                         HexagonShape()
                             .aspectRatio(contentMode: .fit)
                             .foregroundStyle(
