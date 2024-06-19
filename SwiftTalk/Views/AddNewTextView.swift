@@ -17,9 +17,10 @@ struct AddNewTextView: View {
     
     var textSource: AddNewTextOption
     
-    var speechManager = SpeechSynthesizer()
+    @State var speechManager = SpeechSynthesizer()
     
     @AppStorage("SelectedVoice") var voice = "Trinoids"
+    @AppStorage("selectedVoiceFlag") var selectedVoiceFlagIcon = "usa-flag-round-circle-icon"
     
     // @Environment(AddNewTextViewModel.self) var addNewTextVM
     @Bindable var addNewTextVM: AddNewTextViewModel
@@ -27,30 +28,27 @@ struct AddNewTextView: View {
     @State var showAlertTextNotSaved: Bool = false
     @State var showAlertNoText: Bool = false
     
-    init(textSource: AddNewTextOption, addNewTextVM: AddNewTextViewModel, text: String?, title: String?) {
-        if let text = text {
-            addNewTextVM.text = text
-        }
-        if let title = title {
-            addNewTextVM.title = title
-        }
+    var textData: TextData?
+    
+    init(textSource: AddNewTextOption, addNewTextVM: AddNewTextViewModel, textData: TextData?) {
         self.addNewTextVM = addNewTextVM
         self.textSource = textSource
+        if let textData = textData {
+            self.addNewTextVM.text = textData.text
+            self.addNewTextVM.title = textData.textTitle
+            self.textData = textData
+        }
+        else {
+            addNewTextVM.text = nil
+            addNewTextVM.title = nil
+        }
     }
 
     var body: some View {
         VStack {
             // TextFileds for title and Contents
             VStack {
-                Rectangle()
-                    .frame(height: 1)
-                    .foregroundStyle(
-                        LinearGradient(
-                            colors: [.pink, .purple],
-                            startPoint: .leading,
-                            endPoint: .trailing
-                        )
-                    )
+                Divider()
                 HStack {
                     Text("Title:")
                         .font(.custom(Constants.Fonts.NotoSerifR, size: 18))
@@ -61,18 +59,16 @@ struct AddNewTextView: View {
                 
                 .padding(.horizontal, 5)
                 
-                Rectangle()
-                    .frame(height: 1)
-                    .foregroundStyle(
-                        LinearGradient(
-                            colors: [.pink, .purple],
-                            startPoint: .leading,
-                            endPoint: .trailing
-                        )
-                    )
+                Divider()
                 
-                TextEditor(text: $addNewTextVM.text ?? "")
-                    .font(.custom(Constants.Fonts.NotoSerifR, size: 18))
+                Text("Add Text Below")
+                
+                
+                TextView(text: $addNewTextVM.text ?? "", highlightedRange: $speechManager.highlightedRange) { startIndex in
+                    if let text = addNewTextVM.text {
+                        speechManager.play(text: text, voice: voice, from: startIndex)
+                    }
+                }
             }
             
             // Bottom Control Panel
@@ -93,7 +89,7 @@ struct AddNewTextView: View {
                                 )
                                 .frame(width: 55, height: 55)
 
-                            Image("myPhoto2")
+                            Image(selectedVoiceFlagIcon)
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 45, height: 45)
@@ -178,14 +174,22 @@ struct AddNewTextView: View {
             ToolbarItemGroup(placement: .topBarLeading) {
                 HStack {
                     Button(role: .cancel) {
-                        if let text = addNewTextVM.text {
-                            if verifyText(text: text) {
+                        if let textData = textData, let text = addNewTextVM.text {
+                            if DataCoordinator.shared.doesObjectExistAndUpdated(id: textData.id, title: addNewTextVM.title, text: addNewTextVM.text!) {
+                                DataCoordinator.shared.updateObject(id: textData.id, text: text, title: addNewTextVM.title)
+                                dismiss()
+                            }
+                            
+                            else if verifyText(text: addNewTextVM.text!) {
                                 showAlertTextNotSaved = true
                             }
+                            else {
+                                dismiss()
+                            }
                         }
-                        else{
-                            dismiss()
-                        }
+                        
+                        dismiss()
+                        
                     } label: {
                         HStack {
                             Image(systemName: "chevron.left")
@@ -217,17 +221,9 @@ struct AddNewTextView: View {
                     
                     if let text = addNewTextVM.text {
                         Button {
-                            // Save the text in persistence storage and dismiss View if title is present
                             if verifyText(text: text) {
-                                let textData = TextData(textTitle: addNewTextVM.title, text: text, textSource: textSource, iconType: textSource.imageName, dateTime: Date().timeIntervalSince1970)
-                                do {
-                                    modelContext.insert(textData)
-                                    try modelContext.save()
-                                    dismiss()
-                                } catch {
-                                    print(error)
-                                    dismiss()
-                                }
+                                DataCoordinator.shared.saveObject(text: text, title: addNewTextVM.title, textSource: textSource)
+
                                 dismiss()
                             }
                             
@@ -241,27 +237,15 @@ struct AddNewTextView: View {
                 }
             }
         })
+        
         .alert(isPresented: $showAlertTextNotSaved, content: {
             Alert(
                 title: Text("Not Saved"),
                 message: Text("Do you want to save this text?"),
                 primaryButton: .default(Text("Yes, save it!"),
                                         action: {
-                                            let textData = TextData(
-                                                textTitle: addNewTextVM.title,
-                                                text: addNewTextVM.text!,
-                                                textSource: textSource,
-                                                iconType: textSource.imageName,
-                                                dateTime: Date().timeIntervalSince1970
-                                            )
-                                            do {
-                                                modelContext.insert(textData)
-                                                try modelContext.save()
-                                                dismiss()
-                                            } catch {
-                                                print(error)
-                                                dismiss()
-                                            }
+                                            DataCoordinator.shared.saveObject(text: addNewTextVM.text!, title: addNewTextVM.title, textSource: textSource)
+
                                             dismiss()
                                         }),
                 secondaryButton: .cancel {
@@ -282,7 +266,7 @@ struct AddNewTextView: View {
 
 #Preview {
     NavigationStack {
-        AddNewTextView(textSource: .camera, addNewTextVM: AddNewTextViewModel(), text: "Hello", title: "world")
+        AddNewTextView(textSource: .camera, addNewTextVM: AddNewTextViewModel(), textData: nil)
             .modelContainer(for: TextData.self)
     }
 }

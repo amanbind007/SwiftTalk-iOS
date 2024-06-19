@@ -44,7 +44,7 @@ struct TextView: UIViewRepresentable {
 
         attrStr.addAttribute(NSAttributedString.Key.font, value: UIFont(name: Constants.Fonts.NotoSerifR, size: 18)!, range: NSRange(location: 0, length: attrStr.length))
 
-        attrStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.black, range: NSRange(location: 0, length: attrStr.length))
+        attrStr.addAttribute(NSAttributedString.Key.foregroundColor, value: theme == .dark ? UIColor.white : UIColor.black, range: NSRange(location: 0, length: attrStr.length))
 
         attrStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor(.green), range: highlightedRange)
 
@@ -72,15 +72,15 @@ class TextViewCoordinator: NSObject, UITextViewDelegate {
         let location = gesture.location(in: textView)
         let position = CGPoint(x: location.x, y: location.y)
         let tapPosition = textView.closestPosition(to: position)
-        let tappedRange = textView.tokenizer.rangeEnclosingPosition(tapPosition!, with: UITextGranularity.word, inDirection: UITextDirection(rawValue: 1))
-        var tappedWord: String?
-        if tappedRange != nil {
-            tappedWord = textView.text(in: tappedRange!)
+        if let tappedRange = textView.tokenizer.rangeEnclosingPosition(tapPosition!, with: UITextGranularity.sentence, inDirection: UITextDirection(rawValue: 1)) {
+            let startIndex = textView.offset(from: textView.beginningOfDocument, to: tappedRange.start)
+            parent.onCharacterTapped?(startIndex)
+
+            if let tappedWord = textView.text(in: tappedRange) {
+                print("tapped word: \(tappedWord)")
+            }
         }
-        print("tapped word: \(tappedWord)")
     }
-    
-    
 }
 
 #Preview {
