@@ -10,7 +10,7 @@ import SwiftData
 
 @Model
 class TextData: Identifiable {
-    var id: UUID
+    @Attribute(.unique) var id: UUID
     var textTitle: String?
     var text: String
     var textSource: AddNewTextOption
