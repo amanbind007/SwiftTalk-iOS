@@ -13,7 +13,8 @@ struct TextView: UIViewRepresentable {
     @Environment(\.colorScheme) var theme
 
     @Binding var text: String
-    @Binding var highlightedRange: NSRange
+    @Binding var highlightedRange: NSRange?
+    @Binding var isEditing: Bool
 
     var onCharacterTapped: ((Int) -> Void)? // Add a callback for character tapped
 
@@ -31,6 +32,7 @@ struct TextView: UIViewRepresentable {
         textView.autocorrectionType = .no
         textView.autocapitalizationType = .sentences
         textView.isEditable = false
+        textView.isUserInteractionEnabled = true
 
         let tapGesture = UITapGestureRecognizer(target: context.coordinator, action: #selector(context.coordinator.handleTap(_:)))
         textView.addGestureRecognizer(tapGesture)
@@ -46,10 +48,29 @@ struct TextView: UIViewRepresentable {
 
         attrStr.addAttribute(NSAttributedString.Key.foregroundColor, value: theme == .dark ? UIColor.white : UIColor.black, range: NSRange(location: 0, length: attrStr.length))
 
-        attrStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor(.green), range: highlightedRange)
+        if let highlightedRange {
+            attrStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor(.green), range: highlightedRange)
+
+            if !isEditing {
+                uiView.scrollRangeToVisible(highlightedRange)
+            }
+        }
 
         uiView.attributedText = attrStr
-        uiView.scrollRangeToVisible(highlightedRange)
+
+        onEdit(uiView)
+    }
+
+    func onEdit(_ uiView: UITextView) {
+        DispatchQueue.main.async {
+            if isEditing {
+                uiView.isEditable = true
+                uiView.becomeFirstResponder()
+
+            } else {
+                uiView.isEditable = false
+            }
+        }
     }
 }
 
@@ -84,5 +105,5 @@ class TextViewCoordinator: NSObject, UITextViewDelegate {
 }
 
 #Preview {
-    TextView(text: .constant(""), highlightedRange: .constant(NSRange()))
+    TextView(text: .constant(""), highlightedRange: .constant(NSRange()), isEditing: .constant(false))
 }
