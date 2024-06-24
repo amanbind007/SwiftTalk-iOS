@@ -14,7 +14,8 @@ struct TextView: UIViewRepresentable {
 
     @Binding var text: String
     @Binding var highlightedRange: NSRange?
-    @Binding var isEditing: Bool
+    @Binding var editing: Bool
+    @Binding var focused: Bool
 
     var onCharacterTapped: ((Int) -> Void)? // Add a callback for character tapped
 
@@ -32,6 +33,7 @@ struct TextView: UIViewRepresentable {
         textView.autocorrectionType = .no
         textView.autocapitalizationType = .sentences
         textView.isEditable = false
+        textView.isSelectable = false
         textView.isUserInteractionEnabled = true
 
         let tapGesture = UITapGestureRecognizer(target: context.coordinator, action: #selector(context.coordinator.handleTap(_:)))
@@ -51,7 +53,7 @@ struct TextView: UIViewRepresentable {
         if let highlightedRange {
             attrStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor(.green), range: highlightedRange)
 
-            if !isEditing {
+            if !editing {
                 uiView.scrollRangeToVisible(highlightedRange)
             }
         }
@@ -63,7 +65,7 @@ struct TextView: UIViewRepresentable {
 
     func onEdit(_ uiView: UITextView) {
         DispatchQueue.main.async {
-            if isEditing {
+            if editing {
                 uiView.isEditable = true
                 uiView.becomeFirstResponder()
 
@@ -75,15 +77,33 @@ struct TextView: UIViewRepresentable {
 }
 
 class TextViewCoordinator: NSObject, UITextViewDelegate {
-    let parent: TextView
+    var parent: TextView
 
     init(parent: TextView) {
         self.parent = parent
     }
 
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        DispatchQueue.main.async {
+            self.parent.focused = true
+        }
+    }
+    
+//    func textViewDidChangeSelection(_ textView: UITextView) {
+//        DispatchQueue.main.async {
+//            self.parent.onCharacterTapped?(textView.selectedRange.location)
+//        }
+//    }
+
     func textViewDidChange(_ textView: UITextView) {
         DispatchQueue.main.async {
             self.parent.text = textView.text
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        DispatchQueue.main.async {
+            self.parent.focused = false
         }
     }
 
@@ -97,13 +117,13 @@ class TextViewCoordinator: NSObject, UITextViewDelegate {
             let startIndex = textView.offset(from: textView.beginningOfDocument, to: tappedRange.start)
             parent.onCharacterTapped?(startIndex)
 
-            if let tappedWord = textView.text(in: tappedRange) {
-                print("tapped word: \(tappedWord)")
-            }
+//            if let tappedWord = textView.text(in: tappedRange) {
+//                print("tapped word: \(tappedWord)")
+//            }
         }
     }
 }
 
 #Preview {
-    TextView(text: .constant(""), highlightedRange: .constant(NSRange()), isEditing: .constant(false))
+    TextView(text: .constant(""), highlightedRange: .constant(NSRange()), editing: .constant(false), focused: .constant(false))
 }
