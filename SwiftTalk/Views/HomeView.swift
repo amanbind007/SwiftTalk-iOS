@@ -11,9 +11,15 @@ import SwiftUI
 struct HomeView: View {
     @Environment(\.modelContext) var modelContext
 
+    @State var showAddNewTextOptionsView = false
+
     @State private var searchText: String = ""
     @State var navigationState = NavigationStateViewModel()
+    @State var showTitleUpdateAlert: Bool = false
+    @State var newTitle: String = ""
+    @State var selectedTextData: TextData?
     @Query var textDatas: [TextData]
+
     @Environment(AddNewTextViewModel.self) var addNewTextVM
 
     init() {
@@ -28,51 +34,60 @@ struct HomeView: View {
                 EmptyView()
             }
             .navigationDestination(for: AddNewTextOption.self) { target in
-                switch target {
-                case .textInput:
-                    AddNewTextView(textSource: .textInput, addNewTextVM: addNewTextVM, text: nil, title: nil)
-                case .pdfDocument:
-                    AddNewTextView(textSource: .pdfDocument, addNewTextVM: addNewTextVM, text: nil, title: nil)
-                case .camera:
-                    AddNewTextView(textSource: .camera, addNewTextVM: addNewTextVM, text: nil, title: nil)
-                case .photoLibrary:
-                    AddNewTextView(textSource: .photoLibrary, addNewTextVM: addNewTextVM, text: nil, title: nil)
-                case .webpage:
-                    AddNewTextView(textSource: .webpage, addNewTextVM: addNewTextVM, text: nil, title: nil)
-                case .wordDocument:
-                    AddNewTextView(textSource: .wordDocument, addNewTextVM: addNewTextVM, text: nil, title: nil)
-                case .textFile:
-                    AddNewTextView(textSource: .textFile, addNewTextVM: addNewTextVM, text: nil, title: nil)
+                if target == .textInput {
+                    AddNewTextView(textSource: .textInput, addNewTextVM: addNewTextVM, textData: nil)
                 }
             }
 
             VStack {
                 List {
                     ForEach(textDatas, id: \.id) { textData in
-                        
                         NavigationLink(destination: {
-                            AddNewTextView(textSource: textData.textSource, addNewTextVM: addNewTextVM, text: textData.text, title: textData.textTitle)
+                            AddNewTextView(textSource: textData.textSource, addNewTextVM: addNewTextVM, textData: textData)
                         }, label: {
                             ListItemView(textData: textData)
+                                .contextMenu {
+                                    Button {
+                                        newTitle = textData.textTitle // Initialize with current title
+                                        selectedTextData = textData
+                                        showTitleUpdateAlert = true
+                                    } label: {
+                                        Label("Update Title", systemImage: "square.and.pencil")
+                                    }
+                                }
                                 .swipeActions(edge: .trailing) {
                                     Button(role: .destructive) {
-                                        // Deleting fish from persistence storage on swipe
                                         modelContext.delete(textData)
                                         do {
                                             try modelContext.save()
-                                        }
-                                        catch {
-                                            print(error.localizedDescription)
+                                        } catch {
+                                            print(error)
                                         }
                                     } label: {
                                         Label("Delete", systemImage: "trash")
                                     }
                                 }
+
                         })
-                            
-                            
                     }
+                    .alert("Enter new title", isPresented: $showTitleUpdateAlert, actions: {
+                        TextField("Enter new title", text: $newTitle)
+                        Button("OK", action: {
+                            if let selectedTextData = selectedTextData {
+                                selectedTextData.textTitle = newTitle
+                                do {
+                                    try modelContext.save()
+                                } catch {
+                                    print(error)
+                                }
+                            }
+                        })
+                        Button("Cancel", role: .cancel, action: {})
+                    }, message: {
+                        Text("Enter a new title for the item.")
+                    })
                 }
+
                 .listStyle(.sidebar)
                 .searchable(text: $searchText)
             }
@@ -81,15 +96,15 @@ struct HomeView: View {
                 ToolbarItem {
                     // This button triggers the Sheet view
                     Button(action: {
-                        navigationState.showAddNewTextOptionsView.toggle()
+                        showAddNewTextOptionsView.toggle()
                     }, label: {
                         Image(systemName: "plus.circle")
                     })
                 }
             })
         }
-        .sheet(isPresented: $navigationState.showAddNewTextOptionsView, content: {
-            AddNewTextOptionsView(navigationState: $navigationState, addNewTextVM: addNewTextVM)
+        .sheet(isPresented: $showAddNewTextOptionsView, content: {
+            AddNewTextOptionsView(navigationState: $navigationState, showAddNewTextOptionsView: $showAddNewTextOptionsView, addNewTextVM: addNewTextVM)
                 .presentationDetents([.height(520)])
 
         })
