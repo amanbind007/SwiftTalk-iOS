@@ -28,12 +28,12 @@ class DataCoordinator {
 
     func getObject(id: UUID) -> TextData? {
         do {
-            var predicate = #Predicate<TextData> { object in
+            let predicate = #Predicate<TextData> { object in
                 object.id == id
             }
             var descriptor = FetchDescriptor(predicate: predicate)
             descriptor.fetchLimit = 1
-            var object = try persistantContainer.mainContext.fetch(descriptor)
+            let object = try persistantContainer.mainContext.fetch(descriptor)
             return object.first
         } catch {
             print("Fetch Object : \(error)")
@@ -55,7 +55,21 @@ class DataCoordinator {
     }
 
     func saveObject(text: String, title: String?, textSource: AddNewTextOption) {
-        let textDate = TextData(textTitle: title, text: text, textSource: textSource, iconType: textSource.imageName, dateTime: Date().timeIntervalSince1970)
+        var autoTitle = ""
+
+        if let title = title {
+            autoTitle = title
+        }
+
+        else {
+            let currentDate = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH.mm.ss"
+            let formattedDate = dateFormatter.string(from: currentDate)
+            autoTitle = "Text " + formattedDate
+        }
+
+        let textDate = TextData(textTitle: autoTitle, text: text, textSource: textSource, iconType: textSource.imageName, dateTime: Date().timeIntervalSince1970)
 
         do {
             persistantContainer.mainContext.insert(textDate)
@@ -65,13 +79,13 @@ class DataCoordinator {
         }
     }
 
-    func updateObject(id: UUID, text: String, title: String?) {
+    func updateObject(id: UUID, text: String, title: String) {
         if let textData = getObject(id: id) {
             textData.text = text
             textData.textTitle = title
 
-            persistantContainer.mainContext.insert(textData)
             do {
+                persistantContainer.mainContext.insert(textData)
                 try persistantContainer.mainContext.save()
             } catch {
                 print("Update Error : \(error)")
@@ -80,10 +94,10 @@ class DataCoordinator {
     }
 
     func deleteObject(textData: TextData) {
-        persistantContainer.mainContext.delete(textData)
-
         do {
+            persistantContainer.mainContext.delete(textData)
             try persistantContainer.mainContext.save()
+
         } catch {
             print("Delete Error: \(error)")
         }
