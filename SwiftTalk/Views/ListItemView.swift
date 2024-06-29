@@ -28,14 +28,14 @@ struct ListItemView: View {
                 .fixedSize()
 
             VStack(alignment: .leading) {
-                Text(textData.textTitle ?? "")
+                Text(textData.textTitle)
                     .font(.custom("NotoSerif-Regular", size: 14))
                     .bold()
                     .frame(width: .infinity, height: 1, alignment: .leading)
 
                 Text(textData.text)
                     .font(.custom("NotoSerif-Regular", size: 12))
-                    .frame(width: .infinity, height: textData.textTitle == nil ? 50 : 40, alignment: .leading)
+                    .frame(width: .infinity, height: 40, alignment: .leading)
 
                 Text("\(Date(timeIntervalSince1970: textData.dateTime).formatted(date: .abbreviated, time: .shortened))".uppercased())
                     .font(.custom("NotoSerif-Regular", size: 10))
