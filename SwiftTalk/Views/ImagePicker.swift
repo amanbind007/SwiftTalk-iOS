@@ -12,7 +12,7 @@ struct ImagePicker: UIViewControllerRepresentable {
     @Binding var showImagePickerSheet: Bool
     @Bindable var addNewTextVM: AddNewTextViewModel
 
-    @Binding var viewModel: NavigationStateViewModel
+    @Binding var showAddNewTextOptionsView: Bool
 
     func makeUIViewController(context: Context) -> PHPickerViewController {
         var config = PHPickerConfiguration()
@@ -55,8 +55,7 @@ class Coordinator: NSObject, PHPickerViewControllerDelegate {
             }
         }
         self.parent.showImagePickerSheet = false
-        self.parent.viewModel.showAddNewTextOptionsView = false
-        self.parent.viewModel.targetDestination.append(.textInput)
+        self.parent.showAddNewTextOptionsView = false
 
         // This is called at the end; after all signals are matched (IN/OUT)
         dispatchGroup.notify(queue: .main) {
