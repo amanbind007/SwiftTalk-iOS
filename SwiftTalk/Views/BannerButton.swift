@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct BannerButton: View {
+    
+    @Environment(\.colorScheme) var theme
     var iconSystemName: String
     var color: Color
     var text: String
@@ -32,6 +34,7 @@ struct BannerButton: View {
 
                     Text(text)
                         .font(.custom(Constants.Fonts.NotoSerifR, size: 16))
+                        .foregroundStyle(theme == .dark ? .white : .black)
                         .overlay {
                             GeometryReader { proxy in
                                 Color.clear
