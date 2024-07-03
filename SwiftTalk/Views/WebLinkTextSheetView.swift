@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct WebLinkTextSheetView: View {
-    @Bindable var addNewTextVM: AddNewTextViewModel
+    @Binding var addNewTextOptionsVM: AddNewTextOptionsViewModel
     @Binding var showAddNewTextOptionsView: Bool
     @Binding var showWebTextSheet: Bool
     @Environment(\.dismiss) var dismiss
@@ -22,7 +22,7 @@ struct WebLinkTextSheetView: View {
                         .font(.custom(Constants.Fonts.NotoSerifR, size: 12))
                         .padding()
                     
-                    TextField("Paste the web link here", text: $addNewTextVM.link)
+                    TextField("Paste the web link here", text: $addNewTextOptionsVM.link)
                         .font(.custom(Constants.Fonts.NotoSerifR, size: 14))
                         .textFieldStyle(.roundedBorder)
                         .padding(.horizontal)
@@ -30,7 +30,7 @@ struct WebLinkTextSheetView: View {
                         .autocorrectionDisabled()
                         .textInputAutocapitalization(.never)
                     
-                    if let message = addNewTextVM.errorMessage {
+                    if let message = addNewTextOptionsVM.errorMessage {
                         Text(message + " OR incorrect link")
                             .font(.custom(Constants.Fonts.NotoSerifR, size: 12))
                             .foregroundStyle(Color.red)
@@ -40,8 +40,8 @@ struct WebLinkTextSheetView: View {
                     HStack {
                         Spacer()
                         Button(action: {
-                            if let pasteString = addNewTextVM.pasteboard.string {
-                                addNewTextVM.link = pasteString
+                            if let pasteString = addNewTextOptionsVM.pasteboard.string {
+                                addNewTextOptionsVM.link = pasteString
                             }
                         }, label: {
                             Text("Paste")
@@ -58,7 +58,7 @@ struct WebLinkTextSheetView: View {
                         Spacer()
                         
                         Button(action: {
-                            addNewTextVM.getTextFromLink { success in
+                            addNewTextOptionsVM.getTextFromLink { success in
                                 if success {
                                     showWebTextSheet = false
                                     showAddNewTextOptionsView = false
@@ -99,7 +99,7 @@ struct WebLinkTextSheetView: View {
                     }
                 })
                 
-                if addNewTextVM.isParsingWebText {
+                if addNewTextOptionsVM.isParsingWebText {
                     RoundedRectangle(cornerRadius: 0)
                         .frame(width: 2000, height: 2000)
                         .foregroundStyle(Material.thick)
@@ -118,7 +118,7 @@ struct WebLinkTextSheetView: View {
     
 #Preview {
     WebLinkTextSheetView(
-        addNewTextVM: AddNewTextViewModel(),
+        addNewTextOptionsVM: .constant(AddNewTextOptionsViewModel()),
         showAddNewTextOptionsView: .constant(true),
         showWebTextSheet: .constant(true)
     )
