@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ImagePicker: UIViewControllerRepresentable {
     @Binding var showImagePickerSheet: Bool
-    @Bindable var addNewTextVM: AddNewTextViewModel
+    @Binding var addNewTextOptionsVM: AddNewTextOptionsViewModel
 
     @Binding var showAddNewTextOptionsView: Bool
 
@@ -49,7 +49,7 @@ class Coordinator: NSObject, PHPickerViewControllerDelegate {
 
             imageItem.loadObject(ofClass: UIImage.self) { image, _ in
                 if let image = image as? UIImage {
-                    self.parent.addNewTextVM.selectedImages.append(image)
+                    self.parent.addNewTextOptionsVM.selectedImages.append(image)
                 }
                 dispatchGroup.leave() // signal OUT
             }
@@ -59,7 +59,7 @@ class Coordinator: NSObject, PHPickerViewControllerDelegate {
 
         // This is called at the end; after all signals are matched (IN/OUT)
         dispatchGroup.notify(queue: .main) {
-            self.parent.addNewTextVM.getTextFromImages()
+            self.parent.addNewTextOptionsVM.getTextFromImages()
         }
     }
 

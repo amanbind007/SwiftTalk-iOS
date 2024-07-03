@@ -9,12 +9,12 @@ import SwiftUI
 
 struct ImagePickerView: View {
     @Binding var showImagePickerSheet: Bool
-    @Bindable var addNewTextVM: AddNewTextViewModel
+    @Binding var addNewTextOptionsVM: AddNewTextOptionsViewModel
     @Binding var showAddNewTextOptionsView: Bool
 
     var body: some View {
         ZStack {
-            ImagePicker(showImagePickerSheet: $showImagePickerSheet, addNewTextVM: addNewTextVM, showAddNewTextOptionsView: $showAddNewTextOptionsView)
+            ImagePicker(showImagePickerSheet: $showImagePickerSheet, addNewTextOptionsVM: $addNewTextOptionsVM, showAddNewTextOptionsView: $showAddNewTextOptionsView)
                 .ignoresSafeArea(edges: .bottom)
         }
     }
@@ -23,7 +23,7 @@ struct ImagePickerView: View {
 #Preview {
     ImagePickerView(
         showImagePickerSheet: .constant(true),
-        addNewTextVM: AddNewTextViewModel(),
+        addNewTextOptionsVM: .constant(AddNewTextOptionsViewModel()),
         showAddNewTextOptionsView: .constant(true)
     )
 }
