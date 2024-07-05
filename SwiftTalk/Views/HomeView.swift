@@ -18,13 +18,12 @@ struct HomeView: View {
     @State var showTitleUpdateAlert: Bool = false
     @State var newTitle: String = ""
     @State var selectedTextData: TextData?
-    @Query var textDatas: [TextData]
+    @State var isCorrect: Bool = true
 
-    @Environment(AddNewTextViewModel.self) var addNewTextVM
+    @Query(sort: \TextData.dateTime, order: .reverse) var textDatas: [TextData]
 
     init() {
         UINavigationBar.appearance().titleTextAttributes = [.font: UIFont(name: Constants.Fonts.NotoSerifSB, size: 18)!]
-
         UINavigationBar.appearance().largeTitleTextAttributes = [.font: UIFont(name: Constants.Fonts.NotoSerifSB, size: 40)!]
     }
 
@@ -35,7 +34,7 @@ struct HomeView: View {
             }
             .navigationDestination(for: AddNewTextOption.self) { target in
                 if target == .textInput {
-                    AddNewTextView(textSource: .textInput, addNewTextVM: addNewTextVM, textData: nil)
+                    AddNewTextView(textData: TextData(textTitle: nil, text: "", textSource: .textInput, dateTime: nil), isEditing: true, isFocused: true)
                 }
             }
 
@@ -43,14 +42,17 @@ struct HomeView: View {
                 List {
                     ForEach(textDatas, id: \.id) { textData in
                         NavigationLink(destination: {
-                            AddNewTextView(textSource: textData.textSource, addNewTextVM: addNewTextVM, textData: textData)
+                            AddNewTextView(textData: textData, isEditing: false)
                         }, label: {
                             ListItemView(textData: textData)
                                 .contextMenu {
                                     Button {
-                                        newTitle = textData.textTitle // Initialize with current title
+                                        newTitle = textData.textTitle!
                                         selectedTextData = textData
                                         showTitleUpdateAlert = true
+
+                                        // Reset check to original state
+                                        isCorrect = true
                                     } label: {
                                         Label("Update Title", systemImage: "square.and.pencil")
                                     }
@@ -67,34 +69,15 @@ struct HomeView: View {
                                         Label("Delete", systemImage: "trash")
                                     }
                                 }
-
                         })
                     }
-                    .alert("Enter new title", isPresented: $showTitleUpdateAlert, actions: {
-                        TextField("Enter new title", text: $newTitle)
-                        Button("OK", action: {
-                            if let selectedTextData = selectedTextData {
-                                selectedTextData.textTitle = newTitle
-                                do {
-                                    try modelContext.save()
-                                } catch {
-                                    print(error)
-                                }
-                            }
-                        })
-                        Button("Cancel", role: .cancel, action: {})
-                    }, message: {
-                        Text("Enter a new title for the item.")
-                    })
                 }
-
                 .listStyle(.sidebar)
                 .searchable(text: $searchText)
             }
             .navigationTitle("SwiftTalk")
             .toolbar(content: {
                 ToolbarItem {
-                    // This button triggers the Sheet view
                     Button(action: {
                         showAddNewTextOptionsView.toggle()
                     }, label: {
@@ -104,10 +87,34 @@ struct HomeView: View {
             })
         }
         .sheet(isPresented: $showAddNewTextOptionsView, content: {
-            AddNewTextOptionsView(navigationState: $navigationState, showAddNewTextOptionsView: $showAddNewTextOptionsView, addNewTextVM: addNewTextVM)
+            AddNewTextOptionsView(navigationState: $navigationState, showAddNewTextOptionsView: $showAddNewTextOptionsView)
                 .presentationDetents([.height(520)])
-
         })
+        .overlay(
+            CustomAlertView(
+                isPresented: $showTitleUpdateAlert,
+                newTitle: $newTitle,
+                isCorrect: $isCorrect,
+                onSave: verifyAndUpdate
+            )
+        )
+    }
+
+    func verifyAndUpdate() {
+        if !newTitle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            if let selectedTextData = selectedTextData {
+                isCorrect = true
+                selectedTextData.textTitle = newTitle
+                do {
+                    try modelContext.save()
+                    showTitleUpdateAlert = false // Dismiss the alert
+                } catch {
+                    print(error)
+                }
+            }
+        } else {
+            isCorrect = false
+        }
     }
 }
 
