@@ -69,27 +69,14 @@ class DataCoordinator {
             autoTitle = "Text " + formattedDate
         }
 
-        let textDate = TextData(textTitle: autoTitle, text: text, textSource: textSource, iconType: textSource.imageName, dateTime: Date().timeIntervalSince1970)
+        let textDate = TextData(textTitle: autoTitle, text: text, textSource: textSource, dateTime: Date().timeIntervalSince1970)
 
         do {
+            persistantContainer.mainContext.insert(textDate)
             persistantContainer.mainContext.insert(textDate)
             try persistantContainer.mainContext.save()
         } catch {
             print("Save Error : \(error)")
-        }
-    }
-
-    func updateObject(id: UUID, text: String, title: String) {
-        if let textData = getObject(id: id) {
-            textData.text = text
-            textData.textTitle = title
-
-            do {
-                persistantContainer.mainContext.insert(textData)
-                try persistantContainer.mainContext.save()
-            } catch {
-                print("Update Error : \(error)")
-            }
         }
     }
 
