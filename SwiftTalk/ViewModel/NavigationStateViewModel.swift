@@ -9,11 +9,10 @@ import Foundation
 
 @Observable
 class NavigationStateViewModel {
-    var showAddNewTextOptionsView = false
     var targetDestination: [AddNewTextOption] = []
 }
 
-enum AddNewTextOption: String, CaseIterable, Identifiable {
+enum AddNewTextOption: String, CaseIterable, Identifiable, Codable {
     case camera = "Camera Scan"
     case photoLibrary = "Photo Library"
     case wordDocument = "Word Documents"
