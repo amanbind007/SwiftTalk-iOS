@@ -28,7 +28,7 @@ struct ListItemView: View {
                 .fixedSize()
 
             VStack(alignment: .leading) {
-                Text(textData.textTitle)
+                Text(textData.textTitle!)
                     .font(.custom("NotoSerif-Regular", size: 14))
                     .bold()
                     .frame(width: .infinity, height: 1, alignment: .leading)

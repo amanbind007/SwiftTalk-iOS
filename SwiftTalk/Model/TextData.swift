@@ -15,14 +15,14 @@ class TextData: Identifiable {
     var text: String
     var textSource: AddNewTextOption
     var iconType: String
-    var dateTime: Double?
+    var dateTime: Double
 
-    init(textTitle: String?, text: String, textSource: AddNewTextOption, dateTime: Double?) {
+    init(textTitle: String?, text: String, textSource: AddNewTextOption) {
         self.id = UUID()
         self.textTitle = textTitle
         self.text = text
         self.textSource = textSource
         self.iconType = textSource.imageName
-        self.dateTime = dateTime
+        self.dateTime = Date().timeIntervalSince1970
     }
 }

@@ -69,7 +69,7 @@ class DataCoordinator {
             autoTitle = "Text " + formattedDate
         }
 
-        let textDate = TextData(textTitle: autoTitle, text: text, textSource: textSource, dateTime: Date().timeIntervalSince1970)
+        let textDate = TextData(textTitle: autoTitle, text: text, textSource: textSource)
 
         do {
             persistantContainer.mainContext.insert(textDate)
