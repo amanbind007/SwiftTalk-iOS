@@ -34,7 +34,7 @@ struct HomeView: View {
             }
             .navigationDestination(for: AddNewTextOption.self) { target in
                 if target == .textInput {
-                    AddNewTextView(textData: TextData(textTitle: nil, text: "", textSource: .textInput, dateTime: nil), isEditing: true, isFocused: true)
+                    AddNewTextView(textData: TextData(textTitle: nil, text: "", textSource: .textInput), isEditing: true, isFocused: true)
                 }
             }
 
