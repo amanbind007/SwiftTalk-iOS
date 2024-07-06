@@ -27,7 +27,7 @@ struct TextView: UIViewRepresentable {
         let textView = UITextView()
         textView.delegate = context.coordinator
         textView.text = text
-        textView.font = UIFont.systemFont(ofSize: CGFloat(18), weight: .heavy)
+        textView.font = UIFont.systemFont(ofSize: CGFloat(20), weight: .heavy)
         textView.isScrollEnabled = true
         textView.textAlignment = .left
         textView.autocorrectionType = .no
@@ -43,10 +43,10 @@ struct TextView: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: UIViewType, context: Context) {
-        uiView.font = UIFont.systemFont(ofSize: CGFloat(18), weight: .heavy)
+        uiView.font = UIFont.systemFont(ofSize: CGFloat(20), weight: .heavy)
         let attrStr = NSMutableAttributedString(string: text)
 
-        attrStr.addAttribute(NSAttributedString.Key.font, value: UIFont(name: Constants.Fonts.NotoSerifR, size: 18)!, range: NSRange(location: 0, length: attrStr.length))
+        attrStr.addAttribute(NSAttributedString.Key.font, value: UIFont(name: Constants.Fonts.NotoSerifR, size: 20)!, range: NSRange(location: 0, length: attrStr.length))
 
         attrStr.addAttribute(NSAttributedString.Key.foregroundColor, value: theme == .dark ? UIColor.white : UIColor.black, range: NSRange(location: 0, length: attrStr.length))
 
@@ -88,7 +88,7 @@ class TextViewCoordinator: NSObject, UITextViewDelegate {
             self.parent.focused = true
         }
     }
-    
+
 //    func textViewDidChangeSelection(_ textView: UITextView) {
 //        DispatchQueue.main.async {
 //            self.parent.onCharacterTapped?(textView.selectedRange.location)
@@ -100,7 +100,7 @@ class TextViewCoordinator: NSObject, UITextViewDelegate {
             self.parent.text = textView.text
         }
     }
-    
+
     func textViewDidEndEditing(_ textView: UITextView) {
         DispatchQueue.main.async {
             self.parent.focused = false
