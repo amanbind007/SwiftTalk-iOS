@@ -72,7 +72,7 @@ class SpeechSynthesizer: NSObject {
         }
     }
     
-    func pauseText() {
+    func pauseSpeaking() {
         synthesizer.pauseSpeaking(at: .immediate)
         speechState = .paused
     }
