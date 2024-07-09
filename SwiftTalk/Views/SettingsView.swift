@@ -1,13 +1,13 @@
 //
-//  VoiceSpeedSelector.swift
+//  Settings.swift
 //  SwiftTalk
 //
-//  Created by Aman Bind on 09/04/24.
+//  Updated by Aman Bind on 09/07/24.
 //
 
 import SwiftUI
 
-struct VoiceSpeedPitchSelectorView: View {
+struct SettingsView: View {
     @AppStorage("voiceSpeed") var voiceSpeedSliderValue = 0.5
     @AppStorage("voicePitch") var voicePitchSliderValue = 1.0
     @AppStorage("textSize") var textSizeSliderValue = 16.0
@@ -167,5 +167,5 @@ extension Text {
 }
 
 #Preview {
-    VoiceSpeedPitchSelectorView()
+    SettingsView()
 }
