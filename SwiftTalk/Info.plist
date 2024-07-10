@@ -20,6 +20,12 @@
 		<string>NotoSerif-Regular.ttf</string>
 		<string>NotoSerif-SemiBold.ttf</string>
 		<string>ChangaOne-Regular.ttf</string>
+		<string>Fast_Sans.ttf</string>
+		<string>Fast_Serif.ttf</string>
+		<string>OpenDyslexic-Italic.otf</string>
+		<string>OpenDyslexic-Bold.otf</string>
+		<string>OpenDyslexic-Regular.otf</string>
+		<string>OpenDyslexic-Bold-Italic.otf</string>
 	</array>
 	<key>UTImportedTypeDeclarations</key>
 	<array>

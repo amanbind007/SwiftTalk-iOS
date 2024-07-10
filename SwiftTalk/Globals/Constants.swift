@@ -7,11 +7,35 @@
 
 import Foundation
 
-class Constants {
+struct Constants {
     enum Fonts {
         static let NotoSerifSB = "NotoSerif-SemiBold"
         static let NotoSerifR = "NotoSerif-Regular"
         static let ChangaOneR = "ChangaOne"
+    }
+
+    enum BionicFonts {
+        static let BionicSans = "Fast_Sans"
+        static let BionicSerif = "Fast_Serif"
+
+        static let allFonts: [String] = [
+            BionicSans,
+            BionicSerif
+        ]
+    }
+
+    enum OpenDislexic {
+        static let OpenDyslexicBoldItalic = "OpenDyslexic-Bold-Italic"
+        static let OpenDyslexicBold = "OpenDyslexic-Bold"
+        static let OpenDyslexicItalic = "OpenDyslexic-Italic"
+        static let OpenDyslexicRegular = "OpenDyslexic-Regular"
+
+        static let allFonts: [String] = [
+            OpenDyslexicBoldItalic,
+            OpenDyslexicBold,
+            OpenDyslexicItalic,
+            OpenDyslexicRegular
+        ]
     }
 
     enum Icons {
