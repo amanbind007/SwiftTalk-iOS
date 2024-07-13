@@ -11,84 +11,69 @@ import SwiftUI
 struct VoiceSelectorListItemView: View {
     var voice: Voice
     
-    @AppStorage("selectedVoice") var selectedVoice = "Trinoids"
-    @AppStorage("selectedVoiceFlag") var selectedVoiceFlagIcon = "usa-flag-round-circle-icon"
-    @AppStorage("language") var language = "en-US"
+    @Environment(\.dismiss) var dismiss
+    @AppStorage("selectedVoice") var selectedVoiceIdentifier = "com.apple.speech.synthesis.voice.Samantha"
+    @AppStorage("selectedVoiceFlag") var selectedVoiceFlagIcon = "usa"
     
     @State var isPlaying = false
     @Binding var speechManager: SpeechSynthesizer
     
     var body: some View {
         HStack {
-            Image(systemName: selectedVoice == voice.voiceName ? "checkmark.circle.fill" : "circle.fill")
-                .foregroundStyle(selectedVoice == voice.voiceName ? Color.green : Color.secondary)
-                .onTapGesture {
-                    selectedVoice = voice.voiceName
-                    language = voice.languageCode
-                    selectedVoiceFlagIcon = voice.flagName
-                }
-                .imageScale(.large)
+            Button {
+                selectedVoiceIdentifier = voice.identifier
+                selectedVoiceFlagIcon = voice.flag
+                dismiss()
+                
+            } label: {
+                Image(systemName: selectedVoiceIdentifier == voice.identifier ? "checkmark.circle.fill" : "circle.fill")
+                    .foregroundStyle(selectedVoiceIdentifier == voice.identifier ? Color.green : Color.secondary)
+                    
+                    .imageScale(.large)
+            }
+
             Divider()
-            Image(voice.flagName)
+            Image(voice.flag)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 26, height: 26)
             
             Divider()
-            
-            ZStack {
-                Text(voice.language)
-                    .font(.custom("ChangaOne", size: 14))
-                    .foregroundStyle(Color.white)
-                    .padding(5)
-                    .background {
-                        HexagonShape()
-                            .aspectRatio(contentMode: .fit)
-                            .foregroundStyle(
-                                LinearGradient(colors: [.indigo, .blue], startPoint: .topLeading, endPoint: .bottomTrailing)
-                            )
-                    }
+
+            Text("\(voice.voiceName) (\(voice.gender))") { string in
+
+                if let range = string.range(of: voice.voiceName) {
+                    string[range].font = .custom(Constants.Fonts.NotoSerifSB, fixedSize: 14)
+                }
+                if let range = string.range(of: "(\(voice.gender))") {
+                    string[range].foregroundColor = .secondary
+                }
             }
             
-            Divider()
-            
-            Text(voice.voiceName)
-                .font(.custom(Constants.Fonts.NotoSerifR, size: 14))
+            .font(.custom(Constants.Fonts.NotoSerifR, size: 14))
             
             Spacer()
             
-            Button(action: {
-                if isPlaying {
-                    speechManager.stopDemo()
-                    isPlaying = false
-                } else {
-                    speechManager.playDemo(text: voice.demoText, voice: voice.voiceName, languageCode: voice.languageCode)
-                    isPlaying = true
+            Image(systemName: speechManager.speechState == .speaking && speechManager.currentlyPlayingVoice == voice.identifier ? "stop.circle.fill" : "play.circle.fill")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 24, height: 24)
+                .clipShape(Circle())
+                .foregroundStyle(speechManager.speechState == .speaking && speechManager.currentlyPlayingVoice == voice.identifier ? .red : .blue)
+                .onTapGesture {
+                    if speechManager.speechState == .speaking {
+                        speechManager.stopDemo()
+                    } else {
+                        speechManager.playDemo(text: voice.demoText, identifier: voice.identifier)
+                    }
                 }
-            }, label: {
-                ZStack {
-                    Image(systemName: isPlaying && speechManager.currentlyPlayingVoice == voice.voiceName ? "stop.circle.fill" : "play.circle.fill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 24, height: 24)
-                        .clipShape(Circle())
-                        .foregroundStyle(isPlaying && speechManager.currentlyPlayingVoice == voice.voiceName ? .red : .blue)
-                }
-            })
         }
     }
 }
 
 #Preview {
     VoiceSelectorListItemView(
-        voice: Voice(
-            languageCode: "ar-001",
-            voiceName: "Majed",
-            flagName: "saudi-arabia-flag-round-circle-icon",
-            country: "Saudi Arabia",
-            language: "AR",
-            demoText: "مرحبا بالعالم! هذا هو صوت م أجِد لتجربة ميزة تحويل النص إلى كلام"
-        ),
+        voice: Voice(languageCode: "ar-001", voiceName: "Majed", country: "world", language: "Arabic", demoText: "مرحبا، أنا صوتك الناطق الجديد. كيف أبدو ؟", identifier: "com.apple.voice.compact.ar-001.Maged", gender: "Female", flag: "world"),
         speechManager: .constant(SpeechSynthesizer())
     )
 }
