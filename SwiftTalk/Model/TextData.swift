@@ -16,6 +16,8 @@ class TextData: Identifiable {
     var textSource: AddNewTextOption
     var iconType: String
     var dateTime: Double
+    var progress: Int
+    var timeSpend: Double
 
     init(textTitle: String?, text: String, textSource: AddNewTextOption) {
         self.id = UUID()
@@ -24,5 +26,7 @@ class TextData: Identifiable {
         self.textSource = textSource
         self.iconType = textSource.imageName
         self.dateTime = Date().timeIntervalSince1970
+        self.progress = 0
+        self.timeSpend = 0.0
     }
 }
