@@ -20,27 +20,26 @@ struct ListItemView: View {
     ]
 
     var body: some View {
-        HStack {
-            Image(textData.iconType, bundle: Bundle(path: "Assests"))
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 60, height: 60)
-                .fixedSize()
+        VStack(alignment: .leading) {
+            HStack(spacing: 10) {
+                CircularProgressView(value: textData.progress, total: textData.text.count, color: textData.textSource.color, image: textData.textSource.imageName)
+                    .frame(width: 60, height: 60)
 
-            VStack(alignment: .leading) {
-                Text(textData.textTitle!)
-                    .font(.custom("NotoSerif-Regular", size: 14))
-                    .bold()
-                    .frame(width: .infinity, height: 1, alignment: .leading)
+                VStack(alignment: .leading) {
+                    Text(textData.textTitle!)
+                        .font(.custom("NotoSerif-Regular", size: 14))
+                        .bold()
+                        .frame(width: .infinity, height: 1, alignment: .leading)
 
-                Text(textData.text)
-                    .font(.custom("NotoSerif-Regular", size: 12))
-                    .frame(width: .infinity, height: 40, alignment: .leading)
+                    Text(textData.text)
+                        .font(.custom("NotoSerif-Regular", size: 12))
+                        .frame(width: .infinity, height: 40, alignment: .leading)
 
-                Text("\(Date(timeIntervalSince1970: textData.dateTime).formatted(date: .abbreviated, time: .shortened))".uppercased())
-                    .font(.custom("NotoSerif-Regular", size: 10))
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                    Text("\(Date(timeIntervalSince1970: textData.dateTime).formatted(date: .abbreviated, time: .shortened))".uppercased())
+                        .font(.custom("NotoSerif-Regular", size: 10))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
             }
         }
     }
