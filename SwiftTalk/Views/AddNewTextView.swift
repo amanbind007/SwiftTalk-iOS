@@ -10,82 +10,85 @@ import SwiftData
 import SwiftUI
 
 struct AddNewTextView: View {
-    @Environment(\.modelContext) var modelContext
-        
     @Environment(\.colorScheme) private var theme
     @Environment(\.dismiss) private var dismiss
     
-    var textSource: AddNewTextOption
+    @State var speechManager: SpeechSynthesizer = .init()
     
-    @State var speechManager = SpeechSynthesizer()
-    
-    @AppStorage("SelectedVoice") var voice = "Trinoids"
-    @AppStorage("selectedVoiceFlag") var selectedVoiceFlagIcon = "usa-flag-round-circle-icon"
+    @AppStorage("selectedVoice") var selectedVoiceIdentifier = "com.apple.speech.synthesis.voice.Trinoids"
+    @AppStorage("selectedVoiceFlag") var selectedVoiceFlagIcon = "usa"
 
-    @Bindable var addNewTextVM: AddNewTextViewModel
-    
+    @State var addNewTextVM: AddNewTextViewModel = .init()
+    @State var textData: TextData
     @State var isEditing: Bool = false
     @State var isFocused: Bool = false
     
     @State var showAlertTextNotSaved: Bool = false
     @State var showAlertNoText: Bool = false
     
-    var textData: TextData?
+    @State var isSaved: Bool
     
-    init(textSource: AddNewTextOption, addNewTextVM: AddNewTextViewModel, textData: TextData?) {
-        self.addNewTextVM = addNewTextVM
-        self.textSource = textSource
-        if let textData = textData {
-            self.addNewTextVM.text = textData.text
-            self.addNewTextVM.title = textData.textTitle
-            self.textData = textData
-        }
-        else {
-            addNewTextVM.text = nil
-            addNewTextVM.title = nil
+    @State var showContinue: Bool
+    
+    init(textData: TextData, isEditing: Bool, isFocused: Bool, isSaved: Bool) {
+        self.textData = textData
+        self.isEditing = isEditing
+        self.isFocused = isFocused
+        self.isSaved = isSaved
+        
+        if textData.progress > 0 && textData.progress < textData.text.count {
+            self.showContinue = true
+        } else {
+            self.showContinue = false
         }
     }
-
+    
     var body: some View {
-        VStack {
-            VStack(alignment: .leading) {
-                HStack {
-                    if isEditing {
-                        BannerButton(iconSystemName: "list.clipboard", color: .blue, text: "Paste")
-
-                            .onTapGesture {
-                                if let pasteString = addNewTextVM.pasteboard.string {
-                                    addNewTextVM.text = pasteString
+        VStack(spacing: 0) {
+            VStack(alignment: .leading, spacing: 0) {
+                if isEditing {
+                    HStack {
+                        if !isSaved {
+                            Button {
+                                if verifyText(text: textData.text) {
+                                    DataCoordinator().saveObject(text: textData.text, title: nil, textSource: textData.textSource)
+                                    dismiss()
+                                } else {
+                                    showAlertNoText.toggle()
                                 }
-                            }
-                          
-                        if let text = addNewTextVM.text {
-                            BannerButton(iconSystemName: "square.and.arrow.down", color: .green, text: "Save")
                                 
-                                .grayscale(text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? 1 : 0)
-                                .onTapGesture {
-                                    if verifyText(text: text) {
-                                        DataCoordinator.shared.saveObject(text: text, title: addNewTextVM.title, textSource: textSource)
-
-                                        dismiss()
-                                    }
-                                }
-                                .disabled(text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? true : false)
+                            } label: {
+                                BannerButton(iconSystemName: "square.and.arrow.down", color: .green, text: "Save")
+                            }
                         }
                         
-                        BannerButton(iconSystemName: "delete.backward", color: .red, text: "Delete")
-                            .onTapGesture {
-                                addNewTextVM.text = ""
+                        Button {
+                            if let pasteString = addNewTextVM.pasteboard.string {
+                                textData.text = pasteString
                             }
+                        } label: {
+                            BannerButton(iconSystemName: "list.clipboard", color: .blue, text: "Paste")
+                        }
+                        
+                        Button {
+                            textData.text = ""
+                        } label: {
+                            BannerButton(iconSystemName: "delete.backward", color: .red, text: "Delete")
+                        }
                     }
+                    .padding(5)
                 }
-                .padding(.horizontal, 5)
                 
                 Divider()
                 
-                TextView(text: $addNewTextVM.text ?? "", highlightedRange: $speechManager.highlightedRange, editing: $isEditing, focused: $isFocused) { startIndex in
-                    if let text = addNewTextVM.text {
-                        speechManager.play(text: text, voice: voice, from: startIndex)
+                if speechManager.speechState == .speaking || speechManager.speechState == .paused {
+                    LinearProgressBar(value: speechManager.currentCompletedIndex + speechManager.startIndex, total: textData.text.count, color: textData.textSource.color)
+                        .frame(height: 12)
+                }
+                    
+                TextView(text: $textData.text, highlightedRange: $speechManager.highlightedRange, editing: $isEditing, focused: $isFocused) { startIndex in
+                    if !isEditing {
+                        speechManager.play(text: textData.text, voice: selectedVoiceIdentifier, from: startIndex)
                     }
                 }
                 
@@ -94,75 +97,85 @@ struct AddNewTextView: View {
             
             if !isEditing {
                 // Bottom Control Panel
-                VStack {
+                VStack(spacing: 0) {
                     HStack {
-                        Button(action: {
-                            addNewTextVM.isVoiceSelectorPresented.toggle()
-                            
-                        }, label: {
-                            ZStack {
-                                RippledCircle()
-                                    .fill(
-                                        LinearGradient(
-                                            colors: [.pink, .blue, .purple],
-                                            startPoint: .topLeading,
-                                            endPoint: .bottomTrailing
-                                        )
-                                    )
-                                    .frame(width: 55, height: 55)
+                        if speechManager.speechState == .speaking || speechManager.speechState == .paused {
+                            Button(action: {
+                                if speechManager.speechState == .paused {
+                                    speechManager.continueSpeaking()
+                                } else {
+                                    speechManager.pauseSpeaking()
+                                }
                                 
+                            }, label: {
+                                Image(systemName: speechManager.speechState == .speaking ? "pause.circle.fill" : "play.circle.fill")
+                                    .resizable()
+                                    .frame(width: 40, height: 40)
+                            })
+                            
+                        } else {
+                            Button(action: {
+                                addNewTextVM.isVoiceSelectorPresented.toggle()
+                                
+                            }, label: {
                                 Image(selectedVoiceFlagIcon)
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: 45, height: 45)
+                                    .frame(width: 40, height: 40)
                                     .clipShape(Circle())
+                                
+                            })
+                        }
+                        
+                        Spacer()
+                        
+                        if showContinue {
+                            Button {
+                                speechManager.play(text: textData.text, voice: selectedVoiceIdentifier, from: textData.progress)
+                                showContinue = false
+                            } label: {
+                                VStack(spacing: 0) {
+                                    Image(systemName: "arrow.right.circle")
+                                        .resizable()
+                                        .frame(width: 30, height: 30)
+                                        .foregroundStyle(Color.accentColor)
+                                    
+                                    Text("Continue")
+                                        .font(.custom(Constants.Fonts.NotoSerifR, size: 10))
+                                }
                             }
-                        })
-                        
-                        .sheet(isPresented: $addNewTextVM.isVoiceSelectorPresented, content: {
-                            VoiceSelectorView()
-                                .presentationCompactAdaptation(.automatic)
-                        })
-                        .sheet(isPresented: $addNewTextVM.isVoiceSpeedSelectorPresented, content: {
-                            VoiceSpeedPitchSelectorView()
-                                .presentationDetents([.height(280)])
-                        })
-                        
-                        Spacer()
-                        
-                        Button(action: {
-                            // Go forward
-                        }, label: {
-                            Image(systemName: "goforward")
-                                .imageScale(.large)
-                        })
-                        
-                        Spacer()
-                        
-                        Image(systemName: addNewTextVM.isPlaying ? "pause.circle.fill" : "play.circle.fill")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 50, height: 50)
-                            .foregroundColor(addNewTextVM.isPlaying ? .red : .blue)
-                            .clipShape(Circle())
-                            .onTapGesture {
-                                withAnimation {
-                                    addNewTextVM.isPlaying.toggle()
+                            Spacer()
+                        }
+
+                        Button {
+                            withAnimation {
+                                if verifyText(text: textData.text) {
+                                    if speechManager.speechState == .speaking || speechManager.speechState == .paused {
+                                        speechManager.stopSpeakingText()
+                                    } else {
+                                        speechManager.play(text: textData.text, voice: selectedVoiceIdentifier)
+                                    }
+                                } else {
+                                    showAlertNoText = true
                                 }
                                 
-                                if let text = addNewTextVM.text {
-                                    speechManager.play(text: text, voice: voice)
-                                }
+                                showContinue = false
                             }
+                        } label: {
+                            Image(systemName: speechManager.speechState == .speaking || speechManager.speechState
+                                == .paused ? "stop.circle.fill" : "play.circle.fill")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 55, height: 55)
+                                .foregroundColor(speechManager.speechState == .speaking || speechManager.speechState
+                                    == .paused ? .red : .blue)
+                                .clipShape(Circle())
+                        }
                         
-                        Spacer()
-                        
-                        Button(action: {
-                            // Go forward
-                        }, label: {
-                            Image(systemName: "gobackward")
-                                .imageScale(.large)
-                        })
+                        if showContinue {
+                            Spacer()
+                            Spacer()
+                        }
                         
                         Spacer()
                         
@@ -170,28 +183,37 @@ struct AddNewTextView: View {
                             addNewTextVM.isVoiceSpeedSelectorPresented = true
                             
                         }, label: {
-                            FlowerCloud()
-                                .fill(
-                                    .linearGradient(
-                                        colors: [.yellow, .green],
-                                        startPoint: .top,
-                                        endPoint: .bottomTrailing
-                                    )
-                                )
-                                .frame(width: 55, height: 55)
-                                .overlay {
-                                    Text("2.5x")
-                                        .font(.title3)
-                                        .bold()
-                                        .foregroundStyle(Color.black)
-                                }
+                            Image(systemName: "gear.circle.fill")
+                                .resizable()
+                                .frame(width: 40, height: 40)
+                            
                         })
+                        .disabled(speechManager.speechState == .speaking || speechManager.speechState
+                            == .paused)
                     }
+                    .padding(.horizontal)
+                    .padding(.vertical, 5)
+                }
+                
+                .sheet(isPresented: $addNewTextVM.isVoiceSelectorPresented, content: {
+                    VoiceSelectorView()
+                        .presentationCompactAdaptation(.automatic)
+                })
+                .sheet(isPresented: $addNewTextVM.isVoiceSpeedSelectorPresented, content: {
+                    SettingsView()
+                    
+                })
+            }
+        }
+        .onChange(of: speechManager.highlightedRange?.upperBound) {
+            if let highlightedRange = speechManager.highlightedRange {
+                if textData.progress < highlightedRange.upperBound {
+                    textData.progress = highlightedRange.upperBound
                 }
             }
         }
-        .onChange(of: speechManager.isSpeaking) {
-            print("Speech Manager Changed : \(speechManager.isSpeaking)")
+        .onChange(of: speechManager.totalPlayTime) {
+            textData.timeSpend += speechManager.totalPlayTime
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("SwiftTalk")
@@ -201,28 +223,33 @@ struct AddNewTextView: View {
             ToolbarItemGroup(placement: .topBarLeading) {
                 HStack {
                     Button(role: .cancel) {
-                        if let textData = textData, let text = addNewTextVM.text {
-                            if DataCoordinator.shared.doesObjectExistAndUpdated(id: textData.id, title: addNewTextVM.title, text: addNewTextVM.text!) {
-                                DataCoordinator.shared.updateObject(id: textData.id, text: text, title: addNewTextVM.title)
-                                dismiss()
-                            }
-                            
-                            else if verifyText(text: addNewTextVM.text!) {
-                                showAlertTextNotSaved = true
-                            }
-                            else {
-                                dismiss()
-                            }
+                        if !isSaved && verifyText(text: textData.text) {
+                            speechManager.stopSpeakingText()
+                            showAlertTextNotSaved.toggle()
+
+                        } else {
+                            speechManager.stopSpeakingText()
+                            dismiss()
                         }
-                        
-                        dismiss()
-                        
+
                     } label: {
-                        HStack {
-                            Image(systemName: "chevron.left")
-                            Text("Back")
-                        }
+                        BannerButton(iconSystemName: "chevron.left", color: .accentColor, text: "")
                     }
+                    .alert(isPresented: $showAlertTextNotSaved, content: {
+                        Alert(
+                            title: Text("Not Saved"),
+                            message: Text("Do you want to save this text?"),
+                            primaryButton: .default(Text("Yes, save it!"),
+                                                    action: {
+                                                        DataCoordinator.shared.saveObject(text: textData.text, title: textData.textTitle, textSource: textData.textSource)
+
+                                                        dismiss()
+                                                    }),
+                            secondaryButton: .cancel {
+                                dismiss()
+                            }
+                        )
+                    })
                 }
             }
             
@@ -233,26 +260,23 @@ struct AddNewTextView: View {
                     .onTapGesture {
                         withAnimation(.linear) {
                             isEditing = isEditing ? false : true
+                            if isEditing {
+                                speechManager.stopSpeakingText()
+                            }
                         }
                     }
             }
         })
-        
-        .alert(isPresented: $showAlertTextNotSaved, content: {
+        .alert(isPresented: $showAlertNoText, content: {
             Alert(
-                title: Text("Not Saved"),
-                message: Text("Do you want to save this text?"),
-                primaryButton: .default(Text("Yes, save it!"),
-                                        action: {
-                                            DataCoordinator.shared.saveObject(text: addNewTextVM.text!, title: addNewTextVM.title, textSource: textSource)
-
-                                            dismiss()
-                                        }),
-                secondaryButton: .cancel {
-                    dismiss()
-                }
+                title: Text("No Text"),
+                message: Text("Add some text to read/save out")
             )
         })
+        
+//        .onChange(of: speechManager.highlightedRange?.upperBound) {
+//            print("Current Index: \(speechManager.highlightedRange?.upperBound)")
+//        }
     }
     
     func verifyText(text: String) -> Bool {
@@ -262,11 +286,11 @@ struct AddNewTextView: View {
         
         return true
     }
+    
 }
 
 #Preview {
     NavigationStack {
-        AddNewTextView(textSource: .camera, addNewTextVM: AddNewTextViewModel(), textData: nil)
-            .modelContainer(for: TextData.self)
+        AddNewTextView(textData: TextDataPreviewProvider.textData1, isEditing: true, isFocused: false, isSaved: false)
     }
 }
