@@ -54,7 +54,7 @@ class DataCoordinator {
         return false
     }
 
-    func saveObject(text: String, title: String?, textSource: AddNewTextOption) {
+    func saveObject(text: String, title: String?, textSource: TextSource) {
         var autoTitle = ""
 
         if let title = title {

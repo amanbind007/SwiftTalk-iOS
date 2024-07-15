@@ -13,13 +13,13 @@ class TextData: Identifiable {
     @Attribute(.unique) var id: UUID
     var textTitle: String?
     var text: String
-    var textSource: AddNewTextOption
+    var textSource: TextSource
     var iconType: String
     var dateTime: Double
     var progress: Int
     var timeSpend: Double
 
-    init(textTitle: String?, text: String, textSource: AddNewTextOption) {
+    init(textTitle: String?, text: String, textSource: TextSource) {
         self.id = UUID()
         self.textTitle = textTitle
         self.text = text
