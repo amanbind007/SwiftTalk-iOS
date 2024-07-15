@@ -31,10 +31,12 @@ struct WebLinkTextSheetView: View {
                         .textInputAutocapitalization(.never)
                     
                     if let message = addNewTextOptionsVM.errorMessage {
-                        Text(message + " OR incorrect link")
+                        Text(message)
                             .font(.custom(Constants.Fonts.NotoSerifR, size: 12))
                             .foregroundStyle(Color.red)
-                            .frame(width: .infinity, alignment: .trailing)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .padding(.horizontal)
+                            .multilineTextAlignment(.center)
                     }
                     
                     HStack {
