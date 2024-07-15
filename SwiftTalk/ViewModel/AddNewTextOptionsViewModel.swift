@@ -80,7 +80,7 @@ class AddNewTextOptionsViewModel {
         }
     }
 
-    func convertFileToText(fileType: FileTypes, documentURL: URL) {
+    func convertFileToText(fileType: FileImportTypes, documentURL: URL) {
         switch fileType {
         case .pdf:
             self.convertPDFToText(pdfDocumentURL: documentURL)
