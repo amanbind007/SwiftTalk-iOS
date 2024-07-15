@@ -17,7 +17,7 @@ enum SpeechState {
 
 @Observable
 class SpeechSynthesizer: NSObject {
-    let synthesizer: AVSpeechSynthesizer
+    private var synthesizer: AVSpeechSynthesizer
     
     var textFieldText: String = ""
     var textFieldAttributedString: NSAttributedString = .init()
@@ -30,9 +30,15 @@ class SpeechSynthesizer: NSObject {
     // to track highligh stating point if user tapped on the text
     var startIndex: Int = 0
     
-    @ObservationIgnored @AppStorage("voiceSpeed") var voiceSpeedSliderValue = 1.0
+    var currentCompletedIndex: Int = 0
+    
+    private var startTime: Date?
+    private var endTime: Date?
+    private(set) var totalPlayTime: TimeInterval = 0
+    
+    @ObservationIgnored @AppStorage("voiceSpeed") var voiceSpeedSliderValue = 0.5
     @ObservationIgnored @AppStorage("voicePitch") var voicePitchSliderValue = 1.0
-    @ObservationIgnored @AppStorage("language") var language = "en-US"
+    @ObservationIgnored @AppStorage("selectedVoice") var selectedVoiceIdentifier = "com.apple.speech.synthesis.voice.Samantha"
     
     override init() {
         synthesizer = AVSpeechSynthesizer()
@@ -42,13 +48,13 @@ class SpeechSynthesizer: NSObject {
         synthesizer.delegate = self
     }
     
-    func playDemo(text: String, voice: String, languageCode: String) {
+    func playDemo(text: String, identifier: String) {
         stopDemo()
         let utterance = AVSpeechUtterance(string: text)
-        utterance.voice = AVSpeechSynthesisVoice(identifier: voice)
+        utterance.voice = AVSpeechSynthesisVoice(identifier: identifier)
         utterance.rate = 0.5
         synthesizer.speak(utterance)
-        currentlyPlayingVoice = voice
+        currentlyPlayingVoice = identifier
     }
         
     func stopDemo() {
@@ -62,10 +68,14 @@ class SpeechSynthesizer: NSObject {
         stopSpeakingText()
         speechState = .speaking
         self.startIndex = startIndex
+        
+        startTime = Date() // Record start time
+        totalPlayTime = 0 // Reset total play time
+        
         if !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             let textToSpeak = String(text.dropFirst(startIndex))
             let utterance = AVSpeechUtterance(string: textToSpeak)
-            utterance.voice = AVSpeechSynthesisVoice(language: language)
+            utterance.voice = AVSpeechSynthesisVoice(identifier: selectedVoiceIdentifier)
             utterance.rate = Float(voiceSpeedSliderValue)
             utterance.pitchMultiplier = Float(voicePitchSliderValue)
             synthesizer.speak(utterance)
@@ -75,6 +85,7 @@ class SpeechSynthesizer: NSObject {
     func pauseSpeaking() {
         synthesizer.pauseSpeaking(at: .immediate)
         speechState = .paused
+        updateTotalPlayTime()
     }
     
     func continueSpeaking() {
@@ -85,6 +96,15 @@ class SpeechSynthesizer: NSObject {
     func stopSpeakingText() {
         synthesizer.stopSpeaking(at: .immediate)
         speechState = .stop
+        updateTotalPlayTime()
+    }
+    
+    private func updateTotalPlayTime() {
+        if let start = startTime {
+            let now = Date()
+            totalPlayTime += now.timeIntervalSince(start)
+            startTime = nil
+        }
     }
 }
 
@@ -96,14 +116,17 @@ extension SpeechSynthesizer: AVSpeechSynthesizerDelegate {
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
         speechState = .stop
         highlightedRange = NSRange(location: 0, length: 0)
+        updateTotalPlayTime()
     }
     
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
         speechState = .stop
+        updateTotalPlayTime()
     }
     
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didContinue utterance: AVSpeechUtterance) {
         speechState = .speaking
+        startTime = Date()
     }
     
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance) {
@@ -114,5 +137,6 @@ extension SpeechSynthesizer: AVSpeechSynthesizerDelegate {
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, willSpeakRangeOfSpeechString characterRange: NSRange, utterance: AVSpeechUtterance) {
         let adjustedRange = NSRange(location: characterRange.location + startIndex, length: characterRange.length)
         highlightedRange = adjustedRange
+        currentCompletedIndex = characterRange.upperBound
     }
 }
