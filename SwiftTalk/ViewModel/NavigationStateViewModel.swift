@@ -6,13 +6,14 @@
 //
 
 import Foundation
+import SwiftUI
 
 @Observable
 class NavigationStateViewModel {
-    var targetDestination: [AddNewTextOption] = []
+    var targetDestination: [TextSource] = []
 }
 
-enum AddNewTextOption: String, CaseIterable, Identifiable, Codable {
+enum TextSource: String, CaseIterable, Identifiable, Codable {
     case camera = "Camera Scan"
     case photoLibrary = "Photo Library"
     case wordDocument = "Word Documents"
@@ -45,6 +46,18 @@ enum AddNewTextOption: String, CaseIterable, Identifiable, Codable {
         case .pdfDocument: return Constants.Icons.pdfFileIcon
         case .webpage: return Constants.Icons.webIcon
         case .textFile: return Constants.Icons.textFileIcon
+        }
+    }
+    
+    var color: Color {
+        switch self {
+        case .camera: return Color.pink
+        case .photoLibrary: return Color.green
+        case .wordDocument: return Color.blue
+        case .textInput: return Color.purple
+        case .pdfDocument: return Color.red
+        case .webpage: return Color.mint
+        case .textFile: return Color.secondary
         }
     }
 }
