@@ -10,14 +10,14 @@ import SwiftUI
 
 struct ListItemView: View {
     let textData: TextData
-
-    var imageNames = [
-        "image_file_icon",
-        "link_icon",
-        "pdf_file_icon",
-        "text_file_icon",
-        "word_file_icon",
-    ]
+    
+    var formattedPlayTime: String {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.hour, .minute, .second]
+        formatter.unitsStyle = .positional
+        formatter.zeroFormattingBehavior = .pad
+        return formatter.string(from: textData.timeSpend) ?? "00:00:00"
+    }
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -35,10 +35,18 @@ struct ListItemView: View {
                         .font(.custom("NotoSerif-Regular", size: 12))
                         .frame(width: .infinity, height: 40, alignment: .leading)
 
-                    Text("\(Date(timeIntervalSince1970: textData.dateTime).formatted(date: .abbreviated, time: .shortened))".uppercased())
-                        .font(.custom("NotoSerif-Regular", size: 10))
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                    HStack{
+                        Text("\(Date(timeIntervalSince1970: textData.dateTime).formatted(date: .abbreviated, time: .shortened))".uppercased())
+                            .font(.custom("NotoSerif-Regular", size: 10))
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                        
+                        Spacer()
+                        
+                        Text(formattedPlayTime)
+                            .font(.custom("NotoSerif-Regular", size: 10))
+                        
+                    }
                 }
             }
         }
