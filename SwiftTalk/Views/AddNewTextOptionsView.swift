@@ -8,7 +8,7 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-enum FileTypes {
+enum FileImportTypes {
     case text
     case doc
     case pdf
@@ -27,23 +27,22 @@ enum FileTypes {
 
 struct AddNewTextOptionsView: View {
     @Environment(\.dismiss) var dismiss
+
     @Binding var navigationState: NavigationStateViewModel
-
     @Binding var showAddNewTextOptionsView: Bool
-    @Bindable var addNewTextVM: AddNewTextViewModel
 
+    @State var addNewTextOptionsVM = AddNewTextOptionsViewModel()
     @State var showWebTextSheet: Bool = false
     @State var showImagePickerSheet: Bool = false
     @State var showFileImporterSheet: Bool = false
-
-    @State var fileType: FileTypes?
+    @State var fileType: FileImportTypes?
 
     let docUTType = UTType(importedAs: "com.amanbind.swifttalk.doc", conformingTo: .data)
 
     var body: some View {
         NavigationView {
             List {
-                ForEach(AddNewTextOption.allCases) { option in
+                ForEach(TextSource.allCases) { option in
                     Button(action: {
                         switch option {
                         case .camera:
@@ -79,13 +78,12 @@ struct AddNewTextOptionsView: View {
             ) { result in
                 do {
                     let url = try result.get()
-                    addNewTextVM.convertFileToText(fileType: fileType!, documentURL: url)
+                    addNewTextOptionsVM.convertFileToText(fileType: fileType!, documentURL: url)
                 }
                 catch {
                     print(error)
                 }
             }
-
             .offset(y: -30)
             .navigationTitle("Add Text")
             .navigationBarTitleDisplayMode(.inline)
@@ -99,11 +97,11 @@ struct AddNewTextOptionsView: View {
                 }
             })
             .sheet(isPresented: $showWebTextSheet, content: {
-                WebLinkTextSheetView(addNewTextVM: addNewTextVM, showAddNewTextOptionsView: $showAddNewTextOptionsView, showWebTextSheet: $showWebTextSheet)
+                WebLinkTextSheetView(addNewTextOptionsVM: $addNewTextOptionsVM, showAddNewTextOptionsView: $showAddNewTextOptionsView, showWebTextSheet: $showWebTextSheet)
                     .presentationDetents([.height(280)])
             })
             .sheet(isPresented: $showImagePickerSheet, content: {
-                ImagePickerView(showImagePickerSheet: $showImagePickerSheet, addNewTextVM: addNewTextVM, showAddNewTextOptionsView: $showAddNewTextOptionsView)
+                ImagePickerView(showImagePickerSheet: $showImagePickerSheet, addNewTextOptionsVM: $addNewTextOptionsVM, showAddNewTextOptionsView: $showAddNewTextOptionsView)
                     .ignoresSafeArea(edges: .bottom)
             })
         }
@@ -111,5 +109,5 @@ struct AddNewTextOptionsView: View {
 }
 
 #Preview {
-    AddNewTextOptionsView(navigationState: .constant(NavigationStateViewModel()), showAddNewTextOptionsView: .constant(true), addNewTextVM: AddNewTextViewModel())
+    AddNewTextOptionsView(navigationState: .constant(NavigationStateViewModel()), showAddNewTextOptionsView: .constant(true), addNewTextOptionsVM: AddNewTextOptionsViewModel())
 }
