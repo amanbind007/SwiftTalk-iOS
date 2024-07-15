@@ -35,14 +35,11 @@
 		5C4AA48D2BDE4E1A00150112 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AA48C2BDE4E1A00150112 /* ImagePickerView.swift */; };
 		5C4D0A592C08601C00726969 /* TextDataPreviewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4D0A582C08601C00726969 /* TextDataPreviewProvider.swift */; };
 		5C5E5B782BE8C2F300A9ED86 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5E5B772BE8C2F300A9ED86 /* TextView.swift */; };
-		5C662A262BA330F100F52055 /* HexagonShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C662A252BA330F100F52055 /* HexagonShape.swift */; };
 		5C87CC3D2C2828180010363F /* BannerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C87CC3C2C2828180010363F /* BannerButton.swift */; };
 		5C87CC3F2C2895700010363F /* CustomSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C87CC3E2C2895700010363F /* CustomSwitch.swift */; };
 		5C9A42002BBF0BF3001F4744 /* NavigationStateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9A41FF2BBF0BF3001F4744 /* NavigationStateViewModel.swift */; };
 		5CAC44FE2C0639EB001E13CA /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAC44FD2C0639EB001E13CA /* Binding+Extension.swift */; };
-		5CB0EA992BA2066C00648414 /* FlowerCloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB0EA982BA2066C00648414 /* FlowerCloud.swift */; };
 		5CB0EA9F2BA2B67500648414 /* VoiceSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB0EA9E2BA2B67500648414 /* VoiceSelectorView.swift */; };
-		5CB0EAA12BA2B72D00648414 /* RippledCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB0EAA02BA2B72D00648414 /* RippledCircle.swift */; };
 		5CDF5F102BD0EB6E00534B6B /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDF5F0F2BD0EB6E00534B6B /* ImagePicker.swift */; };
 		5CE2A8F32B9F781300665B1F /* AddNewTextOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE2A8F22B9F781300665B1F /* AddNewTextOptionsView.swift */; };
 		5CE2A8F72B9F7C7100665B1F /* NotoSerif-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5CE2A8F62B9F7C7100665B1F /* NotoSerif-SemiBold.ttf */; };
@@ -87,14 +84,11 @@
 		5C4AA48C2BDE4E1A00150112 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		5C4D0A582C08601C00726969 /* TextDataPreviewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextDataPreviewProvider.swift; sourceTree = "<group>"; };
 		5C5E5B772BE8C2F300A9ED86 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
-		5C662A252BA330F100F52055 /* HexagonShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexagonShape.swift; sourceTree = "<group>"; };
 		5C87CC3C2C2828180010363F /* BannerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerButton.swift; sourceTree = "<group>"; };
 		5C87CC3E2C2895700010363F /* CustomSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSwitch.swift; sourceTree = "<group>"; };
 		5C9A41FF2BBF0BF3001F4744 /* NavigationStateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationStateViewModel.swift; sourceTree = "<group>"; };
 		5CAC44FD2C0639EB001E13CA /* Binding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extension.swift"; sourceTree = "<group>"; };
-		5CB0EA982BA2066C00648414 /* FlowerCloud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowerCloud.swift; sourceTree = "<group>"; };
 		5CB0EA9E2BA2B67500648414 /* VoiceSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceSelectorView.swift; sourceTree = "<group>"; };
-		5CB0EAA02BA2B72D00648414 /* RippledCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RippledCircle.swift; sourceTree = "<group>"; };
 		5CDF5F0F2BD0EB6E00534B6B /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		5CE2A8F22B9F781300665B1F /* AddNewTextOptionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewTextOptionsView.swift; sourceTree = "<group>"; };
 		5CE2A8F62B9F7C7100665B1F /* NotoSerif-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSerif-SemiBold.ttf"; sourceTree = "<group>"; };
@@ -143,7 +137,6 @@
 				5CE8E8282C131415009FDAE2 /* Coordinator */,
 				5CAC44FC2C0639B5001E13CA /* Extensions */,
 				5CFAF9572BC6D356003726AA /* Managers */,
-				5CB0EA972BA205F600648414 /* Shapes */,
 				5CB0EA942BA092E000648414 /* Globals */,
 				5C3016F92B9E0DE80012542D /* Model */,
 				5C3016F42B9B652F0012542D /* Fonts */,
@@ -243,16 +236,6 @@
 				5C308BFE2C3E6F5C0054886B /* flagNames.swift */,
 			);
 			path = Globals;
-			sourceTree = "<group>";
-		};
-		5CB0EA972BA205F600648414 /* Shapes */ = {
-			isa = PBXGroup;
-			children = (
-				5CB0EA982BA2066C00648414 /* FlowerCloud.swift */,
-				5CB0EAA02BA2B72D00648414 /* RippledCircle.swift */,
-				5C662A252BA330F100F52055 /* HexagonShape.swift */,
-			);
-			path = Shapes;
 			sourceTree = "<group>";
 		};
 		5CE8E8282C131415009FDAE2 /* Coordinator */ = {
@@ -361,7 +344,6 @@
 				5C308BDB2C37060B0054886B /* CustomAlertView.swift in Sources */,
 				5C308C0A2C3EF9400054886B /* Constants.swift in Sources */,
 				5C308BD92C358A160054886B /* AddNewTextOptionsViewModel.swift in Sources */,
-				5C662A262BA330F100F52055 /* HexagonShape.swift in Sources */,
 				5C4AA48D2BDE4E1A00150112 /* ImagePickerView.swift in Sources */,
 				5C87CC3D2C2828180010363F /* BannerButton.swift in Sources */,
 				5C3016FD2B9E16D20012542D /* ListItemView.swift in Sources */,
@@ -376,7 +358,6 @@
 				5C308BFD2C3D6BC60054886B /* VoiceSampleText.swift in Sources */,
 				5C5E5B782BE8C2F300A9ED86 /* TextView.swift in Sources */,
 				5CFAF9542BC522DB003726AA /* SettingsView.swift in Sources */,
-				5CB0EA992BA2066C00648414 /* FlowerCloud.swift in Sources */,
 				5CE8E82A2C131436009FDAE2 /* DataCoordinator.swift in Sources */,
 				5CFAF9522BC3BE91003726AA /* AddNewTextViewModel.swift in Sources */,
 				5CAC44FE2C0639EB001E13CA /* Binding+Extension.swift in Sources */,
@@ -390,7 +371,6 @@
 				5C21D1DC2B99E8E4009C0A6B /* SwiftTalkApp.swift in Sources */,
 				5C9A42002BBF0BF3001F4744 /* NavigationStateViewModel.swift in Sources */,
 				5C49EC792C41A89900B15B82 /* LinearProgressBar.swift in Sources */,
-				5CB0EAA12BA2B72D00648414 /* RippledCircle.swift in Sources */,
 				5CDF5F102BD0EB6E00534B6B /* ImagePicker.swift in Sources */,
 				5CFAF95B2BC99C08003726AA /* VoiceSelectorListItemView.swift in Sources */,
 			);
