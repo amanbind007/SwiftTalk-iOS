@@ -85,13 +85,16 @@ struct AddNewTextView: View {
                     LinearProgressBar(value: speechManager.currentCompletedIndex + speechManager.startIndex, total: textData.text.count, color: textData.textSource.color)
                         .frame(height: 12)
                 }
-                    
-                TextView(text: $textData.text, highlightedRange: $speechManager.highlightedRange, editing: $isEditing, focused: $isFocused) { startIndex in
-                    if !isEditing {
-                        speechManager.play(text: textData.text, voice: selectedVoiceIdentifier, from: startIndex)
-                    }
-                }
                 
+                GeometryReader { proxy in
+                    TextView(text: $textData.text, highlightedRange: $speechManager.highlightedRange, editing: $isEditing, focused: $isFocused) { startIndex in
+                        if !isEditing {
+                            speechManager.play(text: textData.text, voice: selectedVoiceIdentifier, from: startIndex)
+                        }
+                    }
+                    .frame(width: proxy.size.width, height: proxy.size.height)
+                }
+                    
                 Divider()
             }
             
