@@ -10,12 +10,13 @@ import SwiftUI
 struct SettingsView: View {
     @AppStorage("voiceSpeed") var voiceSpeedSliderValue = 0.5
     @AppStorage("voicePitch") var voicePitchSliderValue = 1.0
-    @AppStorage("textSize") var textSizeSliderValue = 16.0
+    @AppStorage("textSize") var textSize = 16.0
     @AppStorage("selectedFont") var selectedFont = Constants.Fonts.NotoSerifR
-    @State private var backgroundColor: Color = .white
-    @State private var foregroundColor: Color = .black
+    @AppStorage("backgroundColor") var backgroundColor: Color = Color(UIColor(red: 1.00, green: 0.97, blue: 0.42, alpha: 1.00))
+    @AppStorage("foregroundColor") var foregroundColor: Color = Color(UIColor(red: 0.83, green: 0.00, blue: 0.00, alpha: 1.00))
 
     @Environment(\.dismiss) var dismiss
+    @Environment(\.colorScheme) var theme
 
     var body: some View {
         NavigationStack {
@@ -82,7 +83,7 @@ struct SettingsView: View {
                         FontSelectorView(selectedfont: $selectedFont)
                     } label: {
                         HStack {
-                            Text("Font \(Int(self.textSizeSliderValue))")
+                            Text("Font \(Int(self.textSize))")
                                 .font(.custom(Constants.Fonts.NotoSerifR, size: 16))
 
                             Spacer()
@@ -95,9 +96,9 @@ struct SettingsView: View {
 
                 Section(header: Text("Text Size")) {
                     HStack {
-                        Text("Text Size: \(Int(self.textSizeSliderValue))")
+                        Text("Text Size: \(Int(self.textSize))")
                             .font(.custom(Constants.Fonts.NotoSerifR, size: 16))
-                        Stepper("", value: self.$textSizeSliderValue, in: 10...30, step: 1)
+                        Stepper("", value: self.$textSize, in: 10...30, step: 1)
                     }
 
                     HStack {
@@ -108,12 +109,14 @@ struct SettingsView: View {
                                 string[range].backgroundColor = self.backgroundColor
                             }
                         }
-                        .font(.custom(selectedFont, size: self.textSizeSliderValue))
+                        .font(.custom(selectedFont, size: self.textSize))
                         .frame(maxWidth: .infinity, alignment: .center)
                         .padding()
                     }
-                    .background(.white)
-                    .cornerRadius(8)
+                    .background {
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(lineWidth: 3)
+                    }
                 }
                 .font(.custom(Constants.Fonts.NotoSerifR, size: 10))
 
@@ -138,9 +141,9 @@ struct SettingsView: View {
                     Button("Reset") {
                         self.voiceSpeedSliderValue = 0.5
                         self.voicePitchSliderValue = 1.0
-                        self.textSizeSliderValue = 16.0
-                        self.backgroundColor = .white
-                        self.foregroundColor = .black
+                        self.textSize = 16.0
+                        self.backgroundColor = .yellow
+                        self.foregroundColor = .blue
                     }
                     .font(.custom(Constants.Fonts.NotoSerifR, size: 16))
                 }
