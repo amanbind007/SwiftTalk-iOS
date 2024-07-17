@@ -12,7 +12,7 @@ import SwiftUI
 struct SwiftTalkApp: App {
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            MainView()
         }
         .modelContainer(for: [TextData.self, DailyStats.self])
     }
