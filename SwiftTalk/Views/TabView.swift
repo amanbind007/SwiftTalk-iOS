@@ -7,12 +7,22 @@
 
 import SwiftUI
 
-struct TabView: View {
+struct MainView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        TabView {
+            HomeView()
+                .tabItem {
+                    Label("Home", systemImage: "house.fill")
+                }
+            
+            StatsView()
+                .tabItem {
+                    Label("Stats", systemImage: "chart.bar.xaxis")
+                }
+        }
     }
 }
 
 #Preview {
-    TabView()
+    MainView()
 }
