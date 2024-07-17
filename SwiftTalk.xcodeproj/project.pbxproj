@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		5C1925B02BCD84580014FD69 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 5C1925AF2BCD84580014FD69 /* SwiftSoup */; };
-		5C21D1DC2B99E8E4009C0A6B /* SwiftTalkApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C21D1DB2B99E8E4009C0A6B /* SwiftTalkApp.swift */; };
 		5C21D1DE2B99E8E4009C0A6B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C21D1DD2B99E8E4009C0A6B /* HomeView.swift */; };
 		5C21D1E02B99E8E6009C0A6B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C21D1DF2B99E8E6009C0A6B /* Assets.xcassets */; };
 		5C21D1E32B99E8E6009C0A6B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C21D1E22B99E8E6009C0A6B /* Preview Assets.xcassets */; };
@@ -37,6 +36,14 @@
 		5C5E5B782BE8C2F300A9ED86 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5E5B772BE8C2F300A9ED86 /* TextView.swift */; };
 		5C87CC3D2C2828180010363F /* BannerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C87CC3C2C2828180010363F /* BannerButton.swift */; };
 		5C87CC3F2C2895700010363F /* CustomSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C87CC3E2C2895700010363F /* CustomSwitch.swift */; };
+		5C99E3142C4594ED0083A507 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C99E3132C4594ED0083A507 /* Color+Extension.swift */; };
+		5C99E3162C463F0D0083A507 /* DailyStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C99E3152C463F0D0083A507 /* DailyStats.swift */; };
+		5C99E3182C463F980083A507 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C99E3172C463F980083A507 /* StatsView.swift */; };
+		5C99E3202C477AF10083A507 /* SwiftTalkApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C99E31F2C477AF10083A507 /* SwiftTalkApp.swift */; };
+		5C99E39D2C47ACF30083A507 /* TabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C99E39C2C47ACF30083A507 /* TabView.swift */; };
+		5C99E3A02C47BB2E0083A507 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 5C99E39F2C47BB2E0083A507 /* Lottie */; };
+		5C99E3A32C47BB930083A507 /* EmptyAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C99E3A22C47BB930083A507 /* EmptyAnimation.json */; };
+		5C99E3AE2C47FD540083A507 /* StatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C99E3AD2C47FD540083A507 /* StatsViewModel.swift */; };
 		5C9A42002BBF0BF3001F4744 /* NavigationStateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9A41FF2BBF0BF3001F4744 /* NavigationStateViewModel.swift */; };
 		5CAC44FE2C0639EB001E13CA /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAC44FD2C0639EB001E13CA /* Binding+Extension.swift */; };
 		5CB0EA9F2BA2B67500648414 /* VoiceSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB0EA9E2BA2B67500648414 /* VoiceSelectorView.swift */; };
@@ -56,7 +63,6 @@
 
 /* Begin PBXFileReference section */
 		5C21D1D82B99E8E4009C0A6B /* SwiftTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		5C21D1DB2B99E8E4009C0A6B /* SwiftTalkApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftTalkApp.swift; sourceTree = "<group>"; };
 		5C21D1DD2B99E8E4009C0A6B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		5C21D1DF2B99E8E6009C0A6B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5C21D1E22B99E8E6009C0A6B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -86,6 +92,13 @@
 		5C5E5B772BE8C2F300A9ED86 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		5C87CC3C2C2828180010363F /* BannerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerButton.swift; sourceTree = "<group>"; };
 		5C87CC3E2C2895700010363F /* CustomSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSwitch.swift; sourceTree = "<group>"; };
+		5C99E3132C4594ED0083A507 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
+		5C99E3152C463F0D0083A507 /* DailyStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyStats.swift; sourceTree = "<group>"; };
+		5C99E3172C463F980083A507 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
+		5C99E31F2C477AF10083A507 /* SwiftTalkApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftTalkApp.swift; sourceTree = "<group>"; };
+		5C99E39C2C47ACF30083A507 /* TabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabView.swift; sourceTree = "<group>"; };
+		5C99E3A22C47BB930083A507 /* EmptyAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = EmptyAnimation.json; sourceTree = "<group>"; };
+		5C99E3AD2C47FD540083A507 /* StatsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsViewModel.swift; sourceTree = "<group>"; };
 		5C9A41FF2BBF0BF3001F4744 /* NavigationStateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationStateViewModel.swift; sourceTree = "<group>"; };
 		5CAC44FD2C0639EB001E13CA /* Binding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extension.swift"; sourceTree = "<group>"; };
 		5CB0EA9E2BA2B67500648414 /* VoiceSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceSelectorView.swift; sourceTree = "<group>"; };
@@ -109,6 +122,7 @@
 			files = (
 				5C1925B02BCD84580014FD69 /* SwiftSoup in Frameworks */,
 				5CF861102BD793C200D8474F /* OfficeFileReader in Frameworks */,
+				5C99E3A02C47BB2E0083A507 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,6 +148,8 @@
 		5C21D1DA2B99E8E4009C0A6B /* SwiftTalk */ = {
 			isa = PBXGroup;
 			children = (
+				5C99E3212C477B1A0083A507 /* App */,
+				5C99E3A12C47BB730083A507 /* LottieAnimationJson */,
 				5CE8E8282C131415009FDAE2 /* Coordinator */,
 				5CAC44FC2C0639B5001E13CA /* Extensions */,
 				5CFAF9572BC6D356003726AA /* Managers */,
@@ -143,7 +159,6 @@
 				5C9A42012BBF0CED001F4744 /* ViewModel */,
 				5C9A42022BBF0D10001F4744 /* Views */,
 				5C3016F32B9B64770012542D /* Info.plist */,
-				5C21D1DB2B99E8E4009C0A6B /* SwiftTalkApp.swift */,
 				5C21D1DF2B99E8E6009C0A6B /* Assets.xcassets */,
 				5C21D1E12B99E8E6009C0A6B /* Preview Content */,
 			);
@@ -180,14 +195,32 @@
 			children = (
 				5C3016FA2B9E0E140012542D /* TextData.swift */,
 				5CFAF94F2BC2FBFA003726AA /* Voice.swift */,
+				5C99E3152C463F0D0083A507 /* DailyStats.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		5C99E3212C477B1A0083A507 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				5C99E31F2C477AF10083A507 /* SwiftTalkApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		5C99E3A12C47BB730083A507 /* LottieAnimationJson */ = {
+			isa = PBXGroup;
+			children = (
+				5C99E3A22C47BB930083A507 /* EmptyAnimation.json */,
+			);
+			path = LottieAnimationJson;
 			sourceTree = "<group>";
 		};
 		5C9A42012BBF0CED001F4744 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				5C9A41FF2BBF0BF3001F4744 /* NavigationStateViewModel.swift */,
+				5C99E3AD2C47FD540083A507 /* StatsViewModel.swift */,
 				5CFAF9512BC3BE91003726AA /* AddNewTextViewModel.swift */,
 				5C308BD82C358A160054886B /* AddNewTextOptionsViewModel.swift */,
 			);
@@ -198,11 +231,13 @@
 			isa = PBXGroup;
 			children = (
 				5C21D1DD2B99E8E4009C0A6B /* HomeView.swift */,
+				5C99E39C2C47ACF30083A507 /* TabView.swift */,
 				5C308BDA2C37060B0054886B /* CustomAlertView.swift */,
 				5C3016FC2B9E16D20012542D /* ListItemView.swift */,
 				5CE2A8F22B9F781300665B1F /* AddNewTextOptionsView.swift */,
 				5C4454042BA35D34006DB2F5 /* AddNewTextOptionCardView.swift */,
 				5C3016F12B9B5F340012542D /* AddNewTextView.swift */,
+				5C99E3172C463F980083A507 /* StatsView.swift */,
 				5C49EC782C41A89900B15B82 /* LinearProgressBar.swift */,
 				5C308C112C3F0D320054886B /* CircularProgressView.swift */,
 				5C87CC3C2C2828180010363F /* BannerButton.swift */,
@@ -224,6 +259,7 @@
 			isa = PBXGroup;
 			children = (
 				5CAC44FD2C0639EB001E13CA /* Binding+Extension.swift */,
+				5C99E3132C4594ED0083A507 /* Color+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -273,6 +309,7 @@
 			packageProductDependencies = (
 				5C1925AF2BCD84580014FD69 /* SwiftSoup */,
 				5CF8610F2BD793C200D8474F /* OfficeFileReader */,
+				5C99E39F2C47BB2E0083A507 /* Lottie */,
 			);
 			productName = SwiftTalk;
 			productReference = 5C21D1D82B99E8E4009C0A6B /* SwiftTalk.app */;
@@ -305,6 +342,7 @@
 			packageReferences = (
 				5C1925AE2BCD84580014FD69 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
 				5CF8610E2BD793C200D8474F /* XCRemoteSwiftPackageReference "OfficeFileReader" */,
+				5C99E39E2C47BB2E0083A507 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = 5C21D1D92B99E8E4009C0A6B /* Products */;
 			projectDirPath = "";
@@ -324,6 +362,7 @@
 				5C3017012B9E25480012542D /* NotoSerif-Regular.ttf in Resources */,
 				5C4454032BA35266006DB2F5 /* ChangaOne-Regular.ttf in Resources */,
 				5C308BF32C3C61C50054886B /* OpenDyslexic-Regular.otf in Resources */,
+				5C99E3A32C47BB930083A507 /* EmptyAnimation.json in Resources */,
 				5C21D1E32B99E8E6009C0A6B /* Preview Assets.xcassets in Resources */,
 				5C308BFA2C3D11FE0054886B /* Fast_Sans.ttf in Resources */,
 				5CE2A8F72B9F7C7100665B1F /* NotoSerif-SemiBold.ttf in Resources */,
@@ -350,6 +389,7 @@
 				5C308BE72C3BDCDA0054886B /* FontSelectorView.swift in Sources */,
 				5CE2A8F32B9F781300665B1F /* AddNewTextOptionsView.swift in Sources */,
 				5C3016FB2B9E0E140012542D /* TextData.swift in Sources */,
+				5C99E3162C463F0D0083A507 /* DailyStats.swift in Sources */,
 				5CFAF9592BC6D376003726AA /* SpeechSynthesizer.swift in Sources */,
 				5C3016F22B9B5F340012542D /* AddNewTextView.swift in Sources */,
 				5CFAF9502BC2FBFA003726AA /* Voice.swift in Sources */,
@@ -357,6 +397,7 @@
 				5CB0EA9F2BA2B67500648414 /* VoiceSelectorView.swift in Sources */,
 				5C308BFD2C3D6BC60054886B /* VoiceSampleText.swift in Sources */,
 				5C5E5B782BE8C2F300A9ED86 /* TextView.swift in Sources */,
+				5C99E39D2C47ACF30083A507 /* TabView.swift in Sources */,
 				5CFAF9542BC522DB003726AA /* SettingsView.swift in Sources */,
 				5CE8E82A2C131436009FDAE2 /* DataCoordinator.swift in Sources */,
 				5CFAF9522BC3BE91003726AA /* AddNewTextViewModel.swift in Sources */,
@@ -366,13 +407,16 @@
 				5C87CC3F2C2895700010363F /* CustomSwitch.swift in Sources */,
 				5C4D0A592C08601C00726969 /* TextDataPreviewProvider.swift in Sources */,
 				5CFAF95D2BCA737D003726AA /* WebLinkTextSheetView.swift in Sources */,
+				5C99E3182C463F980083A507 /* StatsView.swift in Sources */,
 				5C21D1DE2B99E8E4009C0A6B /* HomeView.swift in Sources */,
 				5C308C122C3F0D320054886B /* CircularProgressView.swift in Sources */,
-				5C21D1DC2B99E8E4009C0A6B /* SwiftTalkApp.swift in Sources */,
 				5C9A42002BBF0BF3001F4744 /* NavigationStateViewModel.swift in Sources */,
 				5C49EC792C41A89900B15B82 /* LinearProgressBar.swift in Sources */,
 				5CDF5F102BD0EB6E00534B6B /* ImagePicker.swift in Sources */,
+				5C99E3AE2C47FD540083A507 /* StatsViewModel.swift in Sources */,
+				5C99E3142C4594ED0083A507 /* Color+Extension.swift in Sources */,
 				5CFAF95B2BC99C08003726AA /* VoiceSelectorListItemView.swift in Sources */,
+				5C99E3202C477AF10083A507 /* SwiftTalkApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -594,6 +638,14 @@
 				minimumVersion = 2.7.2;
 			};
 		};
+		5C99E39E2C47BB2E0083A507 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.0;
+			};
+		};
 		5CF8610E2BD793C200D8474F /* XCRemoteSwiftPackageReference "OfficeFileReader" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/hughbe/OfficeFileReader";
@@ -609,6 +661,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5C1925AE2BCD84580014FD69 /* XCRemoteSwiftPackageReference "SwiftSoup" */;
 			productName = SwiftSoup;
+		};
+		5C99E39F2C47BB2E0083A507 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5C99E39E2C47BB2E0083A507 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 		5CF8610F2BD793C200D8474F /* OfficeFileReader */ = {
 			isa = XCSwiftPackageProductDependency;
