@@ -18,6 +18,8 @@ class TextData: Identifiable {
     var dateTime: Double
     var progress: Int
     var timeSpend: Double
+    var isCompleted: Bool
+    var completionDate: Double
 
     init(textTitle: String?, text: String, textSource: TextSource) {
         self.id = UUID()
@@ -28,5 +30,7 @@ class TextData: Identifiable {
         self.dateTime = Date().timeIntervalSince1970
         self.progress = 0
         self.timeSpend = 0.0
+        self.isCompleted = false
+        self.completionDate = 0.0
     }
 }
