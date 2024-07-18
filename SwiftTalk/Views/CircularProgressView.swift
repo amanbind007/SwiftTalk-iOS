@@ -32,7 +32,7 @@ struct CircularProgressView: View {
                 Circle()
                     .stroke(
                         color.opacity(0.2),
-                        lineWidth: 12
+                        lineWidth: 8
                     )
                 Circle()
                     .trim(from: 0, to: progress)
@@ -50,7 +50,7 @@ struct CircularProgressView: View {
                             .resizable()
                             .clipShape(Circle())
                         
-                            .padding(9)
+                            .padding(6)
                     }
             }
         }
