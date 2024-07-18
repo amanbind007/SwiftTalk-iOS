@@ -11,7 +11,6 @@ struct Constants {
     enum Fonts {
         static let NotoSerifSB = "NotoSerif-SemiBold"
         static let NotoSerifR = "NotoSerif-Regular"
-        static let ChangaOneR = "ChangaOne"
     }
 
     enum BionicFonts {
