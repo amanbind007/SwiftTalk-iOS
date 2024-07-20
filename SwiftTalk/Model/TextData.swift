@@ -14,7 +14,6 @@ class TextData: Identifiable {
     var textTitle: String?
     var text: String
     var textSource: TextSource
-    var iconType: String
     var dateTime: Double
     var progress: Int
     var timeSpend: Double
@@ -26,7 +25,6 @@ class TextData: Identifiable {
         self.textTitle = textTitle
         self.text = text
         self.textSource = textSource
-        self.iconType = textSource.imageName
         self.dateTime = Date().timeIntervalSince1970
         self.progress = 0
         self.timeSpend = 0.0
