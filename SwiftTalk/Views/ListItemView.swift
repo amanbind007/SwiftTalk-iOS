@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ListItemView: View {
     let textData: TextData
-    
+
     var formattedPlayTime: String {
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.hour, .minute, .second]
@@ -23,30 +23,23 @@ struct ListItemView: View {
         VStack(alignment: .leading) {
             HStack(spacing: 10) {
                 CircularProgressView(value: textData.progress, total: textData.text.count, color: textData.textSource.color, image: textData.textSource.imageName)
-                    .frame(width: 60, height: 60)
+                    .frame(width: 65, height: 65)
 
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 0) {
                     Text(textData.textTitle!)
                         .font(.custom("NotoSerif-Regular", size: 14))
                         .bold()
-                        .frame(width: .infinity, height: 1, alignment: .leading)
+                        .frame(minWidth: 1, maxWidth: .infinity, minHeight: 1, maxHeight: .infinity, alignment: .leading)
 
                     Text(textData.text)
                         .font(.custom("NotoSerif-Regular", size: 12))
-                        .frame(width: .infinity, height: 40, alignment: .leading)
+                        .frame(minWidth: 1, maxWidth: .infinity, minHeight: 1, maxHeight: .infinity, alignment: .leading)
+                        .lineLimit(2, reservesSpace: false)
+                        .offset(y: -7)
 
-                    HStack{
-                        Text("\(Date(timeIntervalSince1970: textData.dateTime).formatted(date: .abbreviated, time: .shortened))".uppercased())
-                            .font(.custom("NotoSerif-Regular", size: 10))
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                        
-                        Spacer()
-                        
-                        Text(formattedPlayTime)
-                            .font(.custom("NotoSerif-Regular", size: 10))
-                        
-                    }
+                    Text("Estimated reading time: \(textData.estimateReadTime)")
+                        .font(.custom("NotoSerif-Regular", size: 10))
+                        .offset(y: -4)
                 }
             }
         }
