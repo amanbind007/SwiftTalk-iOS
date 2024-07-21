@@ -14,10 +14,8 @@ class DataCoordinator {
 
     let persistantContainer: ModelContainer = {
         do {
-            let container = try ModelContainer(
-                for: TextData.self,
-                configurations: ModelConfiguration()
-            )
+            let config = ModelConfiguration(for: TextData.self, DailyStats.self)
+            let container = try ModelContainer(for: TextData.self, DailyStats.self, configurations: config)
             return container
         } catch {
             fatalError("Failed to create a container")
@@ -69,10 +67,9 @@ class DataCoordinator {
             autoTitle = "Text " + formattedDate
         }
 
-        let textDate = TextData(textTitle: autoTitle, text: text, textSource: textSource)
+        let textDate = TextData(textTitle: autoTitle, text: text.trimEndWhitespaceAndNewlines(), textSource: textSource)
 
         do {
-            persistantContainer.mainContext.insert(textDate)
             persistantContainer.mainContext.insert(textDate)
             try persistantContainer.mainContext.save()
         } catch {
