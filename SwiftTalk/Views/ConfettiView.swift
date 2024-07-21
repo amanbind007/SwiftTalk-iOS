@@ -10,11 +10,11 @@ import SpriteKit
 import SwiftUI
 
 struct ConfettiView: View {
-    @Binding var isFinishedReading: Bool
     @Binding var textData: TextData
+    @Binding var showConfettiAnimation: Bool
 
     var body: some View {
-        if isFinishedReading && !textData.isCompleted {
+        if showConfettiAnimation && !textData.confettiShown {
             ZStack {
                 GeometryReader(content: { geometry in
                     SpriteView(scene: ConfettiScene(size: geometry.size), options: [.allowsTransparency])
@@ -41,14 +41,14 @@ struct ConfettiView: View {
                     .ignoresSafeArea()
             }
             .onTapGesture {
-                textData.isCompleted = true
-                textData.progress = textData.text.count
+                showConfettiAnimation = false
+                textData.confettiShown = true
             }
             .onAppear {
                 Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { _ in
                     withAnimation {
-                        textData.isCompleted = true
-                        textData.progress = textData.text.count
+                        showConfettiAnimation = false
+                        textData.confettiShown = true
                     }
                 }
             }
@@ -57,5 +57,5 @@ struct ConfettiView: View {
 }
 
 #Preview {
-    ConfettiView(isFinishedReading: .constant(true), textData: .constant(TextDataPreviewProvider.textData1))
+    ConfettiView(textData: .constant(TextDataPreviewProvider.textData1), showConfettiAnimation: .constant(true))
 }

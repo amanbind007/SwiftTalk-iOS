@@ -29,7 +29,7 @@
 		5C308C122C3F0D320054886B /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C308C112C3F0D320054886B /* CircularProgressView.swift */; };
 		5C4454052BA35D34006DB2F5 /* AddNewTextOptionCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4454042BA35D34006DB2F5 /* AddNewTextOptionCardView.swift */; };
 		5C46549E2C4BEC7200375CF5 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C46549D2C4BEC7200375CF5 /* String+Extension.swift */; };
-		5C4654A02C4C2E8C00375CF5 /* Confetti.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C46549F2C4C2E8B00375CF5 /* Confetti.json */; };
+		5C4654A22C4D041500375CF5 /* Completed.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C4654A12C4D041500375CF5 /* Completed.json */; };
 		5C49EC792C41A89900B15B82 /* LinearProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C49EC782C41A89900B15B82 /* LinearProgressBar.swift */; };
 		5C4AA48D2BDE4E1A00150112 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AA48C2BDE4E1A00150112 /* ImagePickerView.swift */; };
 		5C4D0A592C08601C00726969 /* TextDataPreviewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4D0A582C08601C00726969 /* TextDataPreviewProvider.swift */; };
@@ -45,7 +45,7 @@
 		5C99E39D2C47ACF30083A507 /* TabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C99E39C2C47ACF30083A507 /* TabView.swift */; };
 		5C99E3A32C47BB930083A507 /* EmptyAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C99E3A22C47BB930083A507 /* EmptyAnimation.json */; };
 		5C99E3AE2C47FD540083A507 /* StatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C99E3AD2C47FD540083A507 /* StatsViewModel.swift */; };
-		5C99E3B02C4807530083A507 /* CongratulationsCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C99E3AF2C4807530083A507 /* CongratulationsCardView.swift */; };
+		5C99E3B02C4807530083A507 /* ConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C99E3AF2C4807530083A507 /* ConfettiView.swift */; };
 		5C99E3B22C4813E60083A507 /* CompleteAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C99E3B12C4813E60083A507 /* CompleteAnimation.json */; };
 		5C99E3BA2C4824210083A507 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C99E3B82C4824210083A507 /* Assets.xcassets */; };
 		5C99E3BE2C482C9C0083A507 /* ConfettiScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C99E3BD2C482C9C0083A507 /* ConfettiScene.swift */; };
@@ -91,7 +91,7 @@
 		5C308C112C3F0D320054886B /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
 		5C4454042BA35D34006DB2F5 /* AddNewTextOptionCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewTextOptionCardView.swift; sourceTree = "<group>"; };
 		5C46549D2C4BEC7200375CF5 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
-		5C46549F2C4C2E8B00375CF5 /* Confetti.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Confetti.json; sourceTree = "<group>"; };
+		5C4654A12C4D041500375CF5 /* Completed.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Completed.json; sourceTree = "<group>"; };
 		5C49EC782C41A89900B15B82 /* LinearProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearProgressBar.swift; sourceTree = "<group>"; };
 		5C4AA48C2BDE4E1A00150112 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		5C4D0A582C08601C00726969 /* TextDataPreviewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextDataPreviewProvider.swift; sourceTree = "<group>"; };
@@ -106,7 +106,7 @@
 		5C99E39C2C47ACF30083A507 /* TabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabView.swift; sourceTree = "<group>"; };
 		5C99E3A22C47BB930083A507 /* EmptyAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = EmptyAnimation.json; sourceTree = "<group>"; };
 		5C99E3AD2C47FD540083A507 /* StatsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsViewModel.swift; sourceTree = "<group>"; };
-		5C99E3AF2C4807530083A507 /* CongratulationsCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongratulationsCardView.swift; sourceTree = "<group>"; };
+		5C99E3AF2C4807530083A507 /* ConfettiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiView.swift; sourceTree = "<group>"; };
 		5C99E3B12C4813E60083A507 /* CompleteAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CompleteAnimation.json; sourceTree = "<group>"; };
 		5C99E3B82C4824210083A507 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5C99E3BD2C482C9C0083A507 /* ConfettiScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiScene.swift; sourceTree = "<group>"; };
@@ -224,7 +224,7 @@
 		5C99E3A12C47BB730083A507 /* LottieAnimationJson */ = {
 			isa = PBXGroup;
 			children = (
-				5C46549F2C4C2E8B00375CF5 /* Confetti.json */,
+				5C4654A12C4D041500375CF5 /* Completed.json */,
 				5C99E3B12C4813E60083A507 /* CompleteAnimation.json */,
 				5C99E3A22C47BB930083A507 /* EmptyAnimation.json */,
 			);
@@ -257,7 +257,7 @@
 				5C308C112C3F0D320054886B /* CircularProgressView.swift */,
 				5C87CC3C2C2828180010363F /* BannerButton.swift */,
 				5C87CC3E2C2895700010363F /* CustomSwitch.swift */,
-				5C99E3AF2C4807530083A507 /* CongratulationsCardView.swift */,
+				5C99E3AF2C4807530083A507 /* ConfettiView.swift */,
 				5CFAF9532BC522DB003726AA /* SettingsView.swift */,
 				5CB0EA9E2BA2B67500648414 /* VoiceSelectorView.swift */,
 				5CFAF95A2BC99C08003726AA /* VoiceSelectorListItemView.swift */,
@@ -386,8 +386,8 @@
 				5C21D1E32B99E8E6009C0A6B /* Preview Assets.xcassets in Resources */,
 				5C308BFA2C3D11FE0054886B /* Fast_Sans.ttf in Resources */,
 				5CE2A8F72B9F7C7100665B1F /* NotoSerif-SemiBold.ttf in Resources */,
+				5C4654A22C4D041500375CF5 /* Completed.json in Resources */,
 				5C308BFB2C3D11FE0054886B /* Fast_Serif.ttf in Resources */,
-				5C4654A02C4C2E8C00375CF5 /* Confetti.json in Resources */,
 				5C308BF12C3C61C50054886B /* OpenDyslexic-Bold-Italic.otf in Resources */,
 				5C308BF22C3C61C50054886B /* OpenDyslexic-Bold.otf in Resources */,
 			);
@@ -434,7 +434,7 @@
 				5C308C122C3F0D320054886B /* CircularProgressView.swift in Sources */,
 				5C9A42002BBF0BF3001F4744 /* NavigationStateViewModel.swift in Sources */,
 				5C49EC792C41A89900B15B82 /* LinearProgressBar.swift in Sources */,
-				5C99E3B02C4807530083A507 /* CongratulationsCardView.swift in Sources */,
+				5C99E3B02C4807530083A507 /* ConfettiView.swift in Sources */,
 				5CDF5F102BD0EB6E00534B6B /* ImagePicker.swift in Sources */,
 				5C99E3AE2C47FD540083A507 /* StatsViewModel.swift in Sources */,
 				5C99E3142C4594ED0083A507 /* Color+Extension.swift in Sources */,
