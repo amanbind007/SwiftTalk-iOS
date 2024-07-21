@@ -83,6 +83,9 @@ struct CircularProgressView: View {
             GridRow {
                 CircularProgressView(value: 49, total: 50, color: .gray, image: Constants.Icons.textFileIcon)
                     .padding(5)
+                
+                CircularProgressView(value: 35, total: 50, color: .yellow, image: Constants.Icons.textFileIcon)
+                    .padding(5)
             }
         }
     }
