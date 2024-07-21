@@ -64,9 +64,14 @@ struct CustomAlertView: View {
             .shadow(radius: 20)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding()
-            .background(Color.black.opacity(0.4).ignoresSafeArea().onTapGesture {
-                isPresented = false
-            })
+            .toolbar(.hidden, for: .tabBar)
+            .background(
+                Color.black.opacity(0.4)
+                    .ignoresSafeArea()
+                    .onTapGesture {
+                        isPresented = false
+                    }
+            )
         }
     }
 }
