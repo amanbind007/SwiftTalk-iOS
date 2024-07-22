@@ -8,17 +8,20 @@
 import SwiftUI
 
 struct MainView: View {
+    @State private var tabSelection = 1
     var body: some View {
-        TabView {
+        TabView(selection: $tabSelection) {
             HomeView()
                 .tabItem {
                     Label("Home", systemImage: "house.fill")
                 }
-            
-            StatsView()
+                .tag(1)
+
+            StatsView(tabSelection: $tabSelection)
                 .tabItem {
                     Label("Stats", systemImage: "chart.bar.xaxis")
                 }
+                .tag(2)
         }
     }
 }
