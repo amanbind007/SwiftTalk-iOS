@@ -51,7 +51,7 @@ class TextData: Identifiable {
         }
     }
 
-    var completionDate: Double
+    var completionDate: Date?
     var confettiShown: Bool
 
     init(textTitle: String?, text: String, textSource: TextSource) {
@@ -62,7 +62,7 @@ class TextData: Identifiable {
         self.dateTime = Date().timeIntervalSince1970
         self.progress = 0
         self.timeSpend = 0.0
-        self.completionDate = 0.0
+        self.completionDate = nil
         self.confettiShown = false
     }
 }
