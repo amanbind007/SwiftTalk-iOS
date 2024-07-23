@@ -12,8 +12,8 @@ struct SettingsView: View {
     @AppStorage("voicePitch") var voicePitchSliderValue = 1.0
     @AppStorage("textSize") var textSize = 16.0
     @AppStorage("selectedFont") var selectedFont = Constants.Fonts.NotoSerifR
-    @AppStorage("backgroundColor") var backgroundColor: Color = Color(UIColor(red: 1.00, green: 0.97, blue: 0.42, alpha: 1.00))
-    @AppStorage("foregroundColor") var foregroundColor: Color = Color(UIColor(red: 0.83, green: 0.00, blue: 0.00, alpha: 1.00))
+    @AppStorage("backgroundColor") var backgroundColor: Color = .init(UIColor(red: 1.00, green: 0.97, blue: 0.42, alpha: 1.00))
+    @AppStorage("foregroundColor") var foregroundColor: Color = .init(UIColor(red: 0.83, green: 0.00, blue: 0.00, alpha: 1.00))
 
     @Environment(\.dismiss) var dismiss
     @Environment(\.colorScheme) var theme
@@ -48,9 +48,7 @@ struct SettingsView: View {
                     HStack {
                         Text("0.0x")
                             .font(.custom("NotoSerifR", size: 16))
-                        Slider(value: self.$voiceSpeedSliderValue, in: 0.0...1.0, step: 0.01) {
-                            // Update Default for speed
-                        }
+                        Slider(value: self.$voiceSpeedSliderValue, in: 0.0...1.0, step: 0.01)
                         Text("1.0x")
                             .font(.custom("NotoSerifR", size: 16))
                     }
@@ -69,9 +67,11 @@ struct SettingsView: View {
                     HStack {
                         Text("0.5x")
                             .font(.custom(Constants.Fonts.NotoSerifR, size: 16))
-                        LinearGradientSlider(value: self.$voicePitchSliderValue, range: 0.5...2.0, step: 0.1) { _ in
-                            // Update Default for pitch
-                        }
+
+                        Slider(value: self.$voicePitchSliderValue, in: 0.5...2.0, step: 0.1)
+//                        LinearGradientSlider(value: self.$voicePitchSliderValue, range: 0.5...2.0, step: 0.1) { _ in
+//                            // Update Default for pitch
+//                        }
                         Text("2.0x")
                             .font(.custom(Constants.Fonts.NotoSerifR, size: 16))
                     }
@@ -116,6 +116,7 @@ struct SettingsView: View {
                     .background {
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(lineWidth: 3)
+                            .foregroundStyle(Color.green)
                     }
                 }
                 .font(.custom(Constants.Fonts.NotoSerifR, size: 10))
@@ -128,7 +129,7 @@ struct SettingsView: View {
                 }
                 .font(.custom(Constants.Fonts.NotoSerifR, size: 10))
             }
-            .navigationTitle("Change Voice Metric")
+            .navigationTitle("TTS Settings")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(content: {
                 ToolbarItem(placement: .cancellationAction) {
