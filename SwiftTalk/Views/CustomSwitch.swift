@@ -8,88 +8,43 @@
 import SwiftUI
 
 struct CustomSwitch: View {
-    
-    var iconSystemName: String
-    var colorOn: Color
-    var colorOff: Color
-    var text: String
     @Binding var isOn: Bool
-    @State var labelWidth: CGFloat = 0
-    
-    var body: some View {
-        VStack {
-            ZStack {
-                Capsule()
-                    .frame(width: 44 + labelWidth, height: 36)
-                    .foregroundStyle(isOn ? colorOn.opacity(0.2) : colorOff.opacity(0.2))
+    @Binding var showEditAlert: Bool
 
-                HStack {
-                    if isOn {
-                        Text(text)
-                            .font(.custom(Constants.Fonts.NotoSerifR, size: 16))
-                            .overlay {
-                                GeometryReader { proxy in
-                                    Color.clear
-                                        .preference(key: TextWidthKey.self, value: proxy.size.width)
-                                }
-                            }
-                            .offset(x: 3)
-                        
-                        Circle()
-                            .frame(width: 30)
-                            .foregroundColor(colorOn)
-                            .overlay {
-                                Image(systemName: iconSystemName)
-                                    .foregroundStyle(.white)
-                            }
-                    }else{
-                        Circle()
-                            .frame(width: 30)
-                            .foregroundColor(colorOff)
-                            .overlay {
-                                Image(systemName: iconSystemName)
-                                    .foregroundStyle(.white)
-                            }
-                        
-                        
-                        Text(text)
-                            .font(.custom(Constants.Fonts.NotoSerifR, size: 16))
-                            .overlay {
-                                GeometryReader { proxy in
-                                    Color.clear
-                                        .preference(key: TextWidthKey.self, value: proxy.size.width)
-                                }
-                            }
-                            .offset(x: -3)
-                        
-                    }
-                }
-                .padding(.horizontal, 3)
-                
+    var body: some View {
+        ZStack(alignment: isOn ? .leading : .trailing) {
+            Capsule()
+                .frame(width: 70, height: 34)
+                .foregroundColor(isOn ? .green.opacity(0.5) : .red.opacity(0.5))
+
+            Text("Edit")
+                .offset(x: isOn ? 5 : -5)
+                .font(.custom(Constants.Fonts.NotoSerifR, size: 16))
+
+            ZStack {
+                Circle()
+                    .frame(width: 30, height: 30)
+                    .foregroundColor(.white)
+                Image(systemName: isOn ? "pencil" : "pencil.slash")
+                    .foregroundStyle(Color.primary)
             }
-            .onPreferenceChange(TextWidthKey.self) { value in
-                DispatchQueue.main.async {
-                    labelWidth = value
-                }
+            .shadow(color: .black.opacity(0.14), radius: 4, x: 0, y: 2)
+            .offset(x: isOn ? 38 : -38)
+            // .padding(15)
+            .animation(.spring, value: isOn)
+        }
+        .onTapGesture {
+            if isOn {
+                isOn = false
+            } else {
+                showEditAlert = true
             }
         }
-
     }
 }
 
-
-//struct TextWidthKey: PreferenceKey {
-//    static var defaultValue: CGFloat { 0 }
-//    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-//        value = nextValue()
-//    }
-//}
-
 #Preview {
-    @State var isOn: Bool = true
-     return CustomSwitch(iconSystemName: "pen", colorOn: .green, colorOff: .red, text: "edit", isOn: $isOn)
+    HStack {
+        CustomSwitch(isOn: .constant(true), showEditAlert: .constant(true))
+    }
 }
-
-
-
-
