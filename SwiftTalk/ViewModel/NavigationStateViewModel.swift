@@ -14,7 +14,7 @@ class NavigationStateViewModel {
 }
 
 enum TextSource: String, CaseIterable, Identifiable, Codable {
-    case camera = "Camera Scan"
+//    case camera = "Camera Scan"
     case photoLibrary = "Photo Library"
     case wordDocument = "Word Documents"
     case textInput = "Text"
@@ -27,7 +27,7 @@ enum TextSource: String, CaseIterable, Identifiable, Codable {
     var title: String { self.rawValue }
     var description: String {
         switch self {
-        case .camera: return "Scan physical text using your camera"
+//        case .camera: return "Scan physical text using your camera"
         case .photoLibrary: return "Get text from the photos in your library"
         case .wordDocument: return "Add documents from your local storage or cloud"
         case .textInput: return "Input or paste text to read"
@@ -39,7 +39,7 @@ enum TextSource: String, CaseIterable, Identifiable, Codable {
 
     var imageName: String {
         switch self {
-        case .camera: return Constants.Icons.cameraIcon
+//        case .camera: return Constants.Icons.cameraIcon
         case .photoLibrary: return Constants.Icons.imageFileIcon
         case .wordDocument: return Constants.Icons.wordFileIcon
         case .textInput: return Constants.Icons.textFileInputIcon
@@ -51,7 +51,7 @@ enum TextSource: String, CaseIterable, Identifiable, Codable {
     
     var color: Color {
         switch self {
-        case .camera: return Color.pink
+//        case .camera: return Color.pink
         case .photoLibrary: return Color.green
         case .wordDocument: return Color.blue
         case .textInput: return Color.purple
