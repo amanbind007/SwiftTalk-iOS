@@ -8,6 +8,7 @@
 import Foundation
 import OfficeFileReader
 import PDFKit
+import SwiftData
 import SwiftSoup
 import SwiftUI
 import UIKit
@@ -57,7 +58,7 @@ class AddNewTextOptionsViewModel {
                                 dateFormatter.dateFormat = "yyyy-MM-dd HH.mm.ss"
                                 let formattedDate = dateFormatter.string(from: currentDate)
                                 let title = "WebText "+formattedDate
-                                DataCoordinator.shared.saveObject(text: text, title: title, textSource: .webpage)
+                                DataCoordinator.shared.saveObject(text: text.trimEndWhitespaceAndNewlines(), title: title, textSource: .webpage)
                                 self.isParsingWebText = false
                                 completion(text != "")
                             }
@@ -110,7 +111,7 @@ class AddNewTextOptionsViewModel {
                 dateFormatter.dateFormat = "yyyy-MM-dd HH.mm.ss"
                 let formattedDate = dateFormatter.string(from: currentDate)
                 let title = "PDFText "+formattedDate
-                DataCoordinator.shared.saveObject(text: text, title: title, textSource: .pdfDocument)
+                DataCoordinator.shared.saveObject(text: text.trimEndWhitespaceAndNewlines(), title: title, textSource: .pdfDocument)
             }
         }
     }
@@ -130,7 +131,7 @@ class AddNewTextOptionsViewModel {
                     dateFormatter.dateFormat = "yyyy-MM-dd HH.mm.ss"
                     let formattedDate = dateFormatter.string(from: currentDate)
                     let title = "DocText "+formattedDate
-                    DataCoordinator.shared.saveObject(text: text, title: title, textSource: .wordDocument)
+                    DataCoordinator.shared.saveObject(text: text.trimEndWhitespaceAndNewlines(), title: title, textSource: .wordDocument)
                 }
             }
             
@@ -150,7 +151,7 @@ class AddNewTextOptionsViewModel {
                 let formattedDate = dateFormatter.string(from: currentDate)
                 let title = "Text "+formattedDate
 
-                DataCoordinator.shared.saveObject(text: text, title: title, textSource: .textFile)
+                DataCoordinator.shared.saveObject(text: text.trimEndWhitespaceAndNewlines(), title: title, textSource: .textFile)
             }
         } catch {
             print(error)
@@ -207,7 +208,7 @@ class AddNewTextOptionsViewModel {
             dateFormatter.dateFormat = "yyyy-MM-dd HH.mm.ss"
             let formattedDate = dateFormatter.string(from: currentDate)
             let title = "ImageText "+formattedDate
-            DataCoordinator.shared.saveObject(text: text, title: title, textSource: .photoLibrary)
+            DataCoordinator.shared.saveObject(text: text.trimEndWhitespaceAndNewlines(), title: title, textSource: .photoLibrary)
         }
     }
 }
