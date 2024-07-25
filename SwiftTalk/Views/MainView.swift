@@ -1,5 +1,5 @@
 //
-//  TabView.swift
+//  MainView.swift
 //  SwiftTalk
 //
 //  Created by Aman Bind on 17/07/24.
@@ -11,17 +11,14 @@ struct MainView: View {
     @State private var tabSelection = 1
 
     init() {
-        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Avenir-Heavy", size: 15)!], for: .normal)
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: Constants.Fonts.NotoSerifSB, size: 10)!], for: .normal)
     }
 
     var body: some View {
         TabView(selection: $tabSelection) {
             HomeView()
                 .tabItem {
-                    Image(systemName: "house.fill")
-                    Text("Home")
-                        .font(.custom(Constants.Fonts.NotoSerifR, size: 10))
-                    // Label("Home", systemImage: "house.fill")
+                    Label("Home", systemImage: "house.fill")
                 }
                 .tag(1)
 
