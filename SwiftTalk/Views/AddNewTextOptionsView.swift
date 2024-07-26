@@ -27,6 +27,7 @@ enum FileImportTypes {
 
 struct AddNewTextOptionsView: View {
     @Environment(\.dismiss) var dismiss
+    @Environment(\.modelContext) var modelContext
 
     @Binding var navigationState: NavigationStateViewModel
     @Binding var showAddNewTextOptionsView: Bool
@@ -45,8 +46,8 @@ struct AddNewTextOptionsView: View {
                 ForEach(TextSource.allCases) { option in
                     Button(action: {
                         switch option {
-                        case .camera:
-                            break
+//                        case .camera:
+//                            break
                         case .photoLibrary:
                             showImagePickerSheet = true
                         case .wordDocument:
@@ -70,7 +71,9 @@ struct AddNewTextOptionsView: View {
                         AddNewTextOptionCardView(title: option.title, description: option.description, imageName: option.imageName)
                     }
                 }
+                .listRowBackground(Color.accent1)
             }
+            .scrollContentBackground(.hidden)
 
             .fileImporter(
                 isPresented: $showFileImporterSheet,
@@ -104,6 +107,10 @@ struct AddNewTextOptionsView: View {
                 ImagePickerView(showImagePickerSheet: $showImagePickerSheet, addNewTextOptionsVM: $addNewTextOptionsVM, showAddNewTextOptionsView: $showAddNewTextOptionsView)
                     .ignoresSafeArea(edges: .bottom)
             })
+            .background(
+                LinearGradient(colors: [Color.gradiantColor2, Color.gradiantColor1], startPoint: .top, endPoint: .bottom)
+                    .ignoresSafeArea()
+            )
         }
     }
 }
