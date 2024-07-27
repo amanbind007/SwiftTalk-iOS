@@ -12,6 +12,9 @@ import SwiftUI
 struct AddNewTextView: View {
     @Environment(\.colorScheme) private var theme
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var modelContext
+    
+    @Query private var dailyStats: [DailyStats]
     
     @State var speechManager: SpeechSynthesizer = .init()
     
@@ -25,10 +28,13 @@ struct AddNewTextView: View {
     
     @State var showAlertTextNotSaved: Bool = false
     @State var showAlertNoText: Bool = false
+    @State var showEditAlert: Bool = false
     
     @State var isSaved: Bool
     
     @State var showContinue: Bool
+    @State var isFinished: Bool = false
+    @State var showConfettiAnimation: Bool = false
     
     init(textData: TextData, isEditing: Bool, isFocused: Bool, isSaved: Bool) {
         self.textData = textData
@@ -51,7 +57,7 @@ struct AddNewTextView: View {
                         if !isSaved {
                             Button {
                                 if verifyText(text: textData.text) {
-                                    DataCoordinator().saveObject(text: textData.text, title: nil, textSource: textData.textSource)
+                                    DataCoordinator.shared.saveObject(text: textData.text, title: nil, textSource: textData.textSource)
                                     dismiss()
                                 } else {
                                     showAlertNoText.toggle()
@@ -91,6 +97,8 @@ struct AddNewTextView: View {
                         if !isEditing {
                             speechManager.play(text: textData.text, voice: selectedVoiceIdentifier, from: startIndex)
                         }
+                        
+                        showContinue = false
                     }
                     .frame(width: proxy.size.width, height: proxy.size.height)
                 }
@@ -208,19 +216,32 @@ struct AddNewTextView: View {
                 })
             }
         }
+        .onDisappear(perform: {
+            textData.text = textData.text.trimEndWhitespaceAndNewlines()
+        })
+        .toolbar(.hidden, for: .tabBar)
         .onChange(of: speechManager.highlightedRange?.upperBound) {
             if let highlightedRange = speechManager.highlightedRange {
                 if textData.progress < highlightedRange.upperBound {
                     textData.progress = highlightedRange.upperBound
                 }
+                
+                if textData.text.count == textData.progress {
+                    showConfettiAnimation = true
+                    textData.completionDate = Date()
+                }
             }
         }
         .onChange(of: speechManager.totalPlayTime) {
             textData.timeSpend += speechManager.totalPlayTime
+            saveDailyStats()
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("SwiftTalk")
         .navigationBarBackButtonHidden()
+        .overlay(
+            ConfettiView(textData: $textData, showConfettiAnimation: $showConfettiAnimation)
+        )
         
         .toolbar(content: {
             ToolbarItemGroup(placement: .topBarLeading) {
@@ -259,15 +280,7 @@ struct AddNewTextView: View {
         })
         .toolbar(content: {
             ToolbarItemGroup(placement: .topBarTrailing) {
-                CustomSwitch(iconSystemName: "pencil.line", colorOn: .green, colorOff: .red, text: "Edit", isOn: $isEditing)
-                    .onTapGesture {
-                        withAnimation(.linear) {
-                            isEditing = isEditing ? false : true
-                            if isEditing {
-                                speechManager.stopSpeakingText()
-                            }
-                        }
-                    }
+                CustomSwitch(isOn: $isEditing, showEditAlert: $showEditAlert)
             }
         })
         .alert(isPresented: $showAlertNoText, content: {
@@ -277,9 +290,43 @@ struct AddNewTextView: View {
             )
         })
         
-//        .onChange(of: speechManager.highlightedRange?.upperBound) {
-//            print("Current Index: \(speechManager.highlightedRange?.upperBound)")
-//        }
+        .alert("Are you sure?", isPresented: $showEditAlert) {
+            Button("Cancel", role: .cancel) {
+                // Do nothing
+            }
+            
+            Button("OK") {
+                textData.progress = 0
+                textData.completionDate = nil
+                textData.confettiShown = false
+                
+                speechManager.stopSpeakingText()
+                
+                isEditing = true
+            }
+        } message: {
+            Text("Editing the text will reset the progress.")
+        }
+    }
+    
+    private func saveDailyStats() {
+        let today = Calendar.current.startOfDay(for: Date())
+        let timeToAdd = speechManager.totalPlayTime
+
+        guard timeToAdd > 0 else { return }
+
+        if let existingStats = dailyStats.first(where: { Calendar.current.isDate($0.date, inSameDayAs: today) }) {
+            existingStats.timeSpentReading += timeToAdd
+        } else {
+            let newDailyStats = DailyStats(date: today, timeSpentReading: timeToAdd)
+            modelContext.insert(newDailyStats)
+        }
+
+        do {
+            try modelContext.save()
+        } catch {
+            print("Failed to save daily stats: \(error)")
+        }
     }
     
     func verifyText(text: String) -> Bool {
@@ -289,7 +336,6 @@ struct AddNewTextView: View {
         
         return true
     }
-    
 }
 
 #Preview {
