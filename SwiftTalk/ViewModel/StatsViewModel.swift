@@ -11,15 +11,25 @@ import SwiftData
 @Observable
 class StatsViewModel {
     var dailyStats: [DailyStats] = []
+    var mostRead: [TextData] = []
+    var recentlyCompleted: [TextData] = []
 
     func fetchStats(modelContext: ModelContext) {
-        let calendar = Calendar.current
-        let now = Date()
-
-        let fetchDescriptor = FetchDescriptor<DailyStats>(sortBy: [SortDescriptor(\.date, order: .forward)])
+        let weeklyDataFetchDescriptor = FetchDescriptor<DailyStats>(sortBy: [SortDescriptor(\.date, order: .forward)])
+        var mostReadFetchDescriptor = FetchDescriptor<TextData>(sortBy: [SortDescriptor(\.timeSpend, order: .reverse)])
+        mostReadFetchDescriptor.fetchLimit = 3
+        
+        var recentlyCompletedFetchDescriptor = FetchDescriptor<TextData>(sortBy: [SortDescriptor(\.completionDate, order: .reverse)])
+        recentlyCompletedFetchDescriptor.fetchLimit = 3
 
         do {
-            dailyStats = try modelContext.fetch(fetchDescriptor)
+            dailyStats = try modelContext.fetch(weeklyDataFetchDescriptor)
+            mostRead = try modelContext.fetch(mostReadFetchDescriptor).filter { textData in
+                textData.timeSpend != 0.0
+            }
+            recentlyCompleted = try modelContext.fetch(recentlyCompletedFetchDescriptor).filter { textData in
+                textData.completionDate != nil
+            }
         } catch {
             print("Failed to fetch stats: \(error)")
         }
