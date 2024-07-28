@@ -20,108 +20,10 @@ struct StatsView: View {
         NavigationStack {
             VStack {
                 if viewModel.dailyStats.isEmpty {
-                    ZStack {
-                        LinearGradient(colors: [Color.gradiantColor2, Color.gradiantColor1], startPoint: .top, endPoint: .bottom)
-                            .ignoresSafeArea()
-                        
-                        VStack {
-                            LottieView(animation: .named("StatsChartAnimation"))
-                                .playing(loopMode: .loop)
-                                .frame(height: 250)
-                            
-                            Text("I have no stats to show! (skill issue😒)")
-                                .padding(.top, 30)
-                            
-                            Button {
-                                tabSelection = 1
-                            } label: {
-                                Text("Start reading some text to build stats")
-                                    .font(.custom(Constants.Fonts.NotoSerifSB, size: 18))
-                                    .padding(10)
-                                    .foregroundStyle(.white)
-                                    .background {
-                                        RoundedRectangle(cornerRadius: 10)
-                                            .foregroundStyle(.blue)
-                                    }
-                            }
-                        }
-                    }
-
+                    EmptyStatsView
+                    
                 } else {
-                    List {
-                        Section {
-                            Chart(lastSevenDaysData, id: \.date) { day in
-                                if day.timeRead > 0 {
-                                    BarMark(
-                                        x: .value("Date", day.date, unit: .day),
-                                        y: .value("Time Read", day.timeRead / 60)
-                                    )
-                                    .foregroundStyle(Color.deepOrange.gradient)
-                                    .annotation(position: .top) {
-                                        Text(formatTime(day.timeRead))
-                                            .font(.caption2)
-                                            .foregroundColor(.secondary)
-                                    }
-                                } else {
-                                    RuleMark(
-                                        x: .value("Date", day.date, unit: .day),
-                                        yStart: 0,
-                                        yEnd: 1
-                                    )
-                                    .foregroundStyle(Color.deepOrange)
-                                    .lineStyle(StrokeStyle(lineWidth: 3, dash: [5, 5]))
-                                    .annotation(position: .bottom) {
-                                        Text("0s")
-                                            .font(.caption2)
-                                            .foregroundColor(.secondary)
-                                    }
-                                }
-                            }
-                            .frame(height: 200)
-                        }
-                        header: {
-                            Text("Weekly Time Spend - Chart")
-                        }
-                        .listRowBackground(Color.accent1)
-                        
-                        Section(header: Text("Daily Stats (Last 7 Active Days)")) {
-                            ForEach(viewModel.dailyStats.suffix(7).reversed(), id: \.date) { stat in
-                                HStack {
-                                    Text(stat.date, style: .date)
-                                    Spacer()
-                                    Text(viewModel.formatTime(stat.timeSpentReading))
-                                }
-                            }
-                        }
-                        .listRowBackground(Color.accent1)
-                        
-                        if !viewModel.mostRead.isEmpty {
-                            Section {
-                                ForEach(viewModel.mostRead, id: \.id) { textData in
-                                    ListItemView(textData: textData, parentListType: .MostReadList)
-                                }
-                                
-                            } header: {
-                                Text("Most time spend reading")
-                            }
-                            .listRowBackground(Color.accent1)
-                        }
-                        
-                        if !viewModel.recentlyCompleted.isEmpty {
-                            Section {
-                                ForEach(viewModel.recentlyCompleted, id: \.id) { textData in
-                                    ListItemView(textData: textData, parentListType: .RecentlyCompletedList)
-                                }
-                                
-                            } header: {
-                                Text("Recently Completed")
-                            }
-                            .listRowBackground(Color.accent1)
-                        }
-                        
-                    }
-                    .scrollContentBackground(.hidden)
-                    .listRowSpacing(10)
+                    StatsListView
                 }
             }
             .navigationTitle("Reading Stats")
@@ -164,6 +66,117 @@ struct StatsView: View {
         }
         
         return String(format: "%dh %dm", hours, minutes)
+    }
+}
+
+extension StatsView {
+    @ViewBuilder
+    var EmptyStatsView: some View {
+        ZStack {
+            LinearGradient(colors: [Color.gradiantColor2, Color.gradiantColor1], startPoint: .top, endPoint: .bottom)
+                .ignoresSafeArea()
+            
+            VStack {
+                LottieView(animation: .named("StatsChartAnimation"))
+                    .playing(loopMode: .loop)
+                    .frame(height: 250)
+                
+                Text("I have no stats to show! (skill issue😒)")
+                    .padding(.top, 30)
+                
+                Button {
+                    tabSelection = 1
+                } label: {
+                    Text("Start reading some text to build stats")
+                        .font(.custom(Constants.Fonts.NotoSerifSB, size: 18))
+                        .padding(10)
+                        .foregroundStyle(.white)
+                        .background {
+                            RoundedRectangle(cornerRadius: 10)
+                                .foregroundStyle(.blue)
+                        }
+                }
+            }
+        }
+    }
+}
+
+extension StatsView {
+    @ViewBuilder
+    var StatsListView: some View {
+        List {
+            Section {
+                Chart(lastSevenDaysData, id: \.date) { day in
+                    if day.timeRead > 0 {
+                        BarMark(
+                            x: .value("Date", day.date, unit: .day),
+                            y: .value("Time Read", day.timeRead / 60)
+                        )
+                        .foregroundStyle(Color.deepOrange.gradient)
+                        .annotation(position: .top) {
+                            Text(formatTime(day.timeRead))
+                                .font(.caption2)
+                                .foregroundColor(.secondary)
+                        }
+                    } else {
+                        RuleMark(
+                            x: .value("Date", day.date, unit: .day),
+                            yStart: 0,
+                            yEnd: 1
+                        )
+                        .foregroundStyle(Color.deepOrange)
+                        .lineStyle(StrokeStyle(lineWidth: 3, dash: [5, 5]))
+                        .annotation(position: .bottom) {
+                            Text("0s")
+                                .font(.caption2)
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                }
+                .frame(height: 200)
+            }
+            header: {
+                Text("Weekly Time Spend - Chart")
+            }
+            .listRowBackground(Color.accent1)
+            
+            Section(header: Text("Daily Stats (Last 7 Active Days)")) {
+                ForEach(viewModel.dailyStats.suffix(7).reversed(), id: \.date) { stat in
+                    HStack {
+                        Text(stat.date, style: .date)
+                        Spacer()
+                        Text(viewModel.formatTime(stat.timeSpentReading))
+                    }
+                }
+            }
+            .listRowBackground(Color.accent1)
+            
+            if !viewModel.mostRead.isEmpty {
+                Section {
+                    ForEach(viewModel.mostRead, id: \.id) { textData in
+                        ListItemView(textData: textData, parentListType: .MostReadList)
+                    }
+                    
+                } header: {
+                    Text("Most time spend reading")
+                }
+                .listRowBackground(Color.accent1)
+            }
+            
+            if !viewModel.recentlyCompleted.isEmpty {
+                Section {
+                    ForEach(viewModel.recentlyCompleted, id: \.id) { textData in
+                        ListItemView(textData: textData, parentListType: .RecentlyCompletedList)
+                    }
+                    
+                } header: {
+                    Text("Recently Completed")
+                }
+                .listRowBackground(Color.accent1)
+            }
+        }
+        .scrollContentBackground(.hidden)
+        .listRowSpacing(10)
     }
 }
 
