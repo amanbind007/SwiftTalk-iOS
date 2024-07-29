@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C0586DB2C4D84F9007915F2 /* StatsChartAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C0586DA2C4D84F9007915F2 /* StatsChartAnimation.json */; };
+		5C0586E02C52C2D9007915F2 /* SwiftUIIntrospect in Frameworks */ = {isa = PBXBuildFile; productRef = 5C0586DF2C52C2D9007915F2 /* SwiftUIIntrospect */; };
 		5C1925B02BCD84580014FD69 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 5C1925AF2BCD84580014FD69 /* SwiftSoup */; };
 		5C21D1DE2B99E8E4009C0A6B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C21D1DD2B99E8E4009C0A6B /* HomeView.swift */; };
 		5C21D1E32B99E8E6009C0A6B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C21D1E22B99E8E6009C0A6B /* Preview Assets.xcassets */; };
@@ -42,7 +44,7 @@
 		5C99E3162C463F0D0083A507 /* DailyStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C99E3152C463F0D0083A507 /* DailyStats.swift */; };
 		5C99E3182C463F980083A507 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C99E3172C463F980083A507 /* StatsView.swift */; };
 		5C99E3202C477AF10083A507 /* SwiftTalkApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C99E31F2C477AF10083A507 /* SwiftTalkApp.swift */; };
-		5C99E39D2C47ACF30083A507 /* TabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C99E39C2C47ACF30083A507 /* TabView.swift */; };
+		5C99E39D2C47ACF30083A507 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C99E39C2C47ACF30083A507 /* MainView.swift */; };
 		5C99E3A32C47BB930083A507 /* EmptyAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C99E3A22C47BB930083A507 /* EmptyAnimation.json */; };
 		5C99E3AE2C47FD540083A507 /* StatsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C99E3AD2C47FD540083A507 /* StatsViewModel.swift */; };
 		5C99E3B02C4807530083A507 /* ConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C99E3AF2C4807530083A507 /* ConfettiView.swift */; };
@@ -61,13 +63,13 @@
 		5CFAF9502BC2FBFA003726AA /* Voice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFAF94F2BC2FBFA003726AA /* Voice.swift */; };
 		5CFAF9522BC3BE91003726AA /* AddNewTextViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFAF9512BC3BE91003726AA /* AddNewTextViewModel.swift */; };
 		5CFAF9542BC522DB003726AA /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFAF9532BC522DB003726AA /* SettingsView.swift */; };
-		5CFAF9562BC669F0003726AA /* LinearGradientSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFAF9552BC669F0003726AA /* LinearGradientSlider.swift */; };
 		5CFAF9592BC6D376003726AA /* SpeechSynthesizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFAF9582BC6D376003726AA /* SpeechSynthesizer.swift */; };
 		5CFAF95B2BC99C08003726AA /* VoiceSelectorListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFAF95A2BC99C08003726AA /* VoiceSelectorListItemView.swift */; };
 		5CFAF95D2BCA737D003726AA /* WebLinkTextSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFAF95C2BCA737C003726AA /* WebLinkTextSheetView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5C0586DA2C4D84F9007915F2 /* StatsChartAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = StatsChartAnimation.json; sourceTree = "<group>"; };
 		5C21D1D82B99E8E4009C0A6B /* SwiftTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C21D1DD2B99E8E4009C0A6B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		5C21D1E22B99E8E6009C0A6B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -103,7 +105,7 @@
 		5C99E3152C463F0D0083A507 /* DailyStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyStats.swift; sourceTree = "<group>"; };
 		5C99E3172C463F980083A507 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
 		5C99E31F2C477AF10083A507 /* SwiftTalkApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftTalkApp.swift; sourceTree = "<group>"; };
-		5C99E39C2C47ACF30083A507 /* TabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabView.swift; sourceTree = "<group>"; };
+		5C99E39C2C47ACF30083A507 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		5C99E3A22C47BB930083A507 /* EmptyAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = EmptyAnimation.json; sourceTree = "<group>"; };
 		5C99E3AD2C47FD540083A507 /* StatsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsViewModel.swift; sourceTree = "<group>"; };
 		5C99E3AF2C4807530083A507 /* ConfettiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiView.swift; sourceTree = "<group>"; };
@@ -121,7 +123,6 @@
 		5CFAF94F2BC2FBFA003726AA /* Voice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Voice.swift; sourceTree = "<group>"; };
 		5CFAF9512BC3BE91003726AA /* AddNewTextViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewTextViewModel.swift; sourceTree = "<group>"; };
 		5CFAF9532BC522DB003726AA /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		5CFAF9552BC669F0003726AA /* LinearGradientSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearGradientSlider.swift; sourceTree = "<group>"; };
 		5CFAF9582BC6D376003726AA /* SpeechSynthesizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechSynthesizer.swift; sourceTree = "<group>"; };
 		5CFAF95A2BC99C08003726AA /* VoiceSelectorListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceSelectorListItemView.swift; sourceTree = "<group>"; };
 		5CFAF95C2BCA737C003726AA /* WebLinkTextSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLinkTextSheetView.swift; sourceTree = "<group>"; };
@@ -135,6 +136,7 @@
 				5C1925B02BCD84580014FD69 /* SwiftSoup in Frameworks */,
 				5CF861102BD793C200D8474F /* OfficeFileReader in Frameworks */,
 				5C79B3852C4991DC00EDCD0E /* Lottie in Frameworks */,
+				5C0586E02C52C2D9007915F2 /* SwiftUIIntrospect in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,6 +226,7 @@
 		5C99E3A12C47BB730083A507 /* LottieAnimationJson */ = {
 			isa = PBXGroup;
 			children = (
+				5C0586DA2C4D84F9007915F2 /* StatsChartAnimation.json */,
 				5C4654A12C4D041500375CF5 /* Completed.json */,
 				5C99E3B12C4813E60083A507 /* CompleteAnimation.json */,
 				5C99E3A22C47BB930083A507 /* EmptyAnimation.json */,
@@ -246,7 +249,7 @@
 			isa = PBXGroup;
 			children = (
 				5C21D1DD2B99E8E4009C0A6B /* HomeView.swift */,
-				5C99E39C2C47ACF30083A507 /* TabView.swift */,
+				5C99E39C2C47ACF30083A507 /* MainView.swift */,
 				5C308BDA2C37060B0054886B /* CustomAlertView.swift */,
 				5C3016FC2B9E16D20012542D /* ListItemView.swift */,
 				5CE2A8F22B9F781300665B1F /* AddNewTextOptionsView.swift */,
@@ -261,7 +264,6 @@
 				5CFAF9532BC522DB003726AA /* SettingsView.swift */,
 				5CB0EA9E2BA2B67500648414 /* VoiceSelectorView.swift */,
 				5CFAF95A2BC99C08003726AA /* VoiceSelectorListItemView.swift */,
-				5CFAF9552BC669F0003726AA /* LinearGradientSlider.swift */,
 				5CFAF95C2BCA737C003726AA /* WebLinkTextSheetView.swift */,
 				5CDF5F0F2BD0EB6E00534B6B /* ImagePicker.swift */,
 				5C4AA48C2BDE4E1A00150112 /* ImagePickerView.swift */,
@@ -328,6 +330,7 @@
 				5C1925AF2BCD84580014FD69 /* SwiftSoup */,
 				5CF8610F2BD793C200D8474F /* OfficeFileReader */,
 				5C79B3842C4991DC00EDCD0E /* Lottie */,
+				5C0586DF2C52C2D9007915F2 /* SwiftUIIntrospect */,
 			);
 			productName = SwiftTalk;
 			productReference = 5C21D1D82B99E8E4009C0A6B /* SwiftTalk.app */;
@@ -361,6 +364,7 @@
 				5C1925AE2BCD84580014FD69 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
 				5CF8610E2BD793C200D8474F /* XCRemoteSwiftPackageReference "OfficeFileReader" */,
 				5C79B3832C4991DC00EDCD0E /* XCRemoteSwiftPackageReference "lottie-spm" */,
+				5C0586DE2C52C2D8007915F2 /* XCRemoteSwiftPackageReference "swiftui-introspect" */,
 			);
 			productRefGroup = 5C21D1D92B99E8E4009C0A6B /* Products */;
 			projectDirPath = "";
@@ -379,6 +383,7 @@
 				5C308BF02C3C61C50054886B /* OpenDyslexic-Italic.otf in Resources */,
 				5C99E3B22C4813E60083A507 /* CompleteAnimation.json in Resources */,
 				5C3017012B9E25480012542D /* NotoSerif-Regular.ttf in Resources */,
+				5C0586DB2C4D84F9007915F2 /* StatsChartAnimation.json in Resources */,
 				5C308BF32C3C61C50054886B /* OpenDyslexic-Regular.otf in Resources */,
 				5C99E3A32C47BB930083A507 /* EmptyAnimation.json in Resources */,
 				5C99E3BA2C4824210083A507 /* Assets.xcassets in Resources */,
@@ -418,13 +423,12 @@
 				5CB0EA9F2BA2B67500648414 /* VoiceSelectorView.swift in Sources */,
 				5C308BFD2C3D6BC60054886B /* VoiceSampleText.swift in Sources */,
 				5C5E5B782BE8C2F300A9ED86 /* TextView.swift in Sources */,
-				5C99E39D2C47ACF30083A507 /* TabView.swift in Sources */,
+				5C99E39D2C47ACF30083A507 /* MainView.swift in Sources */,
 				5CFAF9542BC522DB003726AA /* SettingsView.swift in Sources */,
 				5CE8E82A2C131436009FDAE2 /* DataCoordinator.swift in Sources */,
 				5CFAF9522BC3BE91003726AA /* AddNewTextViewModel.swift in Sources */,
 				5CAC44FE2C0639EB001E13CA /* Binding+Extension.swift in Sources */,
 				5C4454052BA35D34006DB2F5 /* AddNewTextOptionCardView.swift in Sources */,
-				5CFAF9562BC669F0003726AA /* LinearGradientSlider.swift in Sources */,
 				5C87CC3F2C2895700010363F /* CustomSwitch.swift in Sources */,
 				5C4D0A592C08601C00726969 /* TextDataPreviewProvider.swift in Sources */,
 				5C99E3BE2C482C9C0083A507 /* ConfettiScene.swift in Sources */,
@@ -654,6 +658,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		5C0586DE2C52C2D8007915F2 /* XCRemoteSwiftPackageReference "swiftui-introspect" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/siteline/swiftui-introspect";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.0;
+			};
+		};
 		5C1925AE2BCD84580014FD69 /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scinfu/SwiftSoup";
@@ -681,6 +693,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		5C0586DF2C52C2D9007915F2 /* SwiftUIIntrospect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5C0586DE2C52C2D8007915F2 /* XCRemoteSwiftPackageReference "swiftui-introspect" */;
+			productName = SwiftUIIntrospect;
+		};
 		5C1925AF2BCD84580014FD69 /* SwiftSoup */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5C1925AE2BCD84580014FD69 /* XCRemoteSwiftPackageReference "SwiftSoup" */;

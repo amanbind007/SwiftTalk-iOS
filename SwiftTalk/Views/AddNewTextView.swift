@@ -108,112 +108,7 @@ struct AddNewTextView: View {
             
             if !isEditing {
                 // Bottom Control Panel
-                VStack(spacing: 0) {
-                    HStack {
-                        if speechManager.speechState == .speaking || speechManager.speechState == .paused {
-                            Button(action: {
-                                if speechManager.speechState == .paused {
-                                    speechManager.continueSpeaking()
-                                } else {
-                                    speechManager.pauseSpeaking()
-                                }
-                                
-                            }, label: {
-                                Image(systemName: speechManager.speechState == .speaking ? "pause.circle.fill" : "play.circle.fill")
-                                    .resizable()
-                                    .frame(width: 40, height: 40)
-                            })
-                            
-                        } else {
-                            Button(action: {
-                                addNewTextVM.isVoiceSelectorPresented.toggle()
-                                
-                            }, label: {
-                                Image(selectedVoiceFlagIcon)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 40, height: 40)
-                                    .clipShape(Circle())
-                                
-                            })
-                        }
-                        
-                        Spacer()
-                        
-                        if showContinue {
-                            Button {
-                                speechManager.play(text: textData.text, voice: selectedVoiceIdentifier, from: textData.progress)
-                                showContinue = false
-                            } label: {
-                                VStack(spacing: 0) {
-                                    Image(systemName: "arrow.right.circle")
-                                        .resizable()
-                                        .frame(width: 30, height: 30)
-                                        .foregroundStyle(Color.accentColor)
-                                    
-                                    Text("Continue")
-                                        .font(.custom(Constants.Fonts.NotoSerifR, size: 10))
-                                }
-                            }
-                            Spacer()
-                        }
-
-                        Button {
-                            withAnimation {
-                                if verifyText(text: textData.text) {
-                                    if speechManager.speechState == .speaking || speechManager.speechState == .paused {
-                                        speechManager.stopSpeakingText()
-                                    } else {
-                                        speechManager.play(text: textData.text, voice: selectedVoiceIdentifier)
-                                    }
-                                } else {
-                                    showAlertNoText = true
-                                }
-                                
-                                showContinue = false
-                            }
-                        } label: {
-                            Image(systemName: speechManager.speechState == .speaking || speechManager.speechState
-                                == .paused ? "stop.circle.fill" : "play.circle.fill")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 55, height: 55)
-                                .foregroundColor(speechManager.speechState == .speaking || speechManager.speechState
-                                    == .paused ? .red : .blue)
-                                .clipShape(Circle())
-                        }
-                        
-                        if showContinue {
-                            Spacer()
-                            Spacer()
-                        }
-                        
-                        Spacer()
-                        
-                        Button(action: {
-                            addNewTextVM.isVoiceSpeedSelectorPresented = true
-                            
-                        }, label: {
-                            Image(systemName: "gear.circle.fill")
-                                .resizable()
-                                .frame(width: 40, height: 40)
-                            
-                        })
-                        .disabled(speechManager.speechState == .speaking || speechManager.speechState
-                            == .paused)
-                    }
-                    .padding(.horizontal)
-                    .padding(.vertical, 5)
-                }
-                
-                .sheet(isPresented: $addNewTextVM.isVoiceSelectorPresented, content: {
-                    VoiceSelectorView()
-                        .presentationCompactAdaptation(.automatic)
-                })
-                .sheet(isPresented: $addNewTextVM.isVoiceSpeedSelectorPresented, content: {
-                    SettingsView()
-                    
-                })
+                BottomPlayerPanel
             }
         }
         .onDisappear(perform: {
@@ -289,7 +184,6 @@ struct AddNewTextView: View {
                 message: Text("Add some text to read/save out")
             )
         })
-        
         .alert("Are you sure?", isPresented: $showEditAlert) {
             Button("Cancel", role: .cancel) {
                 // Do nothing
@@ -335,6 +229,118 @@ struct AddNewTextView: View {
         }
         
         return true
+    }
+}
+
+extension AddNewTextView {
+    @ViewBuilder
+    var BottomPlayerPanel: some View {
+        VStack(spacing: 0) {
+            HStack {
+                if speechManager.speechState == .speaking || speechManager.speechState == .paused {
+                    Button(action: {
+                        if speechManager.speechState == .paused {
+                            speechManager.continueSpeaking()
+                        } else {
+                            speechManager.pauseSpeaking()
+                        }
+                        
+                    }, label: {
+                        Image(systemName: speechManager.speechState == .speaking ? "pause.circle.fill" : "play.circle.fill")
+                            .resizable()
+                            .frame(width: 40, height: 40)
+                    })
+                    
+                } else {
+                    Button(action: {
+                        addNewTextVM.isVoiceSelectorPresented.toggle()
+                        
+                    }, label: {
+                        Image(selectedVoiceFlagIcon)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 40, height: 40)
+                            .clipShape(Circle())
+                        
+                    })
+                }
+                
+                Spacer()
+                
+                if showContinue {
+                    Button {
+                        speechManager.play(text: textData.text, voice: selectedVoiceIdentifier, from: textData.progress)
+                        showContinue = false
+                    } label: {
+                        VStack(spacing: 0) {
+                            Image(systemName: "arrow.right.circle")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                                .foregroundStyle(Color.accentColor)
+                            
+                            Text("Continue")
+                                .font(.custom(Constants.Fonts.NotoSerifR, size: 10))
+                        }
+                    }
+                    Spacer()
+                }
+
+                Button {
+                    withAnimation {
+                        if verifyText(text: textData.text) {
+                            if speechManager.speechState == .speaking || speechManager.speechState == .paused {
+                                speechManager.stopSpeakingText()
+                            } else {
+                                speechManager.play(text: textData.text, voice: selectedVoiceIdentifier)
+                            }
+                        } else {
+                            showAlertNoText = true
+                        }
+                        
+                        showContinue = false
+                    }
+                } label: {
+                    Image(systemName: speechManager.speechState == .speaking || speechManager.speechState
+                        == .paused ? "stop.circle.fill" : "play.circle.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 55, height: 55)
+                        .foregroundColor(speechManager.speechState == .speaking || speechManager.speechState
+                            == .paused ? .red : .blue)
+                        .clipShape(Circle())
+                }
+                
+                if showContinue {
+                    Spacer()
+                    Spacer()
+                }
+                
+                Spacer()
+                
+                Button(action: {
+                    addNewTextVM.isVoiceSpeedSelectorPresented = true
+                    
+                }, label: {
+                    Image(systemName: "gear.circle.fill")
+                        .resizable()
+                        .frame(width: 40, height: 40)
+                    
+                })
+                .disabled(speechManager.speechState == .speaking || speechManager.speechState
+                    == .paused)
+            }
+            .padding(.horizontal)
+            .padding(.vertical, 5)
+        }
+        
+        .sheet(isPresented: $addNewTextVM.isVoiceSelectorPresented, content: {
+            VoiceSelectorView()
+                .presentationCompactAdaptation(.automatic)
+        })
+        .sheet(isPresented: $addNewTextVM.isVoiceSpeedSelectorPresented, content: {
+            SettingsView()
+            
+        })
     }
 }
 
