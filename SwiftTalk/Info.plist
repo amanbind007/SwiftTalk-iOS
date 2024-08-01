@@ -17,8 +17,6 @@
 	</array>
 	<key>UIAppFonts</key>
 	<array>
-		<string>NotoSerif-Regular.ttf</string>
-		<string>NotoSerif-SemiBold.ttf</string>
 		<string>Fast_Sans.ttf</string>
 		<string>Fast_Serif.ttf</string>
 		<string>OpenDyslexic-Italic.otf</string>
