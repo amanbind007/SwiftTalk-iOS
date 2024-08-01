@@ -11,6 +11,16 @@ struct Constants {
     enum Fonts {
         static let NotoSerifSB = "NotoSerif-SemiBold"
         static let NotoSerifR = "NotoSerif-Regular"
+
+        static let NotoRegular = "NotoSerif-Regular"
+        static let NotoLight = "NotoSerif-Regular_ExtraLight"
+        static let NotoSemiBold = "NotoSerif-SemiBold"
+        static let NotoBold = "NotoSerif-Regular_Bold"
+
+        static let NotoRegularItalic = "NotoSerif-Italic"
+        static let NotoLightItalic = "NotoSerif-Italic_ExtraLight-Italic"
+        static let NotoSemiBoldItalic = "NotoSerif-Italic_SemiBold-Italic"
+        static let NotoBoldItalic = "NotoSerif-Italic_Bold-Italic"
     }
 
     enum BionicFonts {

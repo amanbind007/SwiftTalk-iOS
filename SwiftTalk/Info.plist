@@ -25,6 +25,8 @@
 		<string>OpenDyslexic-Bold.otf</string>
 		<string>OpenDyslexic-Regular.otf</string>
 		<string>OpenDyslexic-Bold-Italic.otf</string>
+		<string>NotoSerif-Italic-VariableFont.ttf</string>
+		<string>NotoSerif-VariableFont.ttf</string>
 	</array>
 	<key>UTImportedTypeDeclarations</key>
 	<array>

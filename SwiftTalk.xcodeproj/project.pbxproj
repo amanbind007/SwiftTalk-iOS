@@ -36,6 +36,9 @@
 		5C4AA48D2BDE4E1A00150112 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AA48C2BDE4E1A00150112 /* ImagePickerView.swift */; };
 		5C4D0A592C08601C00726969 /* TextDataPreviewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4D0A582C08601C00726969 /* TextDataPreviewProvider.swift */; };
 		5C5E5B782BE8C2F300A9ED86 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5E5B772BE8C2F300A9ED86 /* TextView.swift */; };
+		5C77D1EF2C5AAEE800AA1223 /* NotoFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C77D1EE2C5AAEE800AA1223 /* NotoFont.swift */; };
+		5C77D1F22C5AB0E800AA1223 /* NotoSerif-VariableFont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5C77D1F02C5AB0E800AA1223 /* NotoSerif-VariableFont.ttf */; };
+		5C77D1F32C5AB0E800AA1223 /* NotoSerif-Italic-VariableFont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5C77D1F12C5AB0E800AA1223 /* NotoSerif-Italic-VariableFont.ttf */; };
 		5C79B3852C4991DC00EDCD0E /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 5C79B3842C4991DC00EDCD0E /* Lottie */; };
 		5C79B3872C4AD86400EDCD0E /* ModelContext+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C79B3862C4AD86400EDCD0E /* ModelContext+Extension.swift */; };
 		5C87CC3D2C2828180010363F /* BannerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C87CC3C2C2828180010363F /* BannerButton.swift */; };
@@ -98,6 +101,9 @@
 		5C4AA48C2BDE4E1A00150112 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		5C4D0A582C08601C00726969 /* TextDataPreviewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextDataPreviewProvider.swift; sourceTree = "<group>"; };
 		5C5E5B772BE8C2F300A9ED86 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
+		5C77D1EE2C5AAEE800AA1223 /* NotoFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotoFont.swift; sourceTree = "<group>"; };
+		5C77D1F02C5AB0E800AA1223 /* NotoSerif-VariableFont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSerif-VariableFont.ttf"; sourceTree = "<group>"; };
+		5C77D1F12C5AB0E800AA1223 /* NotoSerif-Italic-VariableFont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSerif-Italic-VariableFont.ttf"; sourceTree = "<group>"; };
 		5C79B3862C4AD86400EDCD0E /* ModelContext+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelContext+Extension.swift"; sourceTree = "<group>"; };
 		5C87CC3C2C2828180010363F /* BannerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerButton.swift; sourceTree = "<group>"; };
 		5C87CC3E2C2895700010363F /* CustomSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSwitch.swift; sourceTree = "<group>"; };
@@ -195,11 +201,14 @@
 				5C308BF82C3D11FE0054886B /* Fast_Sans.ttf */,
 				5C308BF92C3D11FE0054886B /* Fast_Serif.ttf */,
 				5CE2A8F62B9F7C7100665B1F /* NotoSerif-SemiBold.ttf */,
+				5C77D1F12C5AB0E800AA1223 /* NotoSerif-Italic-VariableFont.ttf */,
+				5C77D1F02C5AB0E800AA1223 /* NotoSerif-VariableFont.ttf */,
 				5C3017002B9E25480012542D /* NotoSerif-Regular.ttf */,
 				5C308BED2C3C61C50054886B /* OpenDyslexic-Bold-Italic.otf */,
 				5C308BEE2C3C61C50054886B /* OpenDyslexic-Bold.otf */,
 				5C308BEC2C3C61C50054886B /* OpenDyslexic-Italic.otf */,
 				5C308BEF2C3C61C50054886B /* OpenDyslexic-Regular.otf */,
+				5C77D1EE2C5AAEE800AA1223 /* NotoFont.swift */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -385,10 +394,12 @@
 				5C3017012B9E25480012542D /* NotoSerif-Regular.ttf in Resources */,
 				5C0586DB2C4D84F9007915F2 /* StatsChartAnimation.json in Resources */,
 				5C308BF32C3C61C50054886B /* OpenDyslexic-Regular.otf in Resources */,
+				5C77D1F32C5AB0E800AA1223 /* NotoSerif-Italic-VariableFont.ttf in Resources */,
 				5C99E3A32C47BB930083A507 /* EmptyAnimation.json in Resources */,
 				5C99E3BA2C4824210083A507 /* Assets.xcassets in Resources */,
 				5C99E3C42C48F5870083A507 /* Confetti.sks in Resources */,
 				5C21D1E32B99E8E6009C0A6B /* Preview Assets.xcassets in Resources */,
+				5C77D1F22C5AB0E800AA1223 /* NotoSerif-VariableFont.ttf in Resources */,
 				5C308BFA2C3D11FE0054886B /* Fast_Sans.ttf in Resources */,
 				5CE2A8F72B9F7C7100665B1F /* NotoSerif-SemiBold.ttf in Resources */,
 				5C4654A22C4D041500375CF5 /* Completed.json in Resources */,
@@ -410,6 +421,7 @@
 				5C308BD92C358A160054886B /* AddNewTextOptionsViewModel.swift in Sources */,
 				5C4AA48D2BDE4E1A00150112 /* ImagePickerView.swift in Sources */,
 				5C87CC3D2C2828180010363F /* BannerButton.swift in Sources */,
+				5C77D1EF2C5AAEE800AA1223 /* NotoFont.swift in Sources */,
 				5C3016FD2B9E16D20012542D /* ListItemView.swift in Sources */,
 				5C308BE72C3BDCDA0054886B /* FontSelectorView.swift in Sources */,
 				5CE2A8F32B9F781300665B1F /* AddNewTextOptionsView.swift in Sources */,
