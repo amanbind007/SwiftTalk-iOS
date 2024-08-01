@@ -96,7 +96,7 @@ struct AddNewTextOptionsView: View {
                     Button("Cancel") {
                         dismiss()
                     }
-                    .font(.custom(Constants.Fonts.NotoSerifR, size: 16))
+                    .font(NotoFont.Regular(16))
                 }
             })
             .sheet(isPresented: $showWebTextSheet, content: {

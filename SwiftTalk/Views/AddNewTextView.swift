@@ -279,7 +279,7 @@ extension AddNewTextView {
                                 .foregroundStyle(Color.accentColor)
                             
                             Text("Continue")
-                                .font(.custom(Constants.Fonts.NotoSerifR, size: 10))
+                                .font(NotoFont.Regular(10))
                         }
                     }
                     Spacer()

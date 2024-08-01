@@ -70,6 +70,6 @@ class Coordinator: NSObject, PHPickerViewControllerDelegate {
     }
 }
 
-// #Preview{
-//    ImagePickerView(selectedImages: .constant())
-// }
+#Preview {
+    ImagePickerView(showImagePickerSheet: .constant(true), addNewTextOptionsVM: .constant(AddNewTextOptionsViewModel()), showAddNewTextOptionsView: .constant(false))
+}

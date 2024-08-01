@@ -37,12 +37,12 @@ struct ListItemView: View {
 
                 VStack(alignment: .leading, spacing: 0) {
                     Text(textData.textTitle!)
-                        .font(.custom("NotoSerif-Regular", size: 14))
+                        .font(NotoFont.Regular(14))
                         .bold()
                         .frame(minWidth: 1, maxWidth: .infinity, minHeight: 1, maxHeight: .infinity, alignment: .leading)
 
                     Text(textData.text)
-                        .font(.custom("NotoSerif-Regular", size: 12))
+                        .font(NotoFont.Regular(12))
                         .frame(minWidth: 1, maxWidth: .infinity, minHeight: 1, maxHeight: .infinity, alignment: .leading)
                         .lineLimit(2, reservesSpace: false)
                         .offset(y: -7)
@@ -50,15 +50,15 @@ struct ListItemView: View {
                     switch parentListType {
                     case .HomeViewList:
                         Text("Estimated reading time: \(textData.estimateReadTime)")
-                            .font(.custom("NotoSerif-Regular", size: 10))
+                            .font(NotoFont.Regular(10))
                             .offset(y: -4)
                     case .MostReadList:
                         Text("Total Time Spend: \(formattedPlayTime)")
-                            .font(.custom("NotoSerif-Regular", size: 10))
+                            .font(NotoFont.Regular(10))
                             .offset(y: -4)
                     case .RecentlyCompletedList:
                         Text("Completed reading on: \(textData.completionDate!.formatted(date: .abbreviated, time: .shortened))")
-                            .font(.custom("NotoSerif-Regular", size: 10))
+                            .font(NotoFont.Regular(10))
                             .offset(y: -4)
                     }
                     

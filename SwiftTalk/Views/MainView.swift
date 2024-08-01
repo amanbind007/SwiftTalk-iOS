@@ -11,7 +11,7 @@ struct MainView: View {
     @State private var tabSelection = 1
 
     init() {
-        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: Constants.Fonts.NotoSerifSB, size: 10)!], for: .normal)
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: Constants.Fonts.NotoBold, size: 10)!], for: .normal)
     }
 
     var body: some View {

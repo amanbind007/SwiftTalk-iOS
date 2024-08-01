@@ -11,7 +11,9 @@ struct WebLinkTextSheetView: View {
     @Binding var addNewTextOptionsVM: AddNewTextOptionsViewModel
     @Binding var showAddNewTextOptionsView: Bool
     @Binding var showWebTextSheet: Bool
+    
     @Environment(\.dismiss) var dismiss
+    @Environment(\.modelContext) var modelContext
     
     var body: some View {
         NavigationStack {
@@ -19,11 +21,11 @@ struct WebLinkTextSheetView: View {
                 VStack {
                     Text("Paste a web address link to get contents of a webpage")
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .font(.custom(Constants.Fonts.NotoSerifR, size: 12))
+                        .font(NotoFont.Regular(12))
                         .padding()
                     
                     TextField("Paste the web link here", text: $addNewTextOptionsVM.link)
-                        .font(.custom(Constants.Fonts.NotoSerifR, size: 14))
+                        .font(NotoFont.Regular(14))
                         .textFieldStyle(.roundedBorder)
                         .padding(.horizontal)
                         .padding([.bottom], 3)
@@ -32,7 +34,7 @@ struct WebLinkTextSheetView: View {
                     
                     if let message = addNewTextOptionsVM.errorMessage {
                         Text(message)
-                            .font(.custom(Constants.Fonts.NotoSerifR, size: 12))
+                            .font(NotoFont.Regular(12))
                             .foregroundStyle(Color.red)
                             .fixedSize(horizontal: false, vertical: true)
                             .padding(.horizontal)
@@ -49,7 +51,7 @@ struct WebLinkTextSheetView: View {
                             Text("Paste")
                                 .padding(.horizontal, 45)
                                 .padding(.vertical, 3)
-                                .font(.custom(Constants.Fonts.NotoSerifSB, size: 16))
+                                .font(NotoFont.SemiBold(16))
                                 .foregroundColor(.blue)
                                 .background(
                                     RoundedRectangle(cornerRadius: 10)
@@ -72,7 +74,7 @@ struct WebLinkTextSheetView: View {
                             Text("Go")
                                 .padding(.horizontal, 45)
                                 .padding(.vertical, 3)
-                                .font(.custom(Constants.Fonts.NotoSerifSB, size: 16))
+                                .font(NotoFont.SemiBold(16))
                                 .foregroundColor(.white)
                                 .background(
                                     RoundedRectangle(cornerRadius: 10)
@@ -85,7 +87,7 @@ struct WebLinkTextSheetView: View {
                     Text("NOTE: We cannot get the content if the webpage requires a login")
                         .foregroundStyle(Color.secondary)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .font(.custom(Constants.Fonts.NotoSerifR, size: 12))
+                        .font(NotoFont.Regular(12))
                         .padding()
                     
                     Spacer()
@@ -97,7 +99,7 @@ struct WebLinkTextSheetView: View {
                         Button("Cancel") {
                             dismiss()
                         }
-                        .font(.custom(Constants.Fonts.NotoSerifR, size: 16))
+                        .font(NotoFont.Regular(16))
                     }
                 })
                 

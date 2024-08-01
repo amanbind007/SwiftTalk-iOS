@@ -18,13 +18,13 @@ struct CustomAlertView: View {
         if isPresented {
             VStack(spacing: 0) {
                 Text("Enter new title")
-                    .font(.custom(Constants.Fonts.NotoSerifSB, size: 18))
+                    .font(NotoFont.SemiBold(18))
                     .padding()
 
                 TextField("Enter new title", text: $newTitle)
                     .padding(2)
                     .textFieldStyle(.roundedBorder)
-                    .font(.custom(Constants.Fonts.NotoSerifR, size: 14))
+                    .font(NotoFont.Regular(14))
                     .cornerRadius(5)
                     .shadow(color: isCorrect ? .clear : .red, radius: 5)
                     .padding([.horizontal, .bottom])
@@ -36,7 +36,7 @@ struct CustomAlertView: View {
                         isPresented = false
                     } label: {
                         Text("Cancel")
-                            .font(.custom(Constants.Fonts.NotoSerifSB, size: 16))
+                            .font(NotoFont.SemiBold(16))
                             .foregroundColor(.pink)
                             .multilineTextAlignment(.center)
                             .padding()
@@ -49,7 +49,7 @@ struct CustomAlertView: View {
                         onSave()
                     } label: {
                         Text("OK")
-                            .font(.custom(Constants.Fonts.NotoSerifSB, size: 16))
+                            .font(NotoFont.SemiBold(16))
                             .foregroundColor(.accentColor)
                             .multilineTextAlignment(.center)
                             .padding(15)

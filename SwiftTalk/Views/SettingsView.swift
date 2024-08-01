@@ -11,7 +11,7 @@ struct SettingsView: View {
     @AppStorage("voiceSpeed") var voiceSpeedSliderValue = 0.5
     @AppStorage("voicePitch") var voicePitchSliderValue = 1.0
     @AppStorage("textSize") var textSize = 16.0
-    @AppStorage("selectedFont") var selectedFont = Constants.Fonts.NotoSerifR
+    @AppStorage("selectedFont") var selectedFont = Constants.Fonts.NotoRegular
     @AppStorage("backgroundColor") var backgroundColor: Color = .init(UIColor(red: 1.00, green: 0.97, blue: 0.42, alpha: 1.00))
     @AppStorage("foregroundColor") var foregroundColor: Color = .init(UIColor(red: 0.83, green: 0.00, blue: 0.00, alpha: 1.00))
 
@@ -40,43 +40,39 @@ struct SettingsView: View {
                         }
 
                         Text("Utterance Speed \(percentage)%")
-                            .font(.custom("NotoSerifR", size: 16))
+                            .font(NotoFont.Regular(16))
                     }
                     .symbolEffect(.bounce, value: self.voiceSpeedSliderValue)
                     .imageScale(.large)
 
                     HStack {
                         Text("0.0x")
-                            .font(.custom("NotoSerifR", size: 16))
+                            .font(NotoFont.Regular(16))
                         Slider(value: self.$voiceSpeedSliderValue, in: 0.0...1.0, step: 0.01)
                         Text("1.0x")
-                            .font(.custom("NotoSerifR", size: 16))
+                            .font(NotoFont.Regular(16))
                     }
                 }
-                .font(.custom("NotoSerifR", size: 10))
+                .font(NotoFont.Light(10))
 
                 Section(header: Text("Voice Pitch")) {
                     HStack {
                         Image(systemName: "waveform.path")
                         Text("Utterance Pitch \(self.trimValue(value: self.voicePitchSliderValue))x")
-                            .font(.custom(Constants.Fonts.NotoSerifR, size: 16))
+                            .font(NotoFont.Regular(16))
                     }
                     .symbolEffect(.bounce, value: self.voicePitchSliderValue)
                     .imageScale(.large)
 
                     HStack {
                         Text("0.5x")
-                            .font(.custom(Constants.Fonts.NotoSerifR, size: 16))
-
+                            .font(NotoFont.Regular(16))
                         Slider(value: self.$voicePitchSliderValue, in: 0.5...2.0, step: 0.1)
-//                        LinearGradientSlider(value: self.$voicePitchSliderValue, range: 0.5...2.0, step: 0.1) { _ in
-//                            // Update Default for pitch
-//                        }
                         Text("2.0x")
-                            .font(.custom(Constants.Fonts.NotoSerifR, size: 16))
+                            .font(NotoFont.Regular(16))
                     }
                 }
-                .font(.custom(Constants.Fonts.NotoSerifR, size: 10))
+                .font(NotoFont.Light(10))
 
                 Section(header: Text("Fonts")) {
                     NavigationLink {
@@ -84,20 +80,19 @@ struct SettingsView: View {
                     } label: {
                         HStack {
                             Text("Font \(Int(self.textSize))")
-                                .font(.custom(Constants.Fonts.NotoSerifR, size: 16))
-
+                                .font(NotoFont.Regular(16))
                             Spacer()
                             Text("Selected Font")
                                 .font(.custom(selectedFont, size: 16))
                         }
                     }
                 }
-                .font(.custom(Constants.Fonts.NotoSerifR, size: 10))
+                .font(NotoFont.Light(10))
 
                 Section(header: Text("Text Size")) {
                     HStack {
                         Text("Text Size: \(Int(self.textSize))")
-                            .font(.custom(Constants.Fonts.NotoSerifR, size: 16))
+                            .font(NotoFont.Regular(16))
                         Stepper("", value: self.$textSize, in: 10...30, step: 1)
                     }
 
@@ -119,15 +114,15 @@ struct SettingsView: View {
                             .foregroundStyle(Color.green)
                     }
                 }
-                .font(.custom(Constants.Fonts.NotoSerifR, size: 10))
+                .font(NotoFont.Light(10))
 
                 Section(header: Text("Colors")) {
                     ColorPicker("Background Color", selection: self.$backgroundColor)
-                        .font(.custom(Constants.Fonts.NotoSerifR, size: 16))
+                        .font(NotoFont.Regular(16))
                     ColorPicker("Foreground Color", selection: self.$foregroundColor)
-                        .font(.custom(Constants.Fonts.NotoSerifR, size: 16))
+                        .font(NotoFont.Regular(15))
                 }
-                .font(.custom(Constants.Fonts.NotoSerifR, size: 10))
+                .font(NotoFont.Light(10))
             }
             .navigationTitle("TTS Settings")
             .navigationBarTitleDisplayMode(.inline)
@@ -136,7 +131,7 @@ struct SettingsView: View {
                     Button("Close") {
                         self.dismiss()
                     }
-                    .font(.custom(Constants.Fonts.NotoSerifR, size: 16))
+                    .font(NotoFont.Regular(16))
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Reset") {
@@ -146,7 +141,7 @@ struct SettingsView: View {
                         self.backgroundColor = .yellow
                         self.foregroundColor = .blue
                     }
-                    .font(.custom(Constants.Fonts.NotoSerifR, size: 16))
+                    .font(NotoFont.Regular(16))
                 }
             })
         }

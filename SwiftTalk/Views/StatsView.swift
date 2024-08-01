@@ -88,7 +88,7 @@ extension StatsView {
                     tabSelection = 1
                 } label: {
                     Text("Start reading some text to build stats")
-                        .font(.custom(Constants.Fonts.NotoSerifSB, size: 18))
+                        .font(NotoFont.SemiBold(18))
                         .padding(10)
                         .foregroundStyle(.white)
                         .background {

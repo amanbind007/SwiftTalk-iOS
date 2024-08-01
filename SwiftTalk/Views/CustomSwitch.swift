@@ -19,7 +19,7 @@ struct CustomSwitch: View {
 
             Text("Edit")
                 .offset(x: isOn ? 5 : -5)
-                .font(.custom(Constants.Fonts.NotoSerifR, size: 16))
+                .font(NotoFont.Regular(16))
 
             ZStack {
                 Circle()

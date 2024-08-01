@@ -43,14 +43,13 @@ struct VoiceSelectorListItemView: View {
             Text("\(voice.voiceName) (\(voice.gender))") { string in
 
                 if let range = string.range(of: voice.voiceName) {
-                    string[range].font = .custom(Constants.Fonts.NotoSerifSB, fixedSize: 14)
+                    string[range].font = NotoFont.SemiBold(14)
                 }
                 if let range = string.range(of: "(\(voice.gender))") {
                     string[range].foregroundColor = .secondary
                 }
             }
-            
-            .font(.custom(Constants.Fonts.NotoSerifR, size: 14))
+            .font(NotoFont.Regular(14))
             
             Spacer()
             

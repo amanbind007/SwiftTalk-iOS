@@ -26,11 +26,11 @@ struct AddNewTextOptionCardView: View {
             VStack(alignment: .leading) {
                 Text(title)
                     .underline()
-                    .font(.custom(Constants.Fonts.NotoSerifSB, size: 14))
+                    .font(NotoFont.Bold(14))
                     .foregroundStyle(theme == .dark ? Color.white : Color.black)
                 
                 Text(description)
-                    .font(.custom(Constants.Fonts.NotoSerifR, size: 13))
+                    .font(NotoFont.Regular(13))
                     .multilineTextAlignment(.leading)
                     .foregroundStyle(theme == .dark ? Color.white : Color.black)
                     
