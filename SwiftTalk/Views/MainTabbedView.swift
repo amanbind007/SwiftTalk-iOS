@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MainView: View {
+struct MainTabbedView: View {
     @State private var tabSelection = 1
 
     init() {
