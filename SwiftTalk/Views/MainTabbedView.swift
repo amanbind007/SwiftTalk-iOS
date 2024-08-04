@@ -8,29 +8,38 @@
 import SwiftUI
 
 struct MainTabbedView: View {
-    @State private var tabSelection = 1
+    @State private var tabSelection = 0
+    @State private var showTabView = true
 
     init() {
-        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: Constants.Fonts.NotoBold, size: 10)!], for: .normal)
+        let titleTextColor = UIColor.deepOrange
+
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: titleTextColor, .font: UIFont(name: Constants.Fonts.NotoBold, size: 20)!]
+        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: titleTextColor, .font: UIFont(name: Constants.Fonts.NotoBold, size: 40)!]
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = titleTextColor.withAlphaComponent(0.1)
     }
 
     var body: some View {
-        TabView(selection: $tabSelection) {
-            HomeView()
-                .tabItem {
-                    Label("Home", systemImage: "house.fill")
-                }
-                .tag(1)
+        ZStack {
+            if tabSelection == 0 {
+                HomeView(showTabView: $showTabView)
+                    .tag(0)
+            } else {
+                StatsView(tabSelection: $tabSelection)
+                    .tag(1)
+            }
 
-            StatsView(tabSelection: $tabSelection)
-                .tabItem {
-                    Label("Stats", systemImage: "chart.bar.xaxis")
+            if showTabView {
+                VStack {
+                    Spacer()
+                    CustomTabView(selectedTab: $tabSelection)
+                        .shadow(radius: 10)
                 }
-                .tag(2)
+            }
         }
     }
 }
 
 #Preview {
-    MainView()
+    MainTabbedView()
 }
