@@ -21,15 +21,9 @@ struct HomeView: View {
     @State var selectedTextData: TextData?
     @State var isCorrect: Bool = true
 
+    @Binding var showTabView: Bool
+
     @Query(sort: \TextData.dateTime, order: .reverse) var textDatas: [TextData]
-
-    init() {
-        UINavigationBar.appearance().titleTextAttributes = [.font: UIFont(name: Constants.Fonts.NotoSerifSB, size: 18)!]
-        UINavigationBar.appearance().largeTitleTextAttributes = [.font: UIFont(name: Constants.Fonts.NotoSerifSB, size: 40)!]
-
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.orange
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).tintColor = UIColor.cyan
-    }
 
     var body: some View {
         NavigationStack(path: $navigationState.targetDestination) {
@@ -142,7 +136,7 @@ extension HomeView {
             List {
                 ForEach(textDatas, id: \.id) { textData in
                     NavigationLink(destination: {
-                        AddNewTextView(textData: textData, isEditing: false, isFocused: false, isSaved: true)
+                        AddNewTextView(textData: textData, isEditing: false, isFocused: false, isSaved: true, showTabView: $showTabView)
                     }, label: {
                         ListItemView(textData: textData, parentListType: .HomeViewList)
                             .contextMenu {

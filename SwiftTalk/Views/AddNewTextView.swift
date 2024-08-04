@@ -35,8 +35,9 @@ struct AddNewTextView: View {
     @State var showContinue: Bool
     @State var isFinished: Bool = false
     @State var showConfettiAnimation: Bool = false
+    @Binding var showTabView: Bool
     
-    init(textData: TextData, isEditing: Bool, isFocused: Bool, isSaved: Bool) {
+    init(textData: TextData, isEditing: Bool, isFocused: Bool, isSaved: Bool, showTabView: Binding<Bool>) {
         self.textData = textData
         self.isEditing = isEditing
         self.isFocused = isFocused
@@ -47,6 +48,8 @@ struct AddNewTextView: View {
         } else {
             self.showContinue = false
         }
+        
+        self._showTabView = showTabView
     }
     
     var body: some View {
@@ -111,10 +114,13 @@ struct AddNewTextView: View {
                 BottomPlayerPanel
             }
         }
+        .onAppear(perform: {
+            showTabView = false
+        })
         .onDisappear(perform: {
             textData.text = textData.text.trimEndWhitespaceAndNewlines()
+            showTabView = true
         })
-        .toolbar(.hidden, for: .tabBar)
         .onChange(of: speechManager.highlightedRange?.upperBound) {
             if let highlightedRange = speechManager.highlightedRange {
                 if textData.progress < highlightedRange.upperBound {
@@ -346,6 +352,6 @@ extension AddNewTextView {
 
 #Preview {
     NavigationStack {
-        AddNewTextView(textData: TextDataPreviewProvider.textData1, isEditing: true, isFocused: false, isSaved: false)
+        AddNewTextView(textData: TextDataPreviewProvider.textData1, isEditing: true, isFocused: false, isSaved: false, showTabView: .constant(false))
     }
 }
