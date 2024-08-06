@@ -67,6 +67,10 @@ struct HomeView: View {
                 isCorrect: $isCorrect,
                 onSave: verifyAndUpdate
             )
+            .animation(.easeInOut, value: showTitleUpdateAlert)
+        )
+        .overlay(
+            InfoCardView(isPresented: $showInfoCardView, textData: selectedTextData)
         )
     }
 
