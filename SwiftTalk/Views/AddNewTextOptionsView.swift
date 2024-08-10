@@ -111,6 +111,11 @@ struct AddNewTextOptionsView: View {
                 LinearGradient(colors: [Color.gradiantColor2, Color.gradiantColor1], startPoint: .top, endPoint: .bottom)
                     .ignoresSafeArea()
             )
+            .alert(isPresented: $addNewTextOptionsVM.showParseAlert, content: {
+                Alert(title: Text("Error!"), message: Text(addNewTextOptionsVM.errorMessage ?? "Could'nt parse the text"), dismissButton: .default(Text("OK")))
+                
+            })
+            
         }
     }
 }

@@ -28,14 +28,17 @@ class AddNewTextOptionsViewModel {
     var selectedImages: [UIImage] = []
     var isProcessingImages: Bool = false
     
+    var showParseAlert: Bool = false
+    
     func getTextFromLink(completion: @escaping (Bool) -> Void) {
         var text = ""
-        self.isParsingWebText = true
-
+        
         if let url = URL(string: link) {
+            self.errorMessage = nil
+            self.isParsingWebText = true
             let session = URLSession.shared.dataTask(with: URLRequest(url: url)) { data, _, error in
                 if let error = error {
-                    print(error.localizedDescription)
+                    // print(error.localizedDescription)
                     self.errorMessage = error.localizedDescription
                     self.isParsingWebText = false
                     completion(false)
@@ -52,15 +55,19 @@ class AddNewTextOptionsViewModel {
                             text = try body.text()
                             
                             DispatchQueue.main.async {
-                                self.errorMessage = nil
                                 let currentDate = Date()
                                 let dateFormatter = DateFormatter()
                                 dateFormatter.dateFormat = "yyyy-MM-dd HH.mm.ss"
                                 let formattedDate = dateFormatter.string(from: currentDate)
                                 let title = "WebText "+formattedDate
-                                DataCoordinator.shared.saveObject(text: text.trimEndWhitespaceAndNewlines(), title: title, textSource: .webpage)
+                                if text != "" {
+                                    DataCoordinator.shared.saveObject(text: text.trimEndWhitespaceAndNewlines(), title: title, textSource: .webpage)
+                                    completion(true)
+                                } else {
+                                    print("Text: \(text)")
+                                    self.errorMessage = "Failed to retrieve text."
+                                }
                                 self.isParsingWebText = false
-                                completion(text != "")
                             }
                             
                         } catch {
@@ -159,8 +166,6 @@ class AddNewTextOptionsViewModel {
     }
     
     func getTextFromImages() {
-        // let image = UIImage(named: "quote")
-        
         var text = ""
         self.isProcessingImages = true
         
@@ -181,7 +186,7 @@ class AddNewTextOptionsViewModel {
                         result.topCandidates(1).first?.string
                     }
                         
-                    // Update the UI
+                    // append parsed text
                     DispatchQueue.main.async {
                         text.append(stringArray.joined(separator: "\n"))
                     }
@@ -190,17 +195,24 @@ class AddNewTextOptionsViewModel {
                 // Process the request
                 recognizeRequest.recognitionLevel = .accurate
                 recognizeRequest.automaticallyDetectsLanguage = true
+                recognizeRequest.progressHandler = { _, value, _ in
+                    
+                    // show progress bar or something
+                }
                 
                 do {
                     try handler.perform([recognizeRequest])
+                    
                 } catch {
+                    self.isProcessingImages = false
+                    self.errorMessage = error.localizedDescription
+                    self.showParseAlert = true
                     print(error)
                 }
-                // print(text)
-                
-                self.isProcessingImages = false
             }
         }
+        
+        self.isProcessingImages = false
         
         DispatchQueue.main.async {
             let currentDate = Date()
@@ -208,7 +220,13 @@ class AddNewTextOptionsViewModel {
             dateFormatter.dateFormat = "yyyy-MM-dd HH.mm.ss"
             let formattedDate = dateFormatter.string(from: currentDate)
             let title = "ImageText "+formattedDate
-            DataCoordinator.shared.saveObject(text: text.trimEndWhitespaceAndNewlines(), title: title, textSource: .photoLibrary)
+            
+            if text != "" {
+                DataCoordinator.shared.saveObject(text: text.trimEndWhitespaceAndNewlines(), title: title, textSource: .photoLibrary)
+            } else {
+                self.errorMessage = "Couldn't parse any text from photo(s)"
+                self.showParseAlert = true
+            }
         }
     }
 }
