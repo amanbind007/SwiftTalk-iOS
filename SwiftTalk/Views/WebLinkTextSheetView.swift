@@ -117,6 +117,10 @@ struct WebLinkTextSheetView: View {
                 Spacer()
             }
         }
+        .onAppear {
+            addNewTextOptionsVM.errorMessage = nil
+            addNewTextOptionsVM.link = ""
+        }
     }
 }
     
