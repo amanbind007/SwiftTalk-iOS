@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct LinearProgressBar: View {
-    var value: Int
-    var total: Int
+    var value: Float
+    var total: Float
     let color: Color
 
     var progress: CGFloat {
@@ -17,31 +17,35 @@ struct LinearProgressBar: View {
     }
 
     var body: some View {
-        GeometryReader { geometry in
-            ZStack(alignment: .leading) {
-                RoundedRectangle(cornerRadius: 6)
-                    .foregroundColor(color.opacity(0.5))
-                    .overlay {
-                        HStack {
-                            RoundedRectangle(cornerRadius: 5)
-                                .foregroundColor(color)
-                                .padding(2)
-                                .frame(width: max(geometry.size.width * progress, 12), height: 12)
-                                .animation(.easeInOut(duration: 0.5), value: progress)
+        VStack {
+            GeometryReader { geometry in
 
-                            Spacer(minLength: 0)
+                ZStack {
+                    RoundedRectangle(cornerRadius: 6)
+                        .foregroundColor(color.opacity(0.5))
+                        .overlay {
+                            HStack {
+                                RoundedRectangle(cornerRadius: 5)
+                                    .foregroundColor(color)
+                                    .padding(2)
+                                    .frame(width: max(geometry.size.width * progress, 12), height: 12)
+                                    .animation(.easeInOut(duration: 0.5), value: progress)
+
+                                Spacer(minLength: 0)
+                            }
                         }
-                    }
+                }
+                
             }
-            .frame(height: 12)
         }
+        .frame(height: 12)
     }
 }
 
 struct ProgressBar_Previews: PreviewProvider {
     static var previews: some View {
         VStack(spacing: 30) {
-            LinearProgressBar(value: 1, total: 50, color: .red)
+        LinearProgressBar(value: 1, total: 50, color: .red)
 
             LinearProgressBar(value: 14, total: 50, color: .pink)
 
