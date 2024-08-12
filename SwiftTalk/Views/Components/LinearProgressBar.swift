@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct LinearProgressBar: View {
-    var value: Float
-    var total: Float
+    var value: Double
+    var total: Double
     let color: Color
 
     var progress: CGFloat {
