@@ -9,9 +9,9 @@ import Lottie
 import SwiftUI
 
 struct ProcessProgressCardView: View {
-    @State var total: Float
-    @State var value: Float
-    @State var showProgressCard: Bool
+    @State var total: Double
+    @State var value: Double
+    @Binding var showProgressCard: Bool
     var body: some View {
         if showProgressCard {
             VStack {
@@ -38,5 +38,5 @@ struct ProcessProgressCardView: View {
 }
 
 #Preview {
-    ProcessProgressCardView(total: 100, value: 55, showProgressCard: true)
+    ProcessProgressCardView(total: 100, value: 55, showProgressCard: .constant(true))
 }
