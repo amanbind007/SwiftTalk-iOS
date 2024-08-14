@@ -13,7 +13,7 @@ struct CustomTabView: View {
     var body: some View {
         ZStack {
             Capsule()
-                .foregroundStyle(Material.thick)
+                .foregroundStyle(Material.ultraThick)
             Capsule(style: .circular)
                 .foregroundStyle(Material.ultraThinMaterial)
                 .padding(5)

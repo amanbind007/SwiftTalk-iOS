@@ -13,6 +13,7 @@ struct LinearProgressBar: View {
     let color: Color
 
     var progress: CGFloat {
+        
         return CGFloat(value) / CGFloat(total)
     }
 
@@ -35,7 +36,6 @@ struct LinearProgressBar: View {
                             }
                         }
                 }
-                
             }
         }
         .frame(height: 12)
@@ -45,7 +45,7 @@ struct LinearProgressBar: View {
 struct ProgressBar_Previews: PreviewProvider {
     static var previews: some View {
         VStack(spacing: 30) {
-        LinearProgressBar(value: 1, total: 50, color: .red)
+            LinearProgressBar(value: 1, total: 50, color: .red)
 
             LinearProgressBar(value: 14, total: 50, color: .pink)
 
@@ -58,6 +58,8 @@ struct ProgressBar_Previews: PreviewProvider {
             LinearProgressBar(value: 42, total: 50, color: .purple)
 
             LinearProgressBar(value: 50, total: 50, color: .secondary)
+            
+            LinearProgressBar(value: 0.23454525, total: 1.0, color: .deepOrange)
         }
         .padding()
     }

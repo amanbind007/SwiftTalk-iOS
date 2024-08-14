@@ -26,11 +26,10 @@ struct CustomSwitch: View {
                     .frame(width: 30, height: 30)
                     .foregroundColor(.white)
                 Image(systemName: isOn ? "pencil" : "pencil.slash")
-                    .foregroundStyle(Color.primary)
+                    .foregroundStyle(Color.black)
             }
             .shadow(color: .black.opacity(0.14), radius: 4, x: 0, y: 2)
             .offset(x: isOn ? 38 : -38)
-            // .padding(15)
             .animation(.spring, value: isOn)
         }
         .onTapGesture {
