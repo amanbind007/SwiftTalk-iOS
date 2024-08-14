@@ -32,8 +32,7 @@ struct StatsView: View {
                 calculateLastSevenDaysData()
             }
             .background {
-                LinearGradient(colors: [Color.gradiantColor2, Color.gradiantColor1], startPoint: .top, endPoint: .bottom)
-                    .ignoresSafeArea()
+                BackgroundView()
             }
         }
     }
@@ -73,8 +72,7 @@ extension StatsView {
     @ViewBuilder
     var EmptyStatsView: some View {
         ZStack {
-            LinearGradient(colors: [Color.gradiantColor2, Color.gradiantColor1], startPoint: .top, endPoint: .bottom)
-                .ignoresSafeArea()
+            BackgroundView()
             
             VStack {
                 LottieView(animation: .named("StatsChartAnimation"))
@@ -138,7 +136,6 @@ extension StatsView {
             header: {
                 Text("Weekly Time Spend - Chart")
             }
-            .listRowBackground(Color.accent1)
             
             Section(header: Text("Daily Stats (Last 7 Active Days)")) {
                 ForEach(viewModel.dailyStats.suffix(7).reversed(), id: \.date) { stat in
@@ -149,7 +146,6 @@ extension StatsView {
                     }
                 }
             }
-            .listRowBackground(Color.accent1)
             
             if !viewModel.mostRead.isEmpty {
                 Section {
@@ -160,7 +156,6 @@ extension StatsView {
                 } header: {
                     Text("Most time spend reading")
                 }
-                .listRowBackground(Color.accent1)
             }
             
             if !viewModel.recentlyCompleted.isEmpty {
@@ -172,7 +167,6 @@ extension StatsView {
                 } header: {
                     Text("Recently Completed")
                 }
-                .listRowBackground(Color.accent1)
             }
         }
         .scrollContentBackground(.hidden)
