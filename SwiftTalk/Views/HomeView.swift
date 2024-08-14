@@ -17,6 +17,7 @@ struct HomeView: View {
     @State private var searchText: String = ""
     @State var navigationState = NavigationStateViewModel()
     @State var showTitleUpdateAlert: Bool = false
+    @State var showInfoCardView: Bool = false
     @State var newTitle: String = ""
     @State var selectedTextData: TextData?
     @State var isCorrect: Bool = true
@@ -39,17 +40,14 @@ struct HomeView: View {
                     SavedTextListView
                 }
             }
-
+            .toolbarBackground(Color.navbar, for: .navigationBar)
             .navigationTitle("SwiftTalk")
+            .navigationBarTitleDisplayMode(.large)
             .searchable(
                 text: $searchText,
                 placement: .navigationBarDrawer(displayMode: .always)
             )
-
-//            .toolbarBackground(.visible, for: .navigationBar)
-//            .toolbarBackground(.accent2, for: .navigationBar)
         }
-
         .sheet(
             isPresented: $showAddNewTextOptionsView,
             content: {
@@ -102,12 +100,13 @@ struct HomeView: View {
     }
 }
 
+// MARK: - Empty Home View
+
 extension HomeView {
     @ViewBuilder
     var EmptyHomeView: some View {
         ZStack {
-            LinearGradient(colors: [Color(#colorLiteral(red: 0.02420473658, green: 0.08916769177, blue: 0.1760105193, alpha: 1)), Color(#colorLiteral(red: 0.05882352941, green: 0.06666666667, blue: 0.07450980392, alpha: 1))], startPoint: .top, endPoint: .bottom)
-                .ignoresSafeArea()
+            BackgroundView()
 
             VStack {
                 LottieView(animation: .named("EmptyAnimation"))
@@ -120,7 +119,7 @@ extension HomeView {
                     showAddNewTextOptionsView.toggle()
                 } label: {
                     Text("Add some new Text to Read")
-                        .font(.custom(Constants.Fonts.NotoSerifSB, size: 18))
+                        .font(NotoFont.Regular(18))
                         .padding(10)
                         .foregroundStyle(.white)
                         .background {
@@ -132,6 +131,8 @@ extension HomeView {
         }
     }
 }
+
+// MARK: - Saved Text List View
 
 extension HomeView {
     @ViewBuilder
@@ -154,6 +155,19 @@ extension HomeView {
                                 } label: {
                                     Label("Update Title", systemImage: "square.and.pencil")
                                 }
+
+                                Button {
+                                    deleteObject(textData: textData)
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
+
+                                Button {
+                                    selectedTextData = textData
+                                    showInfoCardView = true
+                                } label: {
+                                    Label("Info", systemImage: "info.bubble")
+                                }
                             }
                             .swipeActions(edge: .trailing) {
                                 Button(role: .destructive) {
@@ -169,37 +183,38 @@ extension HomeView {
                             }
                     })
                 }
-                .listRowBackground(Color(red: 0.075, green: 0.294, blue: 0.439))
             }
             .scrollContentBackground(.hidden)
             .listStyle(.sidebar)
             .listRowSpacing(10)
-            
 
             Button(action: {
                 showAddNewTextOptionsView.toggle()
             }, label: {
                 Circle()
                     .frame(width: 55, height: 55)
-                    .foregroundStyle(Color.green)
+                    .foregroundStyle(Color.deepOrange)
                     .overlay {
                         Image(systemName: "plus")
                             .resizable()
-                            .foregroundStyle(.black)
+                            .bold()
+                            .foregroundStyle(.white)
                             .padding(15)
                     }
 
             })
             .shadow(color: Color.black.opacity(0.3), radius: 10, x: 10, y: 10)
             .shadow(color: Color.white.opacity(1), radius: 10, x: -7, y: -7)
-            .padding()
+            .padding(.vertical, 80)
+            .padding(.horizontal)
         }
         .background(
-            LinearGradient(colors: [Color(#colorLiteral(red: 0.02420473658, green: 0.08916769177, blue: 0.1760105193, alpha: 1)), Color(#colorLiteral(red: 0.05882352941, green: 0.06666666667, blue: 0.07450980392, alpha: 1))], startPoint: .top, endPoint: .bottom)
-                .ignoresSafeArea()
+            BackgroundView()
         )
     }
 }
+
+// MARK: - Open TextView from Home View
 
 extension HomeView {
     @ViewBuilder
@@ -209,13 +224,13 @@ extension HomeView {
         }
         .navigationDestination(for: TextSource.self) { target in
             if target == .textInput {
-                AddNewTextView(textData: TextData(textTitle: nil, text: "", textSource: .textInput), isEditing: true, isFocused: true, isSaved: false)
+                AddNewTextView(textData: TextData(textTitle: nil, text: "", textSource: .textInput), isEditing: true, isFocused: true, isSaved: false, showTabView: $showTabView)
             }
         }
     }
 }
 
 #Preview {
-    HomeView()
+    HomeView(showTabView: .constant(true))
         .modelContainer(for: TextData.self)
 }
