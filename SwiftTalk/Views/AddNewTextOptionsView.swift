@@ -71,9 +71,7 @@ struct AddNewTextOptionsView: View {
                         AddNewTextOptionCardView(title: option.title, description: option.description, imageName: option.imageName)
                     }
                 }
-                .listRowBackground(Color.accent1)
             }
-            .scrollContentBackground(.hidden)
 
             .fileImporter(
                 isPresented: $showFileImporterSheet,
@@ -104,18 +102,12 @@ struct AddNewTextOptionsView: View {
                     .presentationDetents([.height(280)])
             })
             .sheet(isPresented: $showImagePickerSheet, content: {
-                ImagePickerView(showImagePickerSheet: $showImagePickerSheet, addNewTextOptionsVM: $addNewTextOptionsVM, showAddNewTextOptionsView: $showAddNewTextOptionsView)
+                ImagePicker(showImagePickerSheet: $showImagePickerSheet, addNewTextOptionsVM: $addNewTextOptionsVM, showAddNewTextOptionsView: $showAddNewTextOptionsView)
                     .ignoresSafeArea(edges: .bottom)
             })
-            .background(
-                LinearGradient(colors: [Color.gradiantColor2, Color.gradiantColor1], startPoint: .top, endPoint: .bottom)
-                    .ignoresSafeArea()
-            )
             .alert(isPresented: $addNewTextOptionsVM.showParseAlert, content: {
                 Alert(title: Text("Error!"), message: Text(addNewTextOptionsVM.errorMessage ?? "Could'nt parse the text"), dismissButton: .default(Text("OK")))
-                
             })
-            
         }
     }
 }

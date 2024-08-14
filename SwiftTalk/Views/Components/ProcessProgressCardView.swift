@@ -9,18 +9,19 @@ import Lottie
 import SwiftUI
 
 struct ProcessProgressCardView: View {
-    @State var total: Double
-    @State var value: Double
-    @Binding var showProgressCard: Bool
+//    @State var total: Double
+//    @State var value: Double
+    @Binding var addNewTextOptionVM: AddNewTextOptionsViewModel
+    
     var body: some View {
-        if showProgressCard {
+        if addNewTextOptionVM.isProcessingImages {
             VStack {
                 LottieView(animation: .named("GearsAnimation"))
                     .playing(loopMode: .loop)
                     .frame(height: 250)
 
                 Text("Parsing Text")
-                LinearProgressBar(value: value, total: total, color: Color.deepOrange)
+                LinearProgressBar(value: addNewTextOptionVM.progressValue, total: 1.0, color: Color.deepOrange)
                     .padding()
             }
             .background(Material.ultraThick)
@@ -38,5 +39,5 @@ struct ProcessProgressCardView: View {
 }
 
 #Preview {
-    ProcessProgressCardView(total: 100, value: 55, showProgressCard: .constant(true))
+    ProcessProgressCardView(addNewTextOptionVM: .constant(AddNewTextOptionsViewModel()))
 }

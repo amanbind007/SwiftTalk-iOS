@@ -29,9 +29,7 @@ struct AddNewTextView: View {
     @State var showAlertTextNotSaved: Bool = false
     @State var showAlertNoText: Bool = false
     @State var showEditAlert: Bool = false
-    
-    @State var isSaved: Bool
-    
+    @State var isTextDataSaved: Bool
     @State var showContinue: Bool
     @State var isFinished: Bool = false
     @State var showConfettiAnimation: Bool = false
@@ -41,7 +39,7 @@ struct AddNewTextView: View {
         self.textData = textData
         self.isEditing = isEditing
         self.isFocused = isFocused
-        self.isSaved = isSaved
+        self.isTextDataSaved = isSaved
         
         if textData.progress > 0 && textData.progress < textData.text.count {
             self.showContinue = true
@@ -57,7 +55,7 @@ struct AddNewTextView: View {
             VStack(alignment: .leading, spacing: 0) {
                 if isEditing {
                     HStack {
-                        if !isSaved {
+                        if !isTextDataSaved {
                             Button {
                                 if verifyText(text: textData.text) {
                                     DataCoordinator.shared.saveObject(text: textData.text, title: nil, textSource: textData.textSource)
@@ -104,12 +102,14 @@ struct AddNewTextView: View {
                 Divider()
                 
                 if speechManager.speechState == .speaking || speechManager.speechState == .paused {
-                    LinearProgressBar(value: Float(speechManager.currentCompletedIndex + speechManager.startIndex), total: Float(textData.text.count), color: textData.textSource.color)
-                        .frame(height: 12)
-                        .padding(.vertical, 2)
+                    LinearProgressBar(
+                        value: Double(speechManager.currentCompletedIndex + speechManager.startIndex),
+                        total: Double(textData.text.count),
+                        color: textData.textSource.color
+                    )
+                    .frame(height: 12)
+                    .padding(.vertical, 2)
                 }
-                    
-                
             }
             
             if !isEditing {
@@ -151,7 +151,7 @@ struct AddNewTextView: View {
             ToolbarItemGroup(placement: .topBarLeading) {
                 HStack {
                     Button(role: .cancel) {
-                        if !isSaved && verifyText(text: textData.text) {
+                        if !isTextDataSaved && verifyText(text: textData.text) {
                             speechManager.stopSpeakingText()
                             showAlertTextNotSaved.toggle()
 
