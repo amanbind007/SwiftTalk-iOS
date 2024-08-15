@@ -193,7 +193,7 @@ extension HomeView {
             }, label: {
                 Circle()
                     .frame(width: 55, height: 55)
-                    .foregroundStyle(Color.deepOrange)
+                    .foregroundStyle(Color.appTint)
                     .overlay {
                         Image(systemName: "plus")
                             .resizable()

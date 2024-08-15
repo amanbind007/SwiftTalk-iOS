@@ -110,7 +110,7 @@ extension StatsView {
                             x: .value("Date", day.date, unit: .day),
                             y: .value("Time Read", day.timeRead / 60)
                         )
-                        .foregroundStyle(Color.deepOrange.gradient)
+                        .foregroundStyle(Color.appTint.gradient)
                         .annotation(position: .top) {
                             Text(formatTime(day.timeRead))
                                 .font(.caption2)
@@ -122,7 +122,7 @@ extension StatsView {
                             yStart: 0,
                             yEnd: 1
                         )
-                        .foregroundStyle(Color.deepOrange)
+                        .foregroundStyle(Color.appTint)
                         .lineStyle(StrokeStyle(lineWidth: 3, dash: [5, 5]))
                         .annotation(position: .bottom) {
                             Text("0s")

@@ -33,7 +33,6 @@
 		5C46549E2C4BEC7200375CF5 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C46549D2C4BEC7200375CF5 /* String+Extension.swift */; };
 		5C4654A22C4D041500375CF5 /* Completed.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C4654A12C4D041500375CF5 /* Completed.json */; };
 		5C49EC792C41A89900B15B82 /* LinearProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C49EC782C41A89900B15B82 /* LinearProgressBar.swift */; };
-		5C4AA48D2BDE4E1A00150112 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AA48C2BDE4E1A00150112 /* ImagePickerView.swift */; };
 		5C4D0A592C08601C00726969 /* TextDataPreviewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4D0A582C08601C00726969 /* TextDataPreviewProvider.swift */; };
 		5C5E5B782BE8C2F300A9ED86 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5E5B772BE8C2F300A9ED86 /* TextView.swift */; };
 		5C77D1EF2C5AAEE800AA1223 /* NotoFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C77D1EE2C5AAEE800AA1223 /* NotoFont.swift */; };
@@ -101,7 +100,6 @@
 		5C46549D2C4BEC7200375CF5 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		5C4654A12C4D041500375CF5 /* Completed.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Completed.json; sourceTree = "<group>"; };
 		5C49EC782C41A89900B15B82 /* LinearProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearProgressBar.swift; sourceTree = "<group>"; };
-		5C4AA48C2BDE4E1A00150112 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		5C4D0A582C08601C00726969 /* TextDataPreviewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextDataPreviewProvider.swift; sourceTree = "<group>"; };
 		5C5E5B772BE8C2F300A9ED86 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		5C77D1EE2C5AAEE800AA1223 /* NotoFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotoFont.swift; sourceTree = "<group>"; };
@@ -292,7 +290,6 @@
 				5CFAF95A2BC99C08003726AA /* VoiceSelectorListItemView.swift */,
 				5CFAF95C2BCA737C003726AA /* WebLinkTextSheetView.swift */,
 				5CDF5F0F2BD0EB6E00534B6B /* ImagePicker.swift */,
-				5C4AA48C2BDE4E1A00150112 /* ImagePickerView.swift */,
 				5C5E5B772BE8C2F300A9ED86 /* TextView.swift */,
 				5C308BE62C3BDCDA0054886B /* FontSelectorView.swift */,
 			);
@@ -435,7 +432,6 @@
 				5C308BDB2C37060B0054886B /* CustomAlertView.swift in Sources */,
 				5C308C0A2C3EF9400054886B /* Constants.swift in Sources */,
 				5C308BD92C358A160054886B /* AddNewTextOptionsViewModel.swift in Sources */,
-				5C4AA48D2BDE4E1A00150112 /* ImagePickerView.swift in Sources */,
 				5C87CC3D2C2828180010363F /* BannerButton.swift in Sources */,
 				5C77D1EF2C5AAEE800AA1223 /* NotoFont.swift in Sources */,
 				5C3016FD2B9E16D20012542D /* ListItemView.swift in Sources */,

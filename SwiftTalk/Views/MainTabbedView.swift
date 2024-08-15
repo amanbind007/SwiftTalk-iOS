@@ -12,7 +12,7 @@ struct MainTabbedView: View {
     @State private var showTabView = true
 
     init() {
-        let titleTextColor = UIColor.deepOrange
+        let titleTextColor = UIColor.appTint
 
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: titleTextColor, .font: UIFont(name: Constants.Fonts.NotoBold, size: 20)!]
         UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: titleTextColor, .font: UIFont(name: Constants.Fonts.NotoBold, size: 40)!]

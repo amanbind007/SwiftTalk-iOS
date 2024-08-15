@@ -11,7 +11,7 @@ import SwiftUI
 @main
 struct SwiftTalkApp: App {
     @AppStorage("isOnboarding") var isOnboarding: Bool = false
-    @AppStorage("appTintColor") var tintColor: Color = .init(UIColor.green)
+    @AppStorage("appTintColor") var tintColor: Color = .appTint
 
     var body: some Scene {
         WindowGroup {
@@ -19,8 +19,9 @@ struct SwiftTalkApp: App {
                 // Some Onboarding View
 
             } else {
-                MainView()
-                    .tint(Color(red: 1, green: 0.298, blue: 0.298))
+                MainTabbedView()
+                    .font(NotoFont.Regular(13))
+                    .tint(tintColor)
             }
         }
         .modelContainer(for: [TextData.self, DailyStats.self])

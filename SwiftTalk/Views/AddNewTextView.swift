@@ -108,7 +108,7 @@ struct AddNewTextView: View {
                         color: textData.textSource.color
                     )
                     .frame(height: 12)
-                    .padding(.vertical, 2)
+                    .padding(5)
                 }
             }
             
@@ -202,6 +202,7 @@ struct AddNewTextView: View {
                 textData.progress = 0
                 textData.completionDate = nil
                 textData.confettiShown = false
+                showContinue = false
                 
                 speechManager.stopSpeakingText()
                 
