@@ -21,7 +21,7 @@ struct ProcessProgressCardView: View {
                     .frame(height: 250)
 
                 Text("Parsing Text")
-                LinearProgressBar(value: addNewTextOptionVM.progressValue, total: 1.0, color: Color.deepOrange)
+                LinearProgressBar(value: addNewTextOptionVM.progressValue, total: 1.0, color: Color.appTint)
                     .padding()
             }
             .background(Material.ultraThick)

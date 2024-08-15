@@ -59,7 +59,7 @@ struct ProgressBar_Previews: PreviewProvider {
 
             LinearProgressBar(value: 50, total: 50, color: .secondary)
             
-            LinearProgressBar(value: 0.23454525, total: 1.0, color: .deepOrange)
+            LinearProgressBar(value: 0.23454525, total: 1.0, color: .appTint)
         }
         .padding()
     }

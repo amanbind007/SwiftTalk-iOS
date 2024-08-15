@@ -41,7 +41,7 @@ struct CustomTabView: View {
                 
                 Spacer()
             }
-            .foregroundStyle(Color.deepOrange)
+            .foregroundStyle(Color.appTint)
         }
         .animation(.spring, value: selectedTab)
         .padding(.horizontal)
