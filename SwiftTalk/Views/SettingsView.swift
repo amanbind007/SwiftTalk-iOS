@@ -53,7 +53,7 @@ struct SettingsView: View {
                             .font(NotoFont.Regular(16))
                     }
                 }
-                .font(NotoFont.Light(10))
+//                .font(NotoFont.Light(10))
 
                 Section(header: Text("Voice Pitch")) {
                     HStack {
@@ -72,7 +72,6 @@ struct SettingsView: View {
                             .font(NotoFont.Regular(16))
                     }
                 }
-                .font(NotoFont.Light(10))
 
                 Section(header: Text("Fonts")) {
                     NavigationLink {
@@ -87,7 +86,6 @@ struct SettingsView: View {
                         }
                     }
                 }
-                .font(NotoFont.Light(10))
 
                 Section(header: Text("Text Size")) {
                     HStack {
@@ -114,7 +112,6 @@ struct SettingsView: View {
                             .foregroundStyle(Color.green)
                     }
                 }
-                .font(NotoFont.Light(10))
 
                 Section(header: Text("Colors")) {
                     ColorPicker("Background Color", selection: self.$backgroundColor)
@@ -122,7 +119,6 @@ struct SettingsView: View {
                     ColorPicker("Foreground Color", selection: self.$foregroundColor)
                         .font(NotoFont.Regular(15))
                 }
-                .font(NotoFont.Light(10))
             }
             .navigationTitle("TTS Settings")
             .navigationBarTitleDisplayMode(.inline)

@@ -11,14 +11,6 @@ struct MainTabbedView: View {
     @State private var tabSelection = 0
     @State private var showTabView = true
 
-    init() {
-        let titleTextColor = UIColor.appTint
-
-        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: titleTextColor, .font: UIFont(name: Constants.Fonts.NotoBold, size: 20)!]
-        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: titleTextColor, .font: UIFont(name: Constants.Fonts.NotoBold, size: 40)!]
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = titleTextColor.withAlphaComponent(0.1)
-    }
-
     var body: some View {
         ZStack {
             if tabSelection == 0 {

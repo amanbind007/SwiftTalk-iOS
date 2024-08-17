@@ -10,7 +10,6 @@ import Lottie
 import SwiftUI
 
 struct StatsView: View {
-    // @Environment(\.colorScheme) var theme
     @Environment(\.modelContext) private var modelContext
     @State var viewModel = StatsViewModel()
     @State private var lastSevenDaysData: [(date: Date, timeRead: Double)] = []
@@ -27,6 +26,7 @@ struct StatsView: View {
                 }
             }
             .navigationTitle("Reading Stats")
+            .toolbarBackground(Color.navbar, for: .navigationBar)
             .onAppear {
                 viewModel.fetchStats(modelContext: modelContext)
                 calculateLastSevenDaysData()

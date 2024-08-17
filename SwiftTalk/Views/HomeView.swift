@@ -42,7 +42,6 @@ struct HomeView: View {
             }
             .toolbarBackground(Color.navbar, for: .navigationBar)
             .navigationTitle("SwiftTalk")
-            .navigationBarTitleDisplayMode(.large)
             .searchable(
                 text: $searchText,
                 placement: .navigationBarDrawer(displayMode: .always)
@@ -183,6 +182,9 @@ extension HomeView {
                             }
                     })
                 }
+
+                Spacer(minLength: 150)
+                    .listRowBackground(Color.clear)
             }
             .scrollContentBackground(.hidden)
             .listStyle(.sidebar)
