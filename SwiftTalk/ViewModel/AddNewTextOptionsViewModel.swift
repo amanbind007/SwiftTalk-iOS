@@ -57,7 +57,7 @@ class AddNewTextOptionsViewModel {
                             DispatchQueue.main.async {
                                 let currentDate = Date()
                                 let dateFormatter = DateFormatter()
-                                dateFormatter.dateFormat = "yyyy-MM-dd HH.mm.ss"
+                                dateFormatter.dateFormat = "dd-MM-yy HH.mm.ss"
                                 let formattedDate = dateFormatter.string(from: currentDate)
                                 let title = "WebText "+formattedDate
                                 if text != "" {
@@ -115,7 +115,7 @@ class AddNewTextOptionsViewModel {
             DispatchQueue.main.async {
                 let currentDate = Date()
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy-MM-dd HH.mm.ss"
+                dateFormatter.dateFormat = "dd-MM-yy HH.mm.ss"
                 let formattedDate = dateFormatter.string(from: currentDate)
                 let title = "PDFText "+formattedDate
                 DataCoordinator.shared.saveObject(text: text.trimEndWhitespaceAndNewlines(), title: title, textSource: .pdfDocument)
@@ -135,7 +135,7 @@ class AddNewTextOptionsViewModel {
                 DispatchQueue.main.async {
                     let currentDate = Date()
                     let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "yyyy-MM-dd HH.mm.ss"
+                    dateFormatter.dateFormat = "dd-MM-yy HH.mm.ss"
                     let formattedDate = dateFormatter.string(from: currentDate)
                     let title = "DocText "+formattedDate
                     DataCoordinator.shared.saveObject(text: text.trimEndWhitespaceAndNewlines(), title: title, textSource: .wordDocument)
@@ -154,7 +154,7 @@ class AddNewTextOptionsViewModel {
             DispatchQueue.main.async {
                 let currentDate = Date()
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy-MM-dd HH.mm.ss"
+                dateFormatter.dateFormat = "dd-MM-yy HH.mm.ss"
                 let formattedDate = dateFormatter.string(from: currentDate)
                 let title = "Text "+formattedDate
 
@@ -217,9 +217,9 @@ class AddNewTextOptionsViewModel {
         DispatchQueue.main.async {
             let currentDate = Date()
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd HH.mm.ss"
+            dateFormatter.dateFormat = "dd-MM-yy HH.mm.ss"
             let formattedDate = dateFormatter.string(from: currentDate)
-            let title = "ImageText "+formattedDate
+            let title = "ImgText "+formattedDate
             
             if text != "" {
                 DataCoordinator.shared.saveObject(text: text.trimEndWhitespaceAndNewlines(), title: title, textSource: .photoLibrary)

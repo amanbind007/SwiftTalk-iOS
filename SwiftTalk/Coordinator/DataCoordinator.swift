@@ -62,7 +62,7 @@ class DataCoordinator {
         else {
             let currentDate = Date()
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd HH.mm.ss"
+            dateFormatter.dateFormat = "dd-MM-yy HH.mm.ss"
             let formattedDate = dateFormatter.string(from: currentDate)
             autoTitle = "Text " + formattedDate
         }
