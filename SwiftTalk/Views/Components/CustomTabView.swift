@@ -26,6 +26,8 @@ struct CustomTabView: View {
                     selectedTab = 0
                 } label: {
                     Label("Home", systemImage: "house.fill")
+                        .font(.caption)
+                        .bold()
                         .imageScale(.large)
                 }
 
@@ -36,6 +38,8 @@ struct CustomTabView: View {
                     selectedTab = 1
                 }, label: {
                     Label("Stats", systemImage: "chart.bar.xaxis")
+                        .font(.caption)
+                        .bold()
                         .imageScale(.large)
                 })
                 

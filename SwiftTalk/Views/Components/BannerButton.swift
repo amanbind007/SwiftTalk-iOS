@@ -33,7 +33,6 @@ struct BannerButton: View {
                         }
 
                     Text(text)
-                        .font(NotoFont.Regular(16))
                         .foregroundStyle(theme == .dark ? .white : .black)
                         .overlay {
                             GeometryReader { proxy in
