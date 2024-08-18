@@ -48,24 +48,6 @@ struct StatsView: View {
             return (date: date, timeRead: timeRead)
         }
     }
-    
-//    private func maxReadingTime() -> Double {
-//        return lastSevenDaysData.map { $0.timeRead }.max() ?? 600 // Default to 10 min if no data
-//    }
-    
-    private func formatTime(_ seconds: Double) -> String {
-        let hours = Int(seconds / 3600)
-        let minutes = Int((seconds.truncatingRemainder(dividingBy: 3600)) / 60)
-        
-        if hours == 0 && minutes == 0 {
-            // return String(format: "%dsec", seconds)
-            return viewModel.formatTime(seconds)
-        } else if hours == 0 {
-            return String(format: "%dmin", minutes)
-        }
-        
-        return String(format: "%dh %dm", hours, minutes)
-    }
 }
 
 extension StatsView {
@@ -104,6 +86,23 @@ extension StatsView {
     var StatsListView: some View {
         List {
             Section {
+                VStack(alignment: .leading) {
+                    HStack {
+                        Spacer()
+                        
+                        Text("\(Date.now.formatted(date: .complete, time: .omitted))")
+                            .font(NotoFont.Regular(15))
+                    }
+                    
+                    Text("\(lastSevenDaysData.last!.timeRead.shortenedTimeInterval())")
+                        .font(NotoFont.Bold(35))
+                        .foregroundStyle(LinearGradient(colors: [.appTint.opacity(0.7), .appTint, .appTint.opacity(0.7)], startPoint: .top, endPoint: .bottom))
+                }
+            } header: {
+                Text("USAGE")
+            }
+            
+            Section {
                 Chart(lastSevenDaysData, id: \.date) { day in
                     if day.timeRead > 0 {
                         BarMark(
@@ -112,7 +111,7 @@ extension StatsView {
                         )
                         .foregroundStyle(Color.appTint.gradient)
                         .annotation(position: .top) {
-                            Text(formatTime(day.timeRead))
+                            Text(day.timeRead.upperAbbreviatedTimeInterval())
                                 .font(.caption2)
                                 .foregroundColor(.secondary)
                         }
@@ -131,6 +130,7 @@ extension StatsView {
                         }
                     }
                 }
+                .fontDesign(.serif)
                 .frame(height: 200)
             }
             header: {
@@ -142,7 +142,7 @@ extension StatsView {
                     HStack {
                         Text(stat.date, style: .date)
                         Spacer()
-                        Text(viewModel.formatTime(stat.timeSpentReading))
+                        Text(stat.timeSpentReading.shortenedTimeInterval())
                     }
                 }
             }

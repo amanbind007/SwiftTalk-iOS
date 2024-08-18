@@ -18,7 +18,7 @@ class StatsViewModel {
         let weeklyDataFetchDescriptor = FetchDescriptor<DailyStats>(sortBy: [SortDescriptor(\.date, order: .forward)])
         var mostReadFetchDescriptor = FetchDescriptor<TextData>(sortBy: [SortDescriptor(\.timeSpend, order: .reverse)])
         mostReadFetchDescriptor.fetchLimit = 3
-        
+
         var recentlyCompletedFetchDescriptor = FetchDescriptor<TextData>(sortBy: [SortDescriptor(\.completionDate, order: .reverse)])
         recentlyCompletedFetchDescriptor.fetchLimit = 3
 
@@ -33,12 +33,5 @@ class StatsViewModel {
         } catch {
             print("Failed to fetch stats: \(error)")
         }
-    }
-
-    func formatTime(_ timeInterval: TimeInterval) -> String {
-        let formatter = DateComponentsFormatter()
-        formatter.allowedUnits = [.hour, .minute, .second]
-        formatter.unitsStyle = .abbreviated
-        return formatter.string(from: timeInterval) ?? "0s"
     }
 }
