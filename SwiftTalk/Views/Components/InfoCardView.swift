@@ -17,23 +17,29 @@ struct InfoCardView: View {
                 ZStack {
                     Color.gradiantColor1
                     Text(textData.textTitle!)
-                        .font(NotoFont.Bold(16))
+                        .font(.headline)
                         .padding()
                 }
                 .frame(height: 55)
                 
                 Divider()
                 
-                VStack(alignment: .leading, spacing: 10) {
+                VStack(alignment: .leading) {
                     Label(textData.creationDateString, systemImage: "calendar.badge.plus")
+                        .font(NotoFont.Regular(14))
+                        .padding(.top)
                     
                     Divider()
                     
                     Text("Details")
-                        .font(NotoFont.Bold(16))
-                        .padding(.vertical)
-                    
-                    Label("Estimated completion time: \(textData.estimateReadTime)", systemImage: "clock.badge.questionmark")
+                        .font(.subheadline)
+                        .bold()
+                }
+                .imageScale(.large)
+                .padding(.horizontal)
+                
+                VStack(alignment: .leading, spacing: 10) {
+                    Label("Estimated read time: \(textData.estimateReadTime)", systemImage: "clock.badge.questionmark")
                         
                     Label("Total time spend: \(textData.timeSpendString)", systemImage: "clock.badge")
                     
