@@ -68,7 +68,7 @@ struct VoiceSelectorView: View {
         let availableVoices = AVSpeechSynthesisVoice.speechVoices()
         voices = availableVoices.map { voice in
             let languageCode = voice.language
-            let gender = voice.gender.rawValue == 1 ? "Female" : "Male"
+            let gender = voice.gender.rawValue == 1 ? "Male" : "Female"
             let identifier = voice.identifier
             let voiceName = voice.name
             let countryName = getCountryName(from: languageCode)
