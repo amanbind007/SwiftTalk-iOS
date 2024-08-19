@@ -17,4 +17,14 @@ struct Voice: Identifiable {
     let identifier: String
     let gender: String
     let flag: String
+    var trimmedName: String {
+        let pattern = "(\\w+)" // Matches one or more word characters
+        let regex = try! NSRegularExpression(pattern: pattern)
+        let match = regex.firstMatch(in: voiceName, options: [], range: NSRange(location: 0, length: voiceName.utf16.count))
+        if let match = match, let range = Range(match.range(at: 1), in: voiceName) {
+            return String(voiceName[range])
+        } else {
+            return voiceName // Handle unexpected formats
+        }
+    }
 }
