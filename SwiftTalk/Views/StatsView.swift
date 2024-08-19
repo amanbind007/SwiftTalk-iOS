@@ -13,7 +13,30 @@ struct StatsView: View {
     @Environment(\.modelContext) private var modelContext
     @State var viewModel = StatsViewModel()
     @State private var lastSevenDaysData: [(date: Date, timeRead: Double)] = []
+    @State private var lastSevenDaysTimeSpend: TimeInterval = 0
+    @State private var lastSevenDaysAverageTimeSpend: TimeInterval = 0
+    @State private var lastSevenDaysMedianTimeSpend: TimeInterval = 0
+    @State private var lastSevenDayNameString: String = ""
     @Binding var tabSelection: Int
+    
+    @State private var selectedStat: StatType = .total
+
+    enum StatType {
+        case total
+        case mean
+        case median
+        
+        func displayValue(using total: TimeInterval, lastSevenDaysAverageTimeSpend: TimeInterval, lastSevenDaysMedianTimeSpend: TimeInterval) -> String {
+            switch self {
+            case .total:
+                return total.shortenedTimeInterval()
+            case .mean:
+                return lastSevenDaysAverageTimeSpend.shortenedTimeInterval()
+            case .median:
+                return lastSevenDaysMedianTimeSpend.shortenedTimeInterval()
+            }
+        }
+    }
 
     var body: some View {
         NavigationStack {
@@ -46,6 +69,31 @@ struct StatsView: View {
             guard let date = calendar.date(byAdding: .day, value: dayOffset, to: startDate) else { return nil }
             let timeRead = viewModel.dailyStats.first { calendar.isDate($0.date, inSameDayAs: date) }?.timeSpentReading ?? 0
             return (date: date, timeRead: timeRead)
+        }
+        
+        // Total Time Spend (in last 7 days)
+        lastSevenDaysTimeSpend = 0
+        for day in lastSevenDaysData {
+            lastSevenDaysTimeSpend += day.timeRead
+        }
+        
+        // Average Time Spend (in last 7 days)
+        lastSevenDaysAverageTimeSpend = lastSevenDaysTimeSpend / 7
+        
+        // Total Time Spend (in last 7 days)
+        let sortedData = lastSevenDaysData.sorted { $0.timeRead < $1.timeRead }
+
+        let count = sortedData.count
+        let middleIndex = count / 2
+
+        if count % 2 == 1 {
+            // Odd number of elements, median is the middle value
+            lastSevenDaysMedianTimeSpend = sortedData[middleIndex].timeRead
+        } else {
+            // Even number of elements, median is the average of the middle two values
+            let lowerMiddle = sortedData[middleIndex - 1].timeRead
+            let upperMiddle = sortedData[middleIndex].timeRead
+            lastSevenDaysMedianTimeSpend = (lowerMiddle + upperMiddle) / 2
         }
     }
 }
@@ -92,6 +140,7 @@ extension StatsView {
                         
                         Text("\(Date.now.formatted(date: .complete, time: .omitted))")
                             .font(NotoFont.Regular(15))
+                            .foregroundStyle(.secondary)
                     }
                     
                     Text("\(lastSevenDaysData.last!.timeRead.shortenedTimeInterval())")
@@ -99,7 +148,28 @@ extension StatsView {
                         .foregroundStyle(LinearGradient(colors: [.appTint.opacity(0.7), .appTint, .appTint.opacity(0.7)], startPoint: .top, endPoint: .bottom))
                 }
             } header: {
-                Text("USAGE")
+                Text("DAILY USAGE")
+            }
+            
+            Section {
+                VStack(alignment: .leading) {
+                    HStack {
+                        Picker("Stat", selection: $selectedStat) {
+                            Text("Total").tag(StatType.total)
+                            Text("Mean").tag(StatType.mean)
+                            Text("Median").tag(StatType.median)
+                        }
+                        .pickerStyle(.segmented)
+                        
+                        Spacer()
+                    }
+                    
+                    Text(selectedStat.displayValue(using: lastSevenDaysTimeSpend, lastSevenDaysAverageTimeSpend: lastSevenDaysAverageTimeSpend, lastSevenDaysMedianTimeSpend: lastSevenDaysMedianTimeSpend))
+                        .font(NotoFont.Bold(35))
+                        .foregroundStyle(LinearGradient(colors: [.appTint.opacity(0.7), .appTint, .appTint.opacity(0.7)], startPoint: .top, endPoint: .bottom))
+                }
+            } header: {
+                Text("LAST SEVEN DAYS USAGE")
             }
             
             Section {
@@ -114,6 +184,31 @@ extension StatsView {
                             Text(day.timeRead.upperAbbreviatedTimeInterval())
                                 .font(.caption2)
                                 .foregroundColor(.secondary)
+                        }
+                        
+                        if selectedStat == .mean {
+                            RuleMark(y: .value("Mean", lastSevenDaysAverageTimeSpend / 60))
+                                .foregroundStyle(Color.red)
+                                .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [2, 1]))
+                                .annotation(position: .top,
+                                            alignment: .topTrailing)
+                            {
+                                Text("Mean")
+                                    .fontDesign(.serif)
+                                    .font(.caption)
+                            }
+                        }
+                        if selectedStat == .median {
+                            RuleMark(y: .value("Median", lastSevenDaysMedianTimeSpend / 60))
+                                .foregroundStyle(Color.red)
+                                .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [3, 1]))
+                                .annotation(position: .top,
+                                            alignment: .topTrailing)
+                            {
+                                Text("Median")
+                                    .fontDesign(.serif)
+                                    .font(.caption)
+                            }
                         }
                     } else {
                         RuleMark(
@@ -130,21 +225,12 @@ extension StatsView {
                         }
                     }
                 }
+                
                 .fontDesign(.serif)
                 .frame(height: 200)
             }
             header: {
-                Text("Weekly Time Spend - Chart")
-            }
-            
-            Section(header: Text("Daily Stats (Last 7 Active Days)")) {
-                ForEach(viewModel.dailyStats.suffix(7).reversed(), id: \.date) { stat in
-                    HStack {
-                        Text(stat.date, style: .date)
-                        Spacer()
-                        Text(stat.timeSpentReading.shortenedTimeInterval())
-                    }
-                }
+                Text("LAST SEVEN DAY TIME SPEND - Chart")
             }
             
             if !viewModel.mostRead.isEmpty {
@@ -168,6 +254,9 @@ extension StatsView {
                     Text("Recently Completed")
                 }
             }
+            
+            Spacer(minLength: 150)
+                .listRowBackground(Color.clear)
         }
         .scrollContentBackground(.hidden)
         .listRowSpacing(10)
