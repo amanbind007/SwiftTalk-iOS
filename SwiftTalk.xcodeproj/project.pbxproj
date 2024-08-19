@@ -13,6 +13,7 @@
 		5C1B5CAB2C6341FC00F50435 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1B5CAA2C6341FC00F50435 /* BackgroundView.swift */; };
 		5C21D1DE2B99E8E4009C0A6B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C21D1DD2B99E8E4009C0A6B /* HomeView.swift */; };
 		5C21D1E32B99E8E6009C0A6B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C21D1E22B99E8E6009C0A6B /* Preview Assets.xcassets */; };
+		5C2E2CD12C7256A100A18F4D /* TimeInterval+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2E2CD02C7256A100A18F4D /* TimeInterval+Extension.swift */; };
 		5C3016F22B9B5F340012542D /* AddNewTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3016F12B9B5F340012542D /* AddNewTextView.swift */; };
 		5C3016FB2B9E0E140012542D /* TextData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3016FA2B9E0E140012542D /* TextData.swift */; };
 		5C3016FD2B9E16D20012542D /* ListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3016FC2B9E16D20012542D /* ListItemView.swift */; };
@@ -79,6 +80,7 @@
 		5C21D1D82B99E8E4009C0A6B /* SwiftTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C21D1DD2B99E8E4009C0A6B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		5C21D1E22B99E8E6009C0A6B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		5C2E2CD02C7256A100A18F4D /* TimeInterval+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Extension.swift"; sourceTree = "<group>"; };
 		5C3016F12B9B5F340012542D /* AddNewTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewTextView.swift; sourceTree = "<group>"; wrapsLines = 1; };
 		5C3016F32B9B64770012542D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		5C3016FA2B9E0E140012542D /* TextData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextData.swift; sourceTree = "<group>"; };
@@ -303,6 +305,7 @@
 				5C99E3132C4594ED0083A507 /* Color+Extension.swift */,
 				5C79B3862C4AD86400EDCD0E /* ModelContext+Extension.swift */,
 				5C46549D2C4BEC7200375CF5 /* String+Extension.swift */,
+				5C2E2CD02C7256A100A18F4D /* TimeInterval+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -446,6 +449,7 @@
 				5C79B3872C4AD86400EDCD0E /* ModelContext+Extension.swift in Sources */,
 				5C308BFF2C3E6F5C0054886B /* flagNames.swift in Sources */,
 				5CB0EA9F2BA2B67500648414 /* VoiceSelectorView.swift in Sources */,
+				5C2E2CD12C7256A100A18F4D /* TimeInterval+Extension.swift in Sources */,
 				5C308BFD2C3D6BC60054886B /* VoiceSampleText.swift in Sources */,
 				5C5E5B782BE8C2F300A9ED86 /* TextView.swift in Sources */,
 				5C99E39D2C47ACF30083A507 /* MainTabbedView.swift in Sources */,
