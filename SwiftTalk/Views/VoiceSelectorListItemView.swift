@@ -10,25 +10,25 @@ import SwiftUI
 
 struct VoiceSelectorListItemView: View {
     var voice: Voice
-    
+
     @Environment(\.dismiss) var dismiss
     @AppStorage("selectedVoice") var selectedVoiceIdentifier = "com.apple.speech.synthesis.voice.Samantha"
     @AppStorage("selectedVoiceFlag") var selectedVoiceFlagIcon = "usa"
-    
+
     @State var isPlaying = false
     @Binding var speechManager: SpeechSynthesizer
-    
+
     var body: some View {
         HStack {
             Button {
                 selectedVoiceIdentifier = voice.identifier
                 selectedVoiceFlagIcon = voice.flag
                 dismiss()
-                
+
             } label: {
                 Image(systemName: selectedVoiceIdentifier == voice.identifier ? "checkmark.circle.fill" : "circle.fill")
                     .foregroundStyle(selectedVoiceIdentifier == voice.identifier ? Color.green : Color.secondary)
-                    
+
                     .imageScale(.large)
             }
 
@@ -37,22 +37,31 @@ struct VoiceSelectorListItemView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 26, height: 26)
-            
+
             Divider()
 
-            Text("\(voice.voiceName) (\(voice.gender))") { string in
+            Text("\(voice.trimmedName) (\(voice.gender))") { string in
 
-                if let range = string.range(of: voice.voiceName) {
-                    string[range].font = NotoFont.SemiBold(14)
-                }
                 if let range = string.range(of: "(\(voice.gender))") {
                     string[range].foregroundColor = .secondary
                 }
             }
-            .font(NotoFont.Regular(14))
-            
+            .font(NotoFont.Regular(15))
+
+            if voice.voiceName.contains("(Enhanced)") {
+                Image(uiImage: UIImage.eStar)
+                    .resizable()
+                    .frame(width: 26, height: 26)
+            }
+
+            if voice.voiceName.contains("(Premium)") {
+                Image(uiImage: UIImage.pStar)
+                    .resizable()
+                    .frame(width: 26, height: 26)
+            }
+
             Spacer()
-            
+
             Image(systemName: speechManager.speechState == .speaking && speechManager.currentlyPlayingVoice == voice.identifier ? "stop.circle.fill" : "play.circle.fill")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
