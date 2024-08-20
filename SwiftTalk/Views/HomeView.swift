@@ -9,11 +9,18 @@ import Lottie
 import SwiftData
 import SwiftUI
 
+enum SortOrder: String {
+    case recent
+    case dateLowToHigh
+    case dateHighToLow
+    case AtoZ
+    case ZtoA
+}
+
 struct HomeView: View {
     @Environment(\.modelContext) var modelContext
 
     @State var showAddNewTextOptionsView = false
-
     @State private var searchText: String = ""
     @State var navigationState = NavigationStateViewModel()
     @State var showTitleUpdateAlert: Bool = false
@@ -24,7 +31,37 @@ struct HomeView: View {
 
     @Binding var showTabView: Bool
 
-    @Query(sort: \TextData.dateTime, order: .reverse) var textDatas: [TextData]
+    @Query var textDatas: [TextData]
+
+    @AppStorage("sortOrder") var selectedSortOrder: SortOrder = .recent
+
+    var filteredAndSortedTextData: [TextData] {
+        var filteredTextData = textDatas
+
+        // Apply Filter
+        if !searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            filteredTextData = textDatas.filter { textData in
+                textData.textTitle!.contains(searchText.lowercased()) ||
+                    textData.text.lowercased().contains(searchText.lowercased())
+            }
+        }
+
+        // Apply Sort
+        switch selectedSortOrder {
+        case .recent:
+            filteredTextData.sort { $0.lastAccess > $1.lastAccess }
+        case .dateLowToHigh:
+            filteredTextData.sort { $0.creationDateTime < $1.creationDateTime }
+        case .dateHighToLow:
+            filteredTextData.sort { $0.creationDateTime > $1.creationDateTime }
+        case .AtoZ:
+            filteredTextData.sort { $0.textTitle! < $1.textTitle! }
+        case .ZtoA:
+            filteredTextData.sort { $0.textTitle! > $1.textTitle! }
+        }
+
+        return filteredTextData
+    }
 
     var body: some View {
         NavigationStack(path: $navigationState.targetDestination) {
@@ -46,6 +83,27 @@ struct HomeView: View {
                 text: $searchText,
                 placement: .navigationBarDrawer(displayMode: .always)
             )
+            .toolbar(content: {
+                ToolbarItem {
+                    Menu("Sort", systemImage: "line.3.horizontal.decrease.circle") {
+                        Text("Sort Order")
+                        Picker(selection: $selectedSortOrder) {
+                            Text("Recently Accessed")
+                                .tag(SortOrder.recent)
+                            Text("Date Added - New to Old")
+                                .tag(SortOrder.dateHighToLow)
+                            Text("Date Added - Old to New")
+                                .tag(SortOrder.dateLowToHigh)
+                            Text("A to Z (Title)")
+                                .tag(SortOrder.AtoZ)
+                            Text("Z to A (Title)")
+                                .tag(SortOrder.ZtoA)
+                        } label: {
+                            Text("Sort Options")
+                        }
+                    }
+                }
+            })
         }
         .sheet(
             isPresented: $showAddNewTextOptionsView,
@@ -138,7 +196,7 @@ extension HomeView {
     var SavedTextListView: some View {
         ZStack(alignment: .bottomTrailing) {
             List {
-                ForEach(textDatas, id: \.id) { textData in
+                ForEach(filteredAndSortedTextData, id: \.id) { textData in
                     NavigationLink(destination: {
                         AddNewTextView(textData: textData, isEditing: false, isFocused: false, isSaved: true, showTabView: $showTabView)
                     }, label: {
