@@ -108,6 +108,8 @@ class TextData: Identifiable {
 
     var confettiShown: Bool
 
+    var lastAccess: Date
+
     init(textTitle: String?, text: String, textSource: TextSource) {
         self.id = UUID()
         self.textTitle = textTitle
@@ -118,5 +120,6 @@ class TextData: Identifiable {
         self.timeSpend = 0.0
         self.completionDate = nil
         self.confettiShown = false
+        self.lastAccess = Date()
     }
 }

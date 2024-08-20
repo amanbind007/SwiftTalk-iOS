@@ -119,6 +119,9 @@ struct AddNewTextView: View {
         }
         .onAppear(perform: {
             showTabView = false
+            
+            // update access date-time
+            textData.lastAccess = Date()
         })
         .onDisappear(perform: {
             textData.text = textData.text.trimEndWhitespaceAndNewlines()
