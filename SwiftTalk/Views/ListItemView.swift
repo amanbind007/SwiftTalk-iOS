@@ -18,50 +18,39 @@ struct ListItemView: View {
     let textData: TextData
     let parentListType: ParentListType
 
-
-    var formattedPlayTime: String {
-        let formatter = DateComponentsFormatter()
-        formatter.allowedUnits = [.hour, .minute, .second]
-        formatter.unitsStyle = .short
-        formatter.zeroFormattingBehavior = .pad
-        return formatter.string(from: textData.timeSpend) ?? "00:00:00"
-    }
-
-        var body: some View
-    {
+    var body: some View {
         VStack(alignment: .leading) {
             HStack(spacing: 10) {
                 CircularProgressView(value: textData.progress, total: textData.text.count, color: textData.textSource.color, image: textData.textSource.imageName)
                     .frame(width: 65, height: 65)
-                    .offset(x:-5)
+                    .offset(x: -5)
 
                 VStack(alignment: .leading, spacing: 0) {
                     Text(textData.textTitle!)
-                        .font(NotoFont.Regular(14))
+                        .font(NotoFont.Regular(15))
                         .bold()
                         .frame(minWidth: 1, maxWidth: .infinity, minHeight: 1, maxHeight: .infinity, alignment: .leading)
 
                     Text(textData.text)
-                        .font(NotoFont.Regular(12))
+                        .font(NotoFont.Regular(13))
                         .frame(minWidth: 1, maxWidth: .infinity, minHeight: 1, maxHeight: .infinity, alignment: .leading)
                         .lineLimit(2, reservesSpace: false)
                         .offset(y: -7)
-                    
+
                     switch parentListType {
                     case .HomeViewList:
-                        Text("Estimated reading time: \(textData.estimateReadTime)")
+                        Text("Est. read time: \(textData.estimateReadTime)")
                             .font(NotoFont.Regular(10))
                             .offset(y: -4)
                     case .MostReadList:
-                        Text("Total Time Spend: \(formattedPlayTime)")
+                        Text("Total Time Spend: \(textData.timeSpend.shortenedTimeInterval())")
                             .font(NotoFont.Regular(10))
                             .offset(y: -4)
                     case .RecentlyCompletedList:
-                        Text("Completed reading on: \(textData.completionDate!.formatted(date: .abbreviated, time: .shortened))")
+                        Text("Completed: \(textData.relativeCompletionDateString!)")
                             .font(NotoFont.Regular(10))
                             .offset(y: -4)
                     }
-                    
                 }
             }
         }
