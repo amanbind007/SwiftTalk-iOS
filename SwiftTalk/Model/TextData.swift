@@ -14,19 +14,19 @@ class TextData: Identifiable {
     var textTitle: String?
     var text: String
     var textSource: TextSource
-    var dateTime: Date
+    var creationDateTime: Date
     var creationDateString: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "E, d MMM, yyyy • h:mm a"
         formatter.locale = Locale(identifier: "en_US_POSIX")
-        return formatter.string(from: dateTime)
+        return formatter.string(from: creationDateTime)
     }
 
     var relativeCreationDateString: String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "E, d MMM, yyyy • h:mm a"
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        return formatter.string(from: dateTime)
+        let formatter = RelativeDateTimeFormatter()
+        formatter.unitsStyle = .short
+        let relativeDate = formatter.localizedString(for: creationDateTime, relativeTo: Date.now)
+        return relativeDate
     }
 
     var progress: Int
@@ -56,13 +56,13 @@ class TextData: Identifiable {
         return result.trimmingCharacters(in: .whitespaces)
     }
 
-    var timeSpend: Double
+    var timeSpend: TimeInterval
     var timeSpendString: String {
         let hours = Int(timeSpend) / 3600
         let minutes = (Int(timeSpend) % 3600) / 60
         let seconds = Int(timeSpend) % 60
 
-        var result = "Not Read Yet"
+        var result = ""
         if hours > 0 {
             result += "\(hours)hr "
         }
@@ -73,6 +73,7 @@ class TextData: Identifiable {
             result += "\(seconds)sec"
         }
 
+        result = result == "0sec" ? "Not Read Yet" : result
         return result.trimmingCharacters(in: .whitespaces)
     }
 
@@ -97,10 +98,10 @@ class TextData: Identifiable {
 
     var relativeCompletionDateString: String? {
         if let completionDate = completionDate {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "E, d MMM, yyyy • h:mm a"
-            formatter.locale = Locale(identifier: "en_US_POSIX")
-            return formatter.string(from: completionDate)
+            let formatter = RelativeDateTimeFormatter()
+            formatter.unitsStyle = .short
+            let relativeDate = formatter.localizedString(for: completionDate, relativeTo: Date.now)
+            return relativeDate
         }
         return nil
     }
@@ -112,7 +113,7 @@ class TextData: Identifiable {
         self.textTitle = textTitle
         self.text = text
         self.textSource = textSource
-        self.dateTime = Date()
+        self.creationDateTime = Date()
         self.progress = 0
         self.timeSpend = 0.0
         self.completionDate = nil
