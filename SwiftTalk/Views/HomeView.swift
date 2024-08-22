@@ -25,6 +25,7 @@ struct HomeView: View {
     @State var navigationState = NavigationStateViewModel()
     @State var showTitleUpdateAlert: Bool = false
     @State var showInfoCardView: Bool = false
+    @State var showSettingsView: Bool = false
     @State var newTitle: String = ""
     @State var selectedTextData: TextData?
     @State var isCorrect: Bool = true
@@ -104,7 +105,20 @@ struct HomeView: View {
                     }
                 }
             })
+            .toolbar(content: {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        showSettingsView = true
+                    } label: {
+                        Image(systemName: "gearshape")
+                    }
+
+                }
+            })
         }
+        .sheet(isPresented: $showSettingsView, content: {
+            SettingsView()
+        })
         .sheet(
             isPresented: $showAddNewTextOptionsView,
             content: {
