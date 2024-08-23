@@ -20,6 +20,7 @@ struct AddNewTextView: View {
     
     @AppStorage("selectedVoice") var selectedVoiceIdentifier = "com.apple.speech.synthesis.voice.Trinoids"
     @AppStorage("selectedVoiceFlag") var selectedVoiceFlagIcon = "usa"
+    @State var showCaption: Bool = true
 
     @State var addNewTextVM: AddNewTextViewModel = .init()
     @State var textData: TextData
@@ -100,16 +101,6 @@ struct AddNewTextView: View {
                 }
                 
                 Divider()
-                
-                if speechManager.speechState == .speaking || speechManager.speechState == .paused {
-                    LinearProgressBar(
-                        value: Double(speechManager.currentCompletedIndex + speechManager.startIndex),
-                        total: Double(textData.text.count),
-                        color: textData.textSource.color
-                    )
-                    .frame(height: 12)
-                    .padding(5)
-                }
             }
             
             if !isEditing {
@@ -248,6 +239,26 @@ struct AddNewTextView: View {
 extension AddNewTextView {
     @ViewBuilder
     var BottomPlayerPanel: some View {
+        if speechManager.speechState == .speaking || speechManager.speechState == .paused {
+            if let highlightedRange = speechManager.highlightedRange, showCaption {
+                VStack {
+                    Text(textData.text.stringRange(highlightedRange))
+                        .font(NotoFont.Bold(18))
+                }
+                .padding()
+                
+                Divider()
+            }
+            
+            LinearProgressBar(
+                value: Double(speechManager.currentCompletedIndex + speechManager.startIndex),
+                total: Double(textData.text.count),
+                color: textData.textSource.color
+            )
+            .frame(height: 12)
+            .padding(5)
+        }
+        
         VStack(spacing: 0) {
             HStack {
                 if speechManager.speechState == .speaking || speechManager.speechState == .paused {
@@ -330,17 +341,31 @@ extension AddNewTextView {
                 
                 Spacer()
                 
-                Button(action: {
-                    addNewTextVM.isVoiceSpeedSelectorPresented = true
+                if speechManager.speechState == .speaking || speechManager.speechState
+                    == .paused
+                {
+                    Button(action: {
+                        showCaption.toggle()
+                        
+                    }, label: {
+                        Image(systemName: "captions.bubble.fill")
+                            .resizable()
+                            .frame(width: 35, height: 35)
+                        
+                    })
+                    .foregroundStyle(showCaption ? .gray : .appTint)
                     
-                }, label: {
-                    Image(systemName: "gear.circle.fill")
-                        .resizable()
-                        .frame(width: 40, height: 40)
-                    
-                })
-                .disabled(speechManager.speechState == .speaking || speechManager.speechState
-                    == .paused)
+                } else {
+                    Button(action: {
+                        addNewTextVM.isVoiceSpeedSelectorPresented = true
+                        
+                    }, label: {
+                        Image(systemName: "gear.circle.fill")
+                            .resizable()
+                            .frame(width: 40, height: 40)
+                        
+                    })
+                }
             }
             .padding(.horizontal)
             .padding(.vertical, 5)
