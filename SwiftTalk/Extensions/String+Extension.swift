@@ -20,4 +20,11 @@ extension String {
 
         return trimmedString
     }
+
+    func stringRange(_ range: NSRange) -> String {
+        guard let swiftRange = Range(range, in: self) else {
+            return ""
+        }
+        return String(self[swiftRange])
+    }
 }
