@@ -14,6 +14,7 @@ struct SettingsView: View {
     @AppStorage("selectedFont") var selectedFont = Constants.Fonts.NotoRegular
     @AppStorage("backgroundColor") var backgroundColor: Color = .init(UIColor(red: 1.00, green: 0.97, blue: 0.42, alpha: 1.00))
     @AppStorage("foregroundColor") var foregroundColor: Color = .init(UIColor(red: 0.83, green: 0.00, blue: 0.00, alpha: 1.00))
+    @AppStorage("autoScroll") var autoScroll = true
 
     @Environment(\.dismiss) var dismiss
     @Environment(\.colorScheme) var theme
@@ -73,6 +74,16 @@ struct SettingsView: View {
                     }
                 }
 
+                Section {
+                    Toggle(isOn: $autoScroll, label: {
+                        Text("Auto Scroll to higlighted Text")
+                            .font(NotoFont.Regular(16))
+                    })
+
+                } header: {
+                    Text("Auto-Scroll")
+                }
+
                 Section(header: Text("Fonts")) {
                     NavigationLink {
                         FontSelectorView(selectedfont: $selectedFont)
@@ -85,6 +96,13 @@ struct SettingsView: View {
                                 .font(.custom(selectedFont, size: 16))
                         }
                     }
+                }
+
+                Section(header: Text("Colors")) {
+                    ColorPicker("Background Color", selection: self.$backgroundColor)
+                        .font(NotoFont.Regular(16))
+                    ColorPicker("Foreground Color", selection: self.$foregroundColor)
+                        .font(NotoFont.Regular(15))
                 }
 
                 Section(header: Text("Text Size")) {
@@ -111,13 +129,6 @@ struct SettingsView: View {
                             .stroke(lineWidth: 3)
                             .foregroundStyle(Color.green)
                     }
-                }
-
-                Section(header: Text("Colors")) {
-                    ColorPicker("Background Color", selection: self.$backgroundColor)
-                        .font(NotoFont.Regular(16))
-                    ColorPicker("Foreground Color", selection: self.$foregroundColor)
-                        .font(NotoFont.Regular(15))
                 }
             }
             .navigationTitle("TTS Settings")

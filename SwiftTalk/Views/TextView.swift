@@ -18,9 +18,10 @@ struct TextView: UIViewRepresentable {
     @Binding var focused: Bool
 
     @AppStorage("textSize") var textSize = 16.0
-    @AppStorage("selectedFont") var selectedFont = Constants.Fonts.NotoSerifR
+    @AppStorage("selectedFont") var selectedFont = Constants.Fonts.NotoRegular
     @AppStorage("backgroundColor") var backgroundColor: Color = Color(UIColor(red: 1.00, green: 0.97, blue: 0.42, alpha: 1.00))
     @AppStorage("foregroundColor") var foregroundColor: Color = Color(UIColor(red: 0.83, green: 0.00, blue: 0.00, alpha: 1.00))
+    @AppStorage("autoScroll") var autoScroll = true
 
     var onCharacterTapped: ((Int) -> Void)? // Add a callback for character tapped
 
@@ -40,6 +41,7 @@ struct TextView: UIViewRepresentable {
         textView.isEditable = false
         textView.isSelectable = false
         textView.isUserInteractionEnabled = true
+        textView.backgroundColor = .systemBackground.withAlphaComponent(0.8)
 
         let tapGesture = UITapGestureRecognizer(target: context.coordinator, action: #selector(context.coordinator.handleTap(_:)))
         textView.addGestureRecognizer(tapGesture)
@@ -60,8 +62,14 @@ struct TextView: UIViewRepresentable {
 
             attrStr.addAttribute(NSAttributedString.Key.backgroundColor, value: UIColor(backgroundColor), range: highlightedRange)
 
-            if !editing {
-                uiView.scrollRangeToVisible(highlightedRange)
+            if autoScroll {
+                
+                var newRange = NSRange()
+                newRange.length = highlightedRange.length
+                newRange.location = highlightedRange.location
+                
+                
+                uiView.scrollRangeToVisible(newRange)
             }
         }
 
@@ -95,12 +103,6 @@ class TextViewCoordinator: NSObject, UITextViewDelegate {
             self.parent.focused = true
         }
     }
-
-//    func textViewDidChangeSelection(_ textView: UITextView) {
-//        DispatchQueue.main.async {
-//            self.parent.onCharacterTapped?(textView.selectedRange.location)
-//        }
-//    }
 
     func textViewDidChange(_ textView: UITextView) {
         DispatchQueue.main.async {
