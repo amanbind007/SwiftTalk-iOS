@@ -11,7 +11,7 @@ struct BackgroundView: View {
     @Environment(\.colorScheme) var theme
     @State var show = false
     var body: some View {
-        Image(uiImage: UIImage.back5)
+        Image(uiImage: UIImage.back9)
             .resizable()
             .overlay {
                 EmptyView()

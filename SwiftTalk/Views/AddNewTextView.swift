@@ -52,60 +52,64 @@ struct AddNewTextView: View {
     }
     
     var body: some View {
-        VStack(spacing: 0) {
-            VStack(alignment: .leading, spacing: 0) {
-                if isEditing {
-                    HStack {
-                        if !isTextDataSaved {
-                            Button {
-                                if verifyText(text: textData.text) {
-                                    DataCoordinator.shared.saveObject(text: textData.text, title: nil, textSource: textData.textSource)
-                                    dismiss()
-                                } else {
-                                    showAlertNoText.toggle()
-                                }
-                                
-                            } label: {
-                                BannerButton(iconSystemName: "square.and.arrow.down", color: .green, text: "Save")
-                            }
-                        }
-                        
-                        Button {
-                            if let pasteString = addNewTextVM.pasteboard.string {
-                                textData.text = pasteString
-                            }
-                        } label: {
-                            BannerButton(iconSystemName: "list.clipboard", color: .blue, text: "Paste")
-                        }
-                        
-                        Button {
-                            textData.text = ""
-                        } label: {
-                            BannerButton(iconSystemName: "delete.backward", color: .red, text: "Delete")
-                        }
-                    }
-                    .padding(5)
-                }
-                
-                Divider()
-                
-                GeometryReader { proxy in
-                    TextView(text: $textData.text, highlightedRange: $speechManager.highlightedRange, editing: $isEditing, focused: $isFocused) { startIndex in
-                        if !isEditing {
-                            speechManager.play(text: textData.text, voice: selectedVoiceIdentifier, from: startIndex)
-                        }
-                        
-                        showContinue = false
-                    }
-                    .frame(width: proxy.size.width, height: proxy.size.height)
-                }
-                
-                Divider()
-            }
+        ZStack {
+            BackgroundView()
             
-            if !isEditing {
-                // Bottom Control Panel
-                BottomPlayerPanel
+            VStack(spacing: 0) {
+                VStack(alignment: .leading, spacing: 0) {
+                    if isEditing {
+                        HStack {
+                            if !isTextDataSaved {
+                                Button {
+                                    if verifyText(text: textData.text) {
+                                        DataCoordinator.shared.saveObject(text: textData.text, title: nil, textSource: textData.textSource)
+                                        dismiss()
+                                    } else {
+                                        showAlertNoText.toggle()
+                                    }
+                                    
+                                } label: {
+                                    BannerButton(iconSystemName: "square.and.arrow.down", color: .green, text: "Save")
+                                }
+                            }
+                            
+                            Button {
+                                if let pasteString = addNewTextVM.pasteboard.string {
+                                    textData.text = pasteString
+                                }
+                            } label: {
+                                BannerButton(iconSystemName: "list.clipboard", color: .blue, text: "Paste")
+                            }
+                            
+                            Button {
+                                textData.text = ""
+                            } label: {
+                                BannerButton(iconSystemName: "delete.backward", color: .red, text: "Delete")
+                            }
+                        }
+                        .padding(5)
+                    }
+                    
+                    Divider()
+                    
+                    GeometryReader { proxy in
+                        TextView(text: $textData.text, highlightedRange: $speechManager.highlightedRange, editing: $isEditing, focused: $isFocused) { startIndex in
+                            if !isEditing {
+                                speechManager.play(text: textData.text, voice: selectedVoiceIdentifier, from: startIndex)
+                            }
+                            
+                            showContinue = false
+                        }
+                        .frame(width: proxy.size.width, height: proxy.size.height)
+                    }
+                    
+                    Divider()
+                }
+                
+                if !isEditing {
+                    // Bottom Control Panel
+                    BottomPlayerPanel
+                }
             }
         }
         .onAppear(perform: {
@@ -239,27 +243,26 @@ struct AddNewTextView: View {
 extension AddNewTextView {
     @ViewBuilder
     var BottomPlayerPanel: some View {
-        if speechManager.speechState == .speaking || speechManager.speechState == .paused {
-            if let highlightedRange = speechManager.highlightedRange, showCaption {
-                VStack {
-                    Text(textData.text.stringRange(highlightedRange))
-                        .font(NotoFont.Bold(18))
+        VStack(spacing: 0) {
+            if speechManager.speechState == .speaking || speechManager.speechState == .paused {
+                if let highlightedRange = speechManager.highlightedRange, showCaption {
+                    VStack {
+                        Text(textData.text.stringRange(highlightedRange))
+                            .font(NotoFont.SemiBold(20))
+                            .padding()
+                    }
+                    
+                    Divider()
                 }
-                .padding()
                 
-                Divider()
+                LinearProgressBar(
+                    value: Double(speechManager.currentCompletedIndex + speechManager.startIndex),
+                    total: Double(textData.text.count)
+                )
+                .frame(height: 12)
+                .padding(5)
             }
             
-            LinearProgressBar(
-                value: Double(speechManager.currentCompletedIndex + speechManager.startIndex),
-                total: Double(textData.text.count),
-                color: textData.textSource.color
-            )
-            .frame(height: 12)
-            .padding(5)
-        }
-        
-        VStack(spacing: 0) {
             HStack {
                 if speechManager.speechState == .speaking || speechManager.speechState == .paused {
                     Button(action: {
@@ -328,7 +331,7 @@ extension AddNewTextView {
                         == .paused ? "stop.circle.fill" : "play.circle.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 55, height: 55)
+                        .frame(width: 60, height: 60)
                         .foregroundColor(speechManager.speechState == .speaking || speechManager.speechState
                             == .paused ? .red : .blue)
                         .clipShape(Circle())
@@ -370,6 +373,7 @@ extension AddNewTextView {
             .padding(.horizontal)
             .padding(.vertical, 5)
         }
+        .background(.regularMaterial)
         
         .sheet(isPresented: $addNewTextVM.isVoiceSelectorPresented, content: {
             VoiceSelectorView()

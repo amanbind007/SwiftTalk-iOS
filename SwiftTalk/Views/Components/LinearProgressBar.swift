@@ -10,7 +10,7 @@ import SwiftUI
 struct LinearProgressBar: View {
     var value: Double
     var total: Double
-    let color: Color
+    var color: Color = Color(uiColor: UIColor.appTint)
 
     var progress: CGFloat {
         
