@@ -133,6 +133,47 @@ extension StatsView {
     @ViewBuilder
     var StatsListView: some View {
         List {
+            Section("STREAK") {
+                HStack {
+                    Spacer()
+                    
+                    VStack {
+                        Text("Current Streak")
+                            .font(NotoFont.Regular(15))
+                        
+                        HStack(alignment: .lastTextBaseline) {
+                            Text("\(viewModel.currentStreak)")
+                                .font(NotoFont.Bold(44))
+                                .foregroundStyle(LinearGradient(colors: [.appTint.opacity(0.7), .appTint, .appTint.opacity(0.7)], startPoint: .top, endPoint: .bottom))
+                            
+                            Text("Day(s)")
+                                .font(NotoFont.Regular(13))
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    
+                    Spacer()
+                    Divider()
+                    Spacer()
+                    
+                    VStack {
+                        Text("Largest Streak")
+                            .font(NotoFont.Regular(15))
+                            
+                        HStack(alignment: .lastTextBaseline) {
+                            Text("\(viewModel.largestStreak)")
+                                .font(NotoFont.Bold(44))
+                                .foregroundStyle(LinearGradient(colors: [.appTint.opacity(0.7), .appTint, .appTint.opacity(0.7)], startPoint: .top, endPoint: .bottom))
+                            Text("Day(s)")
+                                .font(NotoFont.Regular(13))
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    
+                    Spacer()
+                }
+            }
+            
             Section {
                 VStack(alignment: .leading) {
                     HStack {
@@ -189,7 +230,7 @@ extension StatsView {
                         if selectedStat == .mean {
                             RuleMark(y: .value("Mean", lastSevenDaysAverageTimeSpend / 60))
                                 .foregroundStyle(Color.red)
-                                .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [2, 1]))
+                                .lineStyle(StrokeStyle(lineWidth: 0.5, dash: [3, 1]))
                                 .annotation(position: .top,
                                             alignment: .topTrailing)
                             {
