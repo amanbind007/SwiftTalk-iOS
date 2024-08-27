@@ -133,22 +133,30 @@ extension StatsView {
             }
             
             Section {
-                VStack(alignment: .leading) {
+                VStack {
+                    Picker("Stat", selection: $statsVM.selectedStat) {
+                        Text("Total").tag(StatType.total)
+                        Text("Mean").tag(StatType.mean)
+                        Text("Median").tag(StatType.median)
+                    }
+                    .pickerStyle(.segmented)
+                    
                     HStack {
-                        Picker("Stat", selection: $statsVM.selectedStat) {
-                            Text("Total").tag(StatType.total)
-                            Text("Mean").tag(StatType.mean)
-                            Text("Median").tag(StatType.median)
-                        }
-                        .pickerStyle(.segmented)
-                        
                         Spacer()
+                        
+                        Text(statsVM.lastSevenDaysDateRange)
+                            .font(NotoFont.Regular(15))
+                            .foregroundStyle(.secondary)
                     }
                     
-                    Text(statsVM.displayTimeSpend())
-                        .font(NotoFont.Bold(35))
-                        .foregroundStyle(LinearGradient(colors: [.appTint.opacity(0.7), .appTint, .appTint.opacity(0.7)], startPoint: .top, endPoint: .bottom))
+                    HStack {
+                        Text(statsVM.displayTimeSpend())
+                            .font(NotoFont.Bold(35))
+                            .foregroundStyle(LinearGradient(colors: [.appTint.opacity(0.7), .appTint, .appTint.opacity(0.7)], startPoint: .top, endPoint: .bottom))
+                        Spacer()
+                    }
                 }
+                    
             } header: {
                 Text("LAST SEVEN DAYS USAGE")
             }

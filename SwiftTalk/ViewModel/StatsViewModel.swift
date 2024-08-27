@@ -21,7 +21,9 @@ class StatsViewModel {
     var recentlyCompleted: [TextData] = []
     var currentStreak: Int = 0
     var largestStreak: Int = 0
+
     var lastSevenDaysData: [(date: Date, timeRead: Double)] = []
+    var lastSevenDaysDateRange: String = ""
     var lastSevenDaysTimeSpend: TimeInterval = 0
     var lastSevenDaysAverageTimeSpend: TimeInterval = 0
     var lastSevenDaysMedianTimeSpend: TimeInterval = 0
@@ -55,6 +57,8 @@ class StatsViewModel {
         let calendar = Calendar.current
         let endDate = calendar.startOfDay(for: Date())
         let startDate = calendar.date(byAdding: .day, value: -6, to: endDate)!
+
+        lastSevenDaysDateRange = "\(startDate.formatted(date: .abbreviated, time: .omitted)) -  \(endDate.formatted(date: .abbreviated, time: .omitted))"
 
         lastSevenDaysData = (0 ..< 7).compactMap { dayOffset in
             guard let date = calendar.date(byAdding: .day, value: dayOffset, to: startDate) else { return nil }
