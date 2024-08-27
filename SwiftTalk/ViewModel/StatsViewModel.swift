@@ -8,6 +8,23 @@
 import Foundation
 import SwiftData
 
+enum StatType {
+    case total
+    case mean
+    case median
+
+    func displayValue(using total: TimeInterval, lastSevenDaysAverageTimeSpend: TimeInterval, lastSevenDaysMedianTimeSpend: TimeInterval) -> String {
+        switch self {
+        case .total:
+            return total.shortenedTimeInterval()
+        case .mean:
+            return lastSevenDaysAverageTimeSpend.shortenedTimeInterval()
+        case .median:
+            return lastSevenDaysMedianTimeSpend.shortenedTimeInterval()
+        }
+    }
+}
+
 @Observable
 class StatsViewModel {
     var dailyStats: [DailyStats] = []
@@ -15,6 +32,11 @@ class StatsViewModel {
     var recentlyCompleted: [TextData] = []
     var currentStreak: Int = 0
     var largestStreak: Int = 0
+    var lastSevenDaysData: [(date: Date, timeRead: Double)] = []
+    var lastSevenDaysTimeSpend: TimeInterval = 0
+    var lastSevenDaysAverageTimeSpend: TimeInterval = 0
+    var lastSevenDaysMedianTimeSpend: TimeInterval = 0
+    var selectedStat: StatType = .total
 
     func fetchStats(modelContext: ModelContext) {
         let weeklyDataFetchDescriptor = FetchDescriptor<DailyStats>(sortBy: [SortDescriptor(\.date, order: .forward)])
@@ -32,10 +54,48 @@ class StatsViewModel {
             recentlyCompleted = try modelContext.fetch(recentlyCompletedFetchDescriptor).filter { textData in
                 textData.completionDate != nil
             }
-
             calculateStreaks()
+            calculateLastSevenDaysData()
+
         } catch {
             print("Failed to fetch stats: \(error)")
+        }
+    }
+
+    func calculateLastSevenDaysData() {
+        let calendar = Calendar.current
+        let endDate = calendar.startOfDay(for: Date())
+        let startDate = calendar.date(byAdding: .day, value: -6, to: endDate)!
+
+        lastSevenDaysData = (0 ..< 7).compactMap { dayOffset in
+            guard let date = calendar.date(byAdding: .day, value: dayOffset, to: startDate) else { return nil }
+            let timeRead = dailyStats.first { calendar.isDate($0.date, inSameDayAs: date) }?.timeSpentReading ?? 0
+            return (date: date, timeRead: timeRead)
+        }
+
+        // Total Time Spend (in last 7 days)
+        lastSevenDaysTimeSpend = 0
+        for day in lastSevenDaysData {
+            lastSevenDaysTimeSpend += day.timeRead
+        }
+
+        // Average Time Spend (in last 7 days)
+        lastSevenDaysAverageTimeSpend = lastSevenDaysTimeSpend / 7
+
+        // Total Time Spend (in last 7 days)
+        let sortedData = lastSevenDaysData.sorted { $0.timeRead < $1.timeRead }
+
+        let count = sortedData.count
+        let middleIndex = count / 2
+
+        if count % 2 == 1 {
+            // Odd number of elements, median is the middle value
+            lastSevenDaysMedianTimeSpend = sortedData[middleIndex].timeRead
+        } else {
+            // Even number of elements, median is the average of the middle two values
+            let lowerMiddle = sortedData[middleIndex - 1].timeRead
+            let upperMiddle = sortedData[middleIndex].timeRead
+            lastSevenDaysMedianTimeSpend = (lowerMiddle + upperMiddle) / 2
         }
     }
 
