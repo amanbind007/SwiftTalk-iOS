@@ -12,17 +12,6 @@ enum StatType {
     case total
     case mean
     case median
-
-    func displayValue(using total: TimeInterval, lastSevenDaysAverageTimeSpend: TimeInterval, lastSevenDaysMedianTimeSpend: TimeInterval) -> String {
-        switch self {
-        case .total:
-            return total.shortenedTimeInterval()
-        case .mean:
-            return lastSevenDaysAverageTimeSpend.shortenedTimeInterval()
-        case .median:
-            return lastSevenDaysMedianTimeSpend.shortenedTimeInterval()
-        }
-    }
 }
 
 @Observable
@@ -120,5 +109,16 @@ class StatsViewModel {
         }
 
         largestStreak = max(largestStreak, currentStreak)
+    }
+
+    func displayTimeSpend() -> String {
+        switch selectedStat {
+        case .total:
+            return lastSevenDaysTimeSpend.shortenedTimeInterval()
+        case .mean:
+            return lastSevenDaysAverageTimeSpend.shortenedTimeInterval()
+        case .median:
+            return lastSevenDaysMedianTimeSpend.shortenedTimeInterval()
+        }
     }
 }

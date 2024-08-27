@@ -145,7 +145,7 @@ extension StatsView {
                         Spacer()
                     }
                     
-                    Text(statsVM.selectedStat.displayValue(using: statsVM.lastSevenDaysTimeSpend, lastSevenDaysAverageTimeSpend: statsVM.lastSevenDaysAverageTimeSpend, lastSevenDaysMedianTimeSpend: statsVM.lastSevenDaysMedianTimeSpend))
+                    Text(statsVM.displayTimeSpend())
                         .font(NotoFont.Bold(35))
                         .foregroundStyle(LinearGradient(colors: [.appTint.opacity(0.7), .appTint, .appTint.opacity(0.7)], startPoint: .top, endPoint: .bottom))
                 }
