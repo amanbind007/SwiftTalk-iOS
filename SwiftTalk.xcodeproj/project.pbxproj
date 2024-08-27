@@ -43,6 +43,7 @@
 		5C79B3872C4AD86400EDCD0E /* ModelContext+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C79B3862C4AD86400EDCD0E /* ModelContext+Extension.swift */; };
 		5C7F4FE32C5D42D30018C6C0 /* InfoCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7F4FE22C5D42D30018C6C0 /* InfoCardView.swift */; };
 		5C7F4FE52C5EA7FB0018C6C0 /* CustomTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7F4FE42C5EA7FB0018C6C0 /* CustomTabView.swift */; };
+		5C7FD2092C7E41FB00987133 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7FD2082C7E41FB00987133 /* HomeViewModel.swift */; };
 		5C87CC3D2C2828180010363F /* BannerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C87CC3C2C2828180010363F /* BannerButton.swift */; };
 		5C87CC3F2C2895700010363F /* CustomSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C87CC3E2C2895700010363F /* CustomSwitch.swift */; };
 		5C99E3142C4594ED0083A507 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C99E3132C4594ED0083A507 /* Color+Extension.swift */; };
@@ -110,6 +111,7 @@
 		5C79B3862C4AD86400EDCD0E /* ModelContext+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModelContext+Extension.swift"; sourceTree = "<group>"; };
 		5C7F4FE22C5D42D30018C6C0 /* InfoCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCardView.swift; sourceTree = "<group>"; };
 		5C7F4FE42C5EA7FB0018C6C0 /* CustomTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabView.swift; sourceTree = "<group>"; };
+		5C7FD2082C7E41FB00987133 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		5C87CC3C2C2828180010363F /* BannerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerButton.swift; sourceTree = "<group>"; };
 		5C87CC3E2C2895700010363F /* CustomSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSwitch.swift; sourceTree = "<group>"; };
 		5C99E3132C4594ED0083A507 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 				5C99E3AD2C47FD540083A507 /* StatsViewModel.swift */,
 				5CFAF9512BC3BE91003726AA /* AddNewTextViewModel.swift */,
 				5C308BD82C358A160054886B /* AddNewTextOptionsViewModel.swift */,
+				5C7FD2082C7E41FB00987133 /* HomeViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -437,6 +440,7 @@
 				5C308BD92C358A160054886B /* AddNewTextOptionsViewModel.swift in Sources */,
 				5C87CC3D2C2828180010363F /* BannerButton.swift in Sources */,
 				5C77D1EF2C5AAEE800AA1223 /* NotoFont.swift in Sources */,
+				5C7FD2092C7E41FB00987133 /* HomeViewModel.swift in Sources */,
 				5C3016FD2B9E16D20012542D /* ListItemView.swift in Sources */,
 				5C308BE72C3BDCDA0054886B /* FontSelectorView.swift in Sources */,
 				5CE2A8F32B9F781300665B1F /* AddNewTextOptionsView.swift in Sources */,
