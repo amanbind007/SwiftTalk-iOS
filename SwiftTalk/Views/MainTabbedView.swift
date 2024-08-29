@@ -10,11 +10,12 @@ import SwiftUI
 struct MainTabbedView: View {
     @State private var tabSelection = 0
     @State private var showTabView = true
+    @Environment(\.modelContext) var modelContext
 
     var body: some View {
         ZStack {
             if tabSelection == 0 {
-                HomeView(showTabView: $showTabView)
+                HomeView(modelContext: modelContext, showTabView: $showTabView)
                     .tag(0)
             } else {
                 StatsView(tabSelection: $tabSelection)
