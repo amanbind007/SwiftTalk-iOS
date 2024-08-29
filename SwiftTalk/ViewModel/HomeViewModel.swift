@@ -8,11 +8,12 @@
 import Foundation
 import Observation
 import SwiftData
+import SwiftUI
 
 @Observable
 class HomeViewModel {
-    var showAddNewTextOptionsView = false
     var searchText: String = ""
+    var showAddNewTextOptionsView = false
     var navigationState = NavigationStateViewModel()
     var showTitleUpdateAlert: Bool = false
     var showInfoCardView: Bool = false
@@ -20,10 +21,16 @@ class HomeViewModel {
     var newTitle: String = ""
     var selectedTextData: TextData?
     var isCorrect: Bool = true
-    var textDatas: [TextData]
-    var selectedSortOrder: SortOrder = .recent
 
-    var filteredAndSortedTextData: [TextData] {
+    @ObservationIgnored @AppStorage("sortOrder") var selectedSortOrder: SortOrder = .recent
+
+    private var modelContext: ModelContext
+
+    init(modelContext: ModelContext) {
+        self.modelContext = modelContext
+    }
+
+    func filteredAndSortedTextData(_ textDatas: [TextData]) -> [TextData] {
         var filteredTextData = textDatas
 
         // Apply Filter
@@ -51,7 +58,29 @@ class HomeViewModel {
         return filteredTextData
     }
 
-    init(textDatas: [TextData]) {
-        self.textDatas = textDatas
+    func verifyAndUpdate() {
+        if !newTitle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            if let selectedTextData = selectedTextData {
+                isCorrect = true
+                selectedTextData.textTitle = newTitle
+                do {
+                    try modelContext.save()
+                    showTitleUpdateAlert = false
+                } catch {
+                    print(error)
+                }
+            }
+        } else {
+            isCorrect = false
+        }
+    }
+
+    func deleteObject(textData: TextData) {
+        do {
+            modelContext.delete(textData)
+            try modelContext.save()
+        } catch {
+            print("Delete Error: \(error)")
+        }
     }
 }

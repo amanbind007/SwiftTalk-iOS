@@ -18,62 +18,23 @@ enum SortOrder: String {
 }
 
 struct HomeView: View {
-    @Environment(\.modelContext) var modelContext
-
-    @State var showAddNewTextOptionsView = false
-    @State private var searchText: String = ""
-    @State var navigationState = NavigationStateViewModel()
-    @State var showTitleUpdateAlert: Bool = false
-    @State var showInfoCardView: Bool = false
-    @State var showSettingsView: Bool = false
-    @State var newTitle: String = ""
-    @State var selectedTextData: TextData?
-    @State var isCorrect: Bool = true
-
+    @State private var viewModel: HomeViewModel
     @Binding var showTabView: Bool
-
     @Query var textDatas: [TextData]
-
     @AppStorage("sortOrder") var selectedSortOrder: SortOrder = .recent
 
-    var filteredAndSortedTextData: [TextData] {
-        var filteredTextData = textDatas
-
-        // Apply Filter
-        if !searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            filteredTextData = textDatas.filter { textData in
-                textData.textTitle!.contains(searchText.lowercased()) ||
-                    textData.text.lowercased().contains(searchText.lowercased())
-            }
-        }
-
-        // Apply Sort
-        switch selectedSortOrder {
-        case .recent:
-            filteredTextData.sort { $0.lastAccess > $1.lastAccess }
-        case .dateLowToHigh:
-            filteredTextData.sort { $0.creationDateTime < $1.creationDateTime }
-        case .dateHighToLow:
-            filteredTextData.sort { $0.creationDateTime > $1.creationDateTime }
-        case .AtoZ:
-            filteredTextData.sort { $0.textTitle! < $1.textTitle! }
-        case .ZtoA:
-            filteredTextData.sort { $0.textTitle! > $1.textTitle! }
-        }
-
-        return filteredTextData
+    init(modelContext: ModelContext, showTabView: Binding<Bool>) {
+        _viewModel = State(wrappedValue: HomeViewModel(modelContext: modelContext))
+        _showTabView = showTabView
     }
 
     var body: some View {
-        NavigationStack(path: $navigationState.targetDestination) {
-            // Open AddNewTextView if user selects input
-            // text option in 'add new text options'
+        NavigationStack(path: $viewModel.navigationState.targetDestination) {
             OpenAddNewTextView
 
             VStack {
                 if textDatas.isEmpty {
                     EmptyHomeView
-
                 } else {
                     SavedTextListView
                 }
@@ -81,7 +42,7 @@ struct HomeView: View {
             .toolbarBackground(Color.navbar, for: .navigationBar)
             .navigationTitle("SwiftTalk")
             .searchable(
-                text: $searchText,
+                text: $viewModel.searchText,
                 placement: .navigationBarDrawer(displayMode: .always)
             )
             .toolbar(content: {
@@ -89,16 +50,11 @@ struct HomeView: View {
                     Menu("Sort", systemImage: "line.3.horizontal.decrease.circle") {
                         Text("Sort Order")
                         Picker(selection: $selectedSortOrder) {
-                            Text("Recently Accessed")
-                                .tag(SortOrder.recent)
-                            Text("Date Added - New to Old")
-                                .tag(SortOrder.dateHighToLow)
-                            Text("Date Added - Old to New")
-                                .tag(SortOrder.dateLowToHigh)
-                            Text("A to Z (Title)")
-                                .tag(SortOrder.AtoZ)
-                            Text("Z to A (Title)")
-                                .tag(SortOrder.ZtoA)
+                            Text("Recently Accessed").tag(SortOrder.recent)
+                            Text("Date Added - New to Old").tag(SortOrder.dateHighToLow)
+                            Text("Date Added - Old to New").tag(SortOrder.dateLowToHigh)
+                            Text("A to Z (Title)").tag(SortOrder.AtoZ)
+                            Text("Z to A (Title)").tag(SortOrder.ZtoA)
                         } label: {
                             Text("Sort Options")
                         }
@@ -108,66 +64,35 @@ struct HomeView: View {
             .toolbar(content: {
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
-                        showSettingsView = true
+                        viewModel.showSettingsView = true
                     } label: {
                         Image(systemName: "gearshape")
                     }
-
                 }
             })
         }
-        .sheet(isPresented: $showSettingsView, content: {
+        .sheet(isPresented: $viewModel.showSettingsView, content: {
             SettingsView()
         })
-        .sheet(
-            isPresented: $showAddNewTextOptionsView,
-            content: {
-                AddNewTextOptionsView(
-                    navigationState: $navigationState,
-                    showAddNewTextOptionsView: $showAddNewTextOptionsView
-                )
-                .presentationDetents([.height(520)])
-            }
-        )
+        .sheet(isPresented: $viewModel.showAddNewTextOptionsView, content: {
+            AddNewTextOptionsView(
+                navigationState: $viewModel.navigationState,
+                showAddNewTextOptionsView: $viewModel.showAddNewTextOptionsView
+            )
+            .presentationDetents([.height(520)])
+        })
         .overlay(
             CustomAlertView(
-                isPresented: $showTitleUpdateAlert,
-                newTitle: $newTitle,
-                isCorrect: $isCorrect,
-                onSave: verifyAndUpdate
+                isPresented: $viewModel.showTitleUpdateAlert,
+                newTitle: $viewModel.newTitle,
+                isCorrect: $viewModel.isCorrect,
+                onSave: viewModel.verifyAndUpdate
             )
-            .animation(.easeInOut, value: showTitleUpdateAlert)
+            .animation(.easeInOut, value: viewModel.showTitleUpdateAlert)
         )
         .overlay(
-            InfoCardView(isPresented: $showInfoCardView, textData: selectedTextData)
+            InfoCardView(isPresented: $viewModel.showInfoCardView, textData: viewModel.selectedTextData)
         )
-    }
-
-    func verifyAndUpdate() {
-        if !newTitle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            if let selectedTextData = selectedTextData {
-                isCorrect = true
-                selectedTextData.textTitle = newTitle
-                do {
-                    try modelContext.save()
-                    showTitleUpdateAlert = false
-                } catch {
-                    print(error)
-                }
-            }
-        } else {
-            isCorrect = false
-        }
-    }
-
-    func deleteObject(textData: TextData) {
-        do {
-            modelContext.delete(textData)
-            try modelContext.save()
-
-        } catch {
-            print("Delete Error: \(error)")
-        }
     }
 }
 
@@ -187,7 +112,7 @@ extension HomeView {
                 Text("I have nothing speak!")
 
                 Button {
-                    showAddNewTextOptionsView.toggle()
+                    viewModel.showAddNewTextOptionsView.toggle()
                 } label: {
                     Text("Add some new Text to Read")
                         .font(NotoFont.Regular(18))
@@ -210,44 +135,37 @@ extension HomeView {
     var SavedTextListView: some View {
         ZStack(alignment: .bottomTrailing) {
             List {
-                ForEach(filteredAndSortedTextData, id: \.id) { textData in
+                ForEach(viewModel.filteredAndSortedTextData(textDatas), id: \.id) { textData in
                     NavigationLink(destination: {
                         AddNewTextView(textData: textData, isEditing: false, isFocused: false, isSaved: true, showTabView: $showTabView)
                     }, label: {
                         ListItemView(textData: textData, parentListType: .HomeViewList)
                             .contextMenu {
                                 Button {
-                                    newTitle = textData.textTitle!
-                                    selectedTextData = textData
-                                    showTitleUpdateAlert = true
-
-                                    // Reset check to original state
-                                    isCorrect = true
+                                    viewModel.newTitle = textData.textTitle!
+                                    viewModel.selectedTextData = textData
+                                    viewModel.showTitleUpdateAlert = true
+                                    viewModel.isCorrect = true
                                 } label: {
                                     Label("Update Title", systemImage: "square.and.pencil")
                                 }
 
                                 Button {
-                                    deleteObject(textData: textData)
+                                    viewModel.deleteObject(textData: textData)
                                 } label: {
                                     Label("Delete", systemImage: "trash")
                                 }
 
                                 Button {
-                                    selectedTextData = textData
-                                    showInfoCardView = true
+                                    viewModel.selectedTextData = textData
+                                    viewModel.showInfoCardView = true
                                 } label: {
                                     Label("Info", systemImage: "info.bubble")
                                 }
                             }
                             .swipeActions(edge: .trailing) {
                                 Button(role: .destructive) {
-                                    deleteObject(textData: textData)
-                                    do {
-                                        try modelContext.save()
-                                    } catch {
-                                        print(error)
-                                    }
+                                    viewModel.deleteObject(textData: textData)
                                 } label: {
                                     Label("Delete", systemImage: "trash")
                                 }
@@ -261,9 +179,10 @@ extension HomeView {
             .scrollContentBackground(.hidden)
             .listStyle(.sidebar)
             .listRowSpacing(10)
+            .shadow(radius: 1)
 
             Button(action: {
-                showAddNewTextOptionsView.toggle()
+                viewModel.showAddNewTextOptionsView.toggle()
             }, label: {
                 Circle()
                     .frame(width: 55, height: 55)
@@ -275,7 +194,6 @@ extension HomeView {
                             .foregroundStyle(.white)
                             .padding(15)
                     }
-
             })
             .shadow(color: Color.black.opacity(0.3), radius: 10, x: 10, y: 10)
             .shadow(color: Color.white.opacity(1), radius: 10, x: -7, y: -7)
@@ -293,7 +211,7 @@ extension HomeView {
 extension HomeView {
     @ViewBuilder
     var OpenAddNewTextView: some View {
-        NavigationLink(value: navigationState.targetDestination) {
+        NavigationLink(value: viewModel.navigationState.targetDestination) {
             EmptyView()
         }
         .navigationDestination(for: TextSource.self) { target in
@@ -304,7 +222,8 @@ extension HomeView {
     }
 }
 
-#Preview {
-    HomeView(showTabView: .constant(true))
+
+ #Preview {
+     HomeView(modelContext: DataCoordinator().persistantContainer.mainContext, showTabView: .constant(true))
         .modelContainer(for: TextData.self)
-}
+ }
