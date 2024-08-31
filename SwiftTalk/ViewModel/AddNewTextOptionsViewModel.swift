@@ -44,14 +44,15 @@ class AddNewTextOptionsViewModel {
     // Web Link Text Sheet View Properties
     var link: String = ""
     var isParsingWebText: Bool = false
+    
+    // Text Parsing Alert properties
+    var showParseAlert: Bool = false
     var errorMessage: String?
 
     // Image Text Sheet View Properties
     var selectedImages: [UIImage] = []
     var isProcessingImages: Bool = false
     var progressValue: Double = 0
-    
-    var showParseAlert: Bool = false
     
     func getTextFromLink(completion: @escaping (Bool) -> Void) {
         var text = ""
@@ -145,6 +146,9 @@ class AddNewTextOptionsViewModel {
                 let title = "PDFText "+formattedDate
                 DataCoordinator.shared.saveObject(text: text.trimEndWhitespaceAndNewlines(), title: title, textSource: .pdfDocument)
             }
+        } else {
+            self.showParseAlert = true
+            self.errorMessage = "Couldn't parse the PDF"
         }
     }
     
@@ -168,14 +172,14 @@ class AddNewTextOptionsViewModel {
             }
             
         } catch {
-            print(error)
+            self.showParseAlert = true
+            self.errorMessage = error.localizedDescription
         }
     }
     
     func getTextFromTextFile(textFileURL: URL) {
         do {
             let text = try String(contentsOf: textFileURL)
-            print(text)
             DispatchQueue.main.async {
                 let currentDate = Date()
                 let dateFormatter = DateFormatter()
@@ -186,7 +190,8 @@ class AddNewTextOptionsViewModel {
                 DataCoordinator.shared.saveObject(text: text.trimEndWhitespaceAndNewlines(), title: title, textSource: .textFile)
             }
         } catch {
-            print(error)
+            self.showParseAlert = true
+            self.errorMessage = error.localizedDescription
         }
     }
     
