@@ -8,35 +8,13 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-enum FileImportTypes {
-    case text
-    case doc
-    case pdf
-
-    var allowedContentType: [UTType] {
-        switch self {
-        case .text:
-            return [.text, .plainText, .utf8PlainText]
-        case .doc:
-            return [UTType(importedAs: "com.amanbind.swifttalk.doc", conformingTo: .data)]
-        case .pdf:
-            return [.pdf]
-        }
-    }
-}
-
 struct AddNewTextOptionsView: View {
     @Environment(\.dismiss) var dismiss
-    @Environment(\.modelContext) var modelContext
 
     @Binding var navigationState: NavigationStateViewModel
     @Binding var showAddNewTextOptionsView: Bool
 
-    @State var addNewTextOptionsVM = AddNewTextOptionsViewModel()
-    @State var showWebTextSheet: Bool = false
-    @State var showImagePickerSheet: Bool = false
-    @State var showFileImporterSheet: Bool = false
-    @State var fileType: FileImportTypes?
+    @State var viewModel = AddNewTextOptionsViewModel()
 
     let docUTType = UTType(importedAs: "com.amanbind.swifttalk.doc", conformingTo: .data)
 
@@ -49,22 +27,22 @@ struct AddNewTextOptionsView: View {
 //                        case .camera:
 //                            break
                         case .photoLibrary:
-                            showImagePickerSheet = true
+                            viewModel.showImagePickerSheet = true
                         case .wordDocument:
-                            fileType = .doc
-                            showFileImporterSheet = true
+                            viewModel.fileType = .doc
+                            viewModel.showFileImporterSheet = true
                         case .textInput:
                             self.showAddNewTextOptionsView = false
 
                             self.navigationState.targetDestination.append(option)
                         case .pdfDocument:
-                            fileType = .pdf
-                            showFileImporterSheet = true
+                            viewModel.fileType = .pdf
+                            viewModel.showFileImporterSheet = true
                         case .webpage:
-                            showWebTextSheet = true
+                            viewModel.showWebTextSheet = true
                         case .textFile:
-                            fileType = .text
-                            showFileImporterSheet = true
+                            viewModel.fileType = .text
+                            viewModel.showFileImporterSheet = true
                         }
 
                     }) {
@@ -74,12 +52,12 @@ struct AddNewTextOptionsView: View {
             }
 
             .fileImporter(
-                isPresented: $showFileImporterSheet,
-                allowedContentTypes: fileType?.allowedContentType ?? []
+                isPresented: $viewModel.showFileImporterSheet,
+                allowedContentTypes: viewModel.fileType?.allowedContentType ?? []
             ) { result in
                 do {
                     let url = try result.get()
-                    addNewTextOptionsVM.convertFileToText(fileType: fileType!, documentURL: url)
+                    viewModel.convertFileToText(documentURL: url)
                 }
                 catch {
                     print(error)
@@ -97,21 +75,21 @@ struct AddNewTextOptionsView: View {
                     .font(NotoFont.Regular(16))
                 }
             })
-            .sheet(isPresented: $showWebTextSheet, content: {
-                WebLinkTextSheetView(addNewTextOptionsVM: $addNewTextOptionsVM, showAddNewTextOptionsView: $showAddNewTextOptionsView, showWebTextSheet: $showWebTextSheet)
+            .sheet(isPresented: $viewModel.showWebTextSheet, content: {
+                WebLinkTextSheetView(addNewTextOptionsVM: $viewModel, showAddNewTextOptionsView: $showAddNewTextOptionsView, showWebTextSheet: $viewModel.showWebTextSheet)
                     .presentationDetents([.height(280)])
             })
-            .sheet(isPresented: $showImagePickerSheet, content: {
-                ImagePicker(showImagePickerSheet: $showImagePickerSheet, addNewTextOptionsVM: $addNewTextOptionsVM, showAddNewTextOptionsView: $showAddNewTextOptionsView)
+            .sheet(isPresented: $viewModel.showImagePickerSheet, content: {
+                ImagePicker(showImagePickerSheet: $viewModel.showImagePickerSheet, addNewTextOptionsVM: $viewModel, showAddNewTextOptionsView: $showAddNewTextOptionsView)
                     .ignoresSafeArea(edges: .bottom)
             })
-            .alert(isPresented: $addNewTextOptionsVM.showParseAlert, content: {
-                Alert(title: Text("Error!"), message: Text(addNewTextOptionsVM.errorMessage ?? "Could'nt parse the text"), dismissButton: .default(Text("OK")))
+            .alert(isPresented: $viewModel.showParseAlert, content: {
+                Alert(title: Text("Error!"), message: Text(viewModel.errorMessage ?? "Could'nt parse the text"), dismissButton: .default(Text("OK")))
             })
         }
     }
 }
 
 #Preview {
-    AddNewTextOptionsView(navigationState: .constant(NavigationStateViewModel()), showAddNewTextOptionsView: .constant(true), addNewTextOptionsVM: AddNewTextOptionsViewModel())
+    AddNewTextOptionsView(navigationState: .constant(NavigationStateViewModel()), showAddNewTextOptionsView: .constant(true))
 }

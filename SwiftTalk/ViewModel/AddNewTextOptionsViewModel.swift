@@ -15,9 +15,31 @@ import UIKit
 import UniformTypeIdentifiers
 import Vision
 
+enum FileImportTypes {
+    case text
+    case doc
+    case pdf
+
+    var allowedContentType: [UTType] {
+        switch self {
+        case .text:
+            return [.text, .plainText, .utf8PlainText]
+        case .doc:
+            return [UTType(importedAs: "com.amanbind.swifttalk.doc", conformingTo: .data)]
+        case .pdf:
+            return [.pdf]
+        }
+    }
+}
+
 @Observable
 class AddNewTextOptionsViewModel {
     var pasteboard = UIPasteboard.general
+    
+    var showWebTextSheet: Bool = false
+    var showImagePickerSheet: Bool = false
+    var showFileImporterSheet: Bool = false
+    var fileType: FileImportTypes?
     
     // Web Link Text Sheet View Properties
     var link: String = ""
@@ -27,6 +49,7 @@ class AddNewTextOptionsViewModel {
     // Image Text Sheet View Properties
     var selectedImages: [UIImage] = []
     var isProcessingImages: Bool = false
+    var progressValue: Double = 0
     
     var showParseAlert: Bool = false
     
@@ -88,14 +111,16 @@ class AddNewTextOptionsViewModel {
         }
     }
 
-    func convertFileToText(fileType: FileImportTypes, documentURL: URL) {
-        switch fileType {
+    func convertFileToText(documentURL: URL) {
+        switch self.fileType {
         case .pdf:
             self.convertPDFToText(pdfDocumentURL: documentURL)
         case .doc:
             self.convertDocToText(wordDocumentURL: documentURL)
         case .text:
             self.getTextFromTextFile(textFileURL: documentURL)
+        case .none:
+            return
         }
     }
     
@@ -165,11 +190,13 @@ class AddNewTextOptionsViewModel {
         }
     }
     
-    func getTextFromImages() {
+    func getTextFromImages(progress: @escaping (Double) -> Void) {
         var text = ""
         self.isProcessingImages = true
+        let totalImages = self.selectedImages.count
+        self.progressValue = 0.0
         
-        for image in self.selectedImages {
+        for (index, image) in self.selectedImages.enumerated() {
             if let cgImage = image.cgImage {
                 // Request handler
                 let handler = VNImageRequestHandler(cgImage: cgImage)
