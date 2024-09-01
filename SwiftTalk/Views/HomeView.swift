@@ -162,6 +162,16 @@ extension HomeView {
                                 } label: {
                                     Label("Info", systemImage: "info.bubble")
                                 }
+
+                                Button {
+                                    textData.progress = 0
+                                    textData.completionDate = nil
+                                    textData.timeSpend = 0
+                                    textData.confettiShown = false
+
+                                } label: {
+                                    Label("Reset", systemImage: "slider.horizontal.2.gobackward")
+                                }
                             }
                             .swipeActions(edge: .trailing) {
                                 Button(role: .destructive) {
