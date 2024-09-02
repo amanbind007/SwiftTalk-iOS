@@ -30,6 +30,7 @@
 		5C308BFF2C3E6F5C0054886B /* flagNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C308BFE2C3E6F5C0054886B /* flagNames.swift */; };
 		5C308C0A2C3EF9400054886B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C308C092C3EF9400054886B /* Constants.swift */; };
 		5C308C122C3F0D320054886B /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C308C112C3F0D320054886B /* CircularProgressView.swift */; };
+		5C423B762C86210A00399841 /* ReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C423B752C86210A00399841 /* ReminderView.swift */; };
 		5C4454052BA35D34006DB2F5 /* AddNewTextOptionCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4454042BA35D34006DB2F5 /* AddNewTextOptionCardView.swift */; };
 		5C46549E2C4BEC7200375CF5 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C46549D2C4BEC7200375CF5 /* String+Extension.swift */; };
 		5C4654A22C4D041500375CF5 /* Completed.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C4654A12C4D041500375CF5 /* Completed.json */; };
@@ -99,6 +100,7 @@
 		5C308BFE2C3E6F5C0054886B /* flagNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = flagNames.swift; sourceTree = "<group>"; };
 		5C308C092C3EF9400054886B /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		5C308C112C3F0D320054886B /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
+		5C423B752C86210A00399841 /* ReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderView.swift; sourceTree = "<group>"; };
 		5C4454042BA35D34006DB2F5 /* AddNewTextOptionCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewTextOptionCardView.swift; sourceTree = "<group>"; };
 		5C46549D2C4BEC7200375CF5 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		5C4654A12C4D041500375CF5 /* Completed.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Completed.json; sourceTree = "<group>"; };
@@ -295,6 +297,7 @@
 				5CFAF95A2BC99C08003726AA /* VoiceSelectorListItemView.swift */,
 				5CFAF95C2BCA737C003726AA /* WebLinkTextSheetView.swift */,
 				5CDF5F0F2BD0EB6E00534B6B /* ImagePicker.swift */,
+				5C423B752C86210A00399841 /* ReminderView.swift */,
 				5C5E5B772BE8C2F300A9ED86 /* TextView.swift */,
 				5C308BE62C3BDCDA0054886B /* FontSelectorView.swift */,
 			);
@@ -478,6 +481,7 @@
 				5C99E3142C4594ED0083A507 /* Color+Extension.swift in Sources */,
 				5C9CA2972C68F88100F72FB3 /* ProcessProgressCardView.swift in Sources */,
 				5CFAF95B2BC99C08003726AA /* VoiceSelectorListItemView.swift in Sources */,
+				5C423B762C86210A00399841 /* ReminderView.swift in Sources */,
 				5C99E3202C477AF10083A507 /* SwiftTalkApp.swift in Sources */,
 				5C1B5CAB2C6341FC00F50435 /* BackgroundView.swift in Sources */,
 				5C46549E2C4BEC7200375CF5 /* String+Extension.swift in Sources */,
