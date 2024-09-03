@@ -109,6 +109,10 @@ class TextData: Identifiable {
     var confettiShown: Bool
 
     var lastAccess: Date
+    
+    var hasReminder: Bool
+    var selectedDays: Set<Int>
+    var reminderTime: Date?
 
     init(textTitle: String?, text: String, textSource: TextSource) {
         self.id = UUID()
@@ -121,5 +125,8 @@ class TextData: Identifiable {
         self.completionDate = nil
         self.confettiShown = false
         self.lastAccess = Date()
+        self.hasReminder = false
+        self.selectedDays = []
+        self.reminderTime = nil
     }
 }
