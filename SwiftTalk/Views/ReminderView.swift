@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct ReminderView: View {
-    @State private var selectedDays: Set<Int> = []
+    @State var textData: TextData
     @State var reminderTime: Date = .init()
     let weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
     var selectedWeekdaysString: String {
-        let sortedDays = selectedDays.sorted()
+        let sortedDays = textData.selectedDays.sorted()
 
         var string = ""
 
@@ -27,62 +27,93 @@ struct ReminderView: View {
 
         return weekdaysString
     }
-
+    
     var body: some View {
         VStack(spacing: 15) {
+            VStack(spacing: 1) {
+                HStack {
+                    Text("PREVIEW")
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                }
+                
+                HStack {
+                    Image(uiImage: UIImage.icon)
+                        .resizable()
+                        .frame(width: 45, height: 45)
+                    
+                    VStack {
+                        HStack {
+                            Text("Dummy Title")
+                                .font(.headline)
+                            Spacer()
+                            
+                            Text("now")
+                                .font(.callout)
+                                .foregroundStyle(.secondary)
+                        }
+                        HStack {
+                            Text("Dummy Text for Preview")
+                            
+                            Spacer(minLength: 0)
+                        }
+                    }
+                }
+                .padding()
+                .background(.thinMaterial)
+                .clipShape(RoundedRectangle(cornerRadius: 20))
+            }
+            
             HStack(alignment: .center) {
                 DatePicker("Time", selection: $reminderTime, displayedComponents: .hourAndMinute)
                     .pickerStyle(.wheel)
             }
 
             HStack {
-                if selectedDays.isEmpty {
+                if textData.selectedDays.isEmpty {
                     Text("Not Scheduled")
-                } else if selectedDays.count == 1 {
-                    Text(weekdays[selectedDays.first!])
-                } else if selectedDays.count == 7 {
+                } else if textData.selectedDays.count == 1 {
+                    Text(weekdays[textData.selectedDays.first!])
+                } else if textData.selectedDays.count == 7 {
                     Text("Every day")
                 } else {
                     Text(selectedWeekdaysString)
                 }
 
                 Spacer()
+                
+                Toggle(isOn: $textData.hasReminder, label: {
+                    Text("")
+                })
             }
 
             HStack(spacing: 6) {
                 ForEach(0 ..< 7) { index in
 
                     Button(action: {
-                        if selectedDays.contains(index) {
-                            selectedDays.remove(index)
+                        if textData.selectedDays.contains(index) {
+                            textData.selectedDays.remove(index)
                         } else {
-                            selectedDays.insert(index)
+                            textData.selectedDays.insert(index)
                         }
                     }) {
                         HStack(spacing: 0) {
                             Capsule()
                                 .foregroundStyle(Color.appTint)
-                                .opacity(selectedDays.contains(index) ? 1 : 0.2)
+                                .opacity(textData.selectedDays.contains(index) ? 1 : 0.2)
 
                                 .frame(width: 47, height: 35)
                                 .overlay {
                                     Text(weekdays[index].prefix(3))
 
                                         .bold()
-                                        .foregroundStyle(selectedDays.contains(index) ? Color.white : Color.secondary)
+                                        .foregroundStyle(textData.selectedDays.contains(index) ? Color.white : Color.secondary)
                                         .dynamicTypeSize(.medium)
                                 }
                         }
                     }
                 }
-            }
-
-            HStack {
-                Image(systemName: "trash")
-
-                Text("Delete")
-
-                Spacer()
             }
         }
         .padding()
@@ -90,5 +121,5 @@ struct ReminderView: View {
 }
 
 #Preview {
-    ReminderView()
+    ReminderView(textData: TextDataPreviewProvider.textData1)
 }
