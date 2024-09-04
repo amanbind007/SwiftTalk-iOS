@@ -71,6 +71,10 @@ struct HomeView: View {
                 }
             })
         }
+        .sheet(isPresented: $viewModel.showReminderView, content: {
+            ReminderView(textData: viewModel.selectedTextData!)
+                .presentationDetents([.medium])
+        })
         .sheet(isPresented: $viewModel.showSettingsView, content: {
             SettingsView()
         })
@@ -149,13 +153,14 @@ extension HomeView {
                                 } label: {
                                     Label("Update Title", systemImage: "square.and.pencil")
                                 }
-
+                                
                                 Button {
-                                    viewModel.deleteObject(textData: textData)
+                                    viewModel.selectedTextData = textData
+                                    viewModel.showReminderView = true
                                 } label: {
-                                    Label("Delete", systemImage: "trash")
+                                    Label("Reminder", systemImage: "bell.fill")
                                 }
-
+                                
                                 Button {
                                     viewModel.selectedTextData = textData
                                     viewModel.showInfoCardView = true
@@ -172,6 +177,13 @@ extension HomeView {
                                 } label: {
                                     Label("Reset", systemImage: "slider.horizontal.2.gobackward")
                                 }
+                                
+                                Button {
+                                    viewModel.deleteObject(textData: textData)
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
+
                             }
                             .swipeActions(edge: .trailing) {
                                 Button(role: .destructive) {
@@ -232,8 +244,7 @@ extension HomeView {
     }
 }
 
-
- #Preview {
-     HomeView(modelContext: DataCoordinator().persistantContainer.mainContext, showTabView: .constant(true))
+#Preview {
+    HomeView(modelContext: DataCoordinator().persistantContainer.mainContext, showTabView: .constant(true))
         .modelContainer(for: TextData.self)
- }
+}

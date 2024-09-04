@@ -18,6 +18,7 @@ class HomeViewModel {
     var showTitleUpdateAlert: Bool = false
     var showInfoCardView: Bool = false
     var showSettingsView: Bool = false
+    var showReminderView: Bool = false
     var newTitle: String = ""
     var selectedTextData: TextData?
     var isCorrect: Bool = true
