@@ -22,6 +22,7 @@ struct HomeView: View {
     @Binding var showTabView: Bool
     @Query var textDatas: [TextData]
     @AppStorage("sortOrder") var selectedSortOrder: SortOrder = .recent
+    @State private var reminder = NotificationManager.shared
 
     init(modelContext: ModelContext, showTabView: Binding<Bool>) {
         _viewModel = State(wrappedValue: HomeViewModel(modelContext: modelContext))
@@ -192,6 +193,13 @@ extension HomeView {
                                     Label("Delete", systemImage: "trash")
                                 }
                             }
+                            .onChange(of: textData.hasReminder, {
+                                if textData.hasReminder {
+                                    reminder.scheduleNotifications(for: textData)
+                                }else{
+                                    reminder.deleteNotifications(for: textData.id)
+                                }
+                            })
                     })
                 }
 
