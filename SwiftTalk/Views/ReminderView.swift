@@ -9,24 +9,7 @@ import SwiftUI
 
 struct ReminderView: View {
     @State var textData: TextData
-    @State var reminderTime: Date = .init()
-    let weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-
-    var selectedWeekdaysString: String {
-        let sortedDays = textData.selectedDays.sorted()
-
-        var string = ""
-
-        for days in sortedDays {
-            string += weekdays[days].prefix(3) + " "
-        }
-
-        string.removeLast()
-
-        let weekdaysString = string.replacingOccurrences(of: " ", with: ", ")
-
-        return weekdaysString
-    }
+    @State var viewModel = ReminderViewViewModel()
     
     var body: some View {
         NavigationView {
@@ -64,31 +47,24 @@ struct ReminderView: View {
                     .padding()
                     .background(.thinMaterial)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
-                    
                 }
                 .padding(.bottom, 15)
                 
                 HStack(alignment: .center) {
-                    DatePicker("Time", selection: $reminderTime, displayedComponents: .hourAndMinute)
+                    DatePicker("Time", selection: $textData.reminderTime ?? viewModel.reminderTime, displayedComponents: .hourAndMinute)
                         .pickerStyle(.wheel)
+                        .disabled(textData.hasReminder)
+                        .onTapGesture {
+                            print("heeol")
+                        }
                 }
                 
                 HStack {
-                    if textData.selectedDays.isEmpty {
-                        Text("Not Scheduled")
-                    } else if textData.selectedDays.count == 1 {
-                        Text(weekdays[textData.selectedDays.first!])
-                    } else if textData.selectedDays.count == 7 {
-                        Text("Every day")
-                    } else {
-                        Text(selectedWeekdaysString)
-                    }
-                    
+                    Text(viewModel.selectedWeekDaysString(textData: textData))
+                                  
                     Spacer()
                     
-                    Toggle(isOn: $textData.hasReminder, label: {
-                        Text("")
-                    })
+                    Toggle(isOn: $textData.hasReminder, label: {})
                 }
                 
                 HStack(spacing: 6) {
@@ -108,7 +84,7 @@ struct ReminderView: View {
                                 
                                     .frame(width: 47, height: 35)
                                     .overlay {
-                                        Text(weekdays[index].prefix(3))
+                                        Text(viewModel.weekdays[index].prefix(3))
                                         
                                             .bold()
                                             .foregroundStyle(textData.selectedDays.contains(index) ? Color.white : Color.secondary)
@@ -118,7 +94,12 @@ struct ReminderView: View {
                         }
                     }
                 }
+                .disabled(textData.hasReminder)
+                .grayscale(textData.hasReminder ? 1 : 0)
                 Spacer()
+                
+                Text("*Switch off the reminder to make changes")
+                    .font(.caption)
             }
             .padding()
             .navigationTitle("Set Reminder")

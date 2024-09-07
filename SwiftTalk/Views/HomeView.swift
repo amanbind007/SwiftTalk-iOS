@@ -154,14 +154,14 @@ extension HomeView {
                                 } label: {
                                     Label("Update Title", systemImage: "square.and.pencil")
                                 }
-                                
+
                                 Button {
                                     viewModel.selectedTextData = textData
                                     viewModel.showReminderView = true
                                 } label: {
                                     Label("Reminder", systemImage: "bell.fill")
                                 }
-                                
+
                                 Button {
                                     viewModel.selectedTextData = textData
                                     viewModel.showInfoCardView = true
@@ -178,13 +178,12 @@ extension HomeView {
                                 } label: {
                                     Label("Reset", systemImage: "slider.horizontal.2.gobackward")
                                 }
-                                
+
                                 Button {
                                     viewModel.deleteObject(textData: textData)
                                 } label: {
                                     Label("Delete", systemImage: "trash")
                                 }
-
                             }
                             .swipeActions(edge: .trailing) {
                                 Button(role: .destructive) {
@@ -193,13 +192,6 @@ extension HomeView {
                                     Label("Delete", systemImage: "trash")
                                 }
                             }
-                            .onChange(of: textData.hasReminder, {
-                                if textData.hasReminder {
-                                    reminder.scheduleNotifications(for: textData)
-                                }else{
-                                    reminder.deleteNotifications(for: textData.id)
-                                }
-                            })
                     })
                 }
 
