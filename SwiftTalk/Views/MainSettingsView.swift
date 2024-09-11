@@ -12,35 +12,56 @@ struct MainSettingsView: View {
         VStack {
             List {
                 Section {
-                    HStack {
-                        Text("Voice Selection")
+                    NavigationLink {
+                        VoiceSelectorView()
+                    } label: {
+                        HStack {
+                            Text("Voice Selection")
+                        }
                     }
-                    HStack {
-                        Text("Text Display Selection")
+
+                    NavigationLink {
+                        SettingsView()
+                    } label: {
+                        HStack {
+                            Text("Text Display Customization")
+                        }
                     }
-                    HStack {
-                        Text("Voice Setting")
+
+                    NavigationLink {
+                        SettingsView()
+                    } label: {
+                        HStack {
+                            Text("Voice Setting")
+                        }
                     }
                 }
-                
+
                 Section {
                     HStack {
                         Text("How to Get Free Premium & Enhanced Neural Voices")
                     }
-                    HStack {
-                        Text("Give feedback to developer(me)")
+                    Link(destination: URL(string: "https://forms.gle/D1dEGQqCryQYaZqh8")!) {
+                        HStack {
+                            Text("Give feedback to developer(me)")
+                        }
                     }
+
                     HStack {
-                        Text("Leave a review")
+                        LeaveReviewView(label: "Leave a review")
                     }
                 }
-                
+
+                GroupBox {}
                 Section {
                     HStack {
                         Text("About")
                     }
                     HStack {
                         Text("Version")
+                        Spacer()
+                        Text(Bundle.main.appVersionShort)
+                            .foregroundColor(.secondary)
                     }
                 }
             }
