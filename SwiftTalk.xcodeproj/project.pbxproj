@@ -13,6 +13,7 @@
 		5C1B5CAB2C6341FC00F50435 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1B5CAA2C6341FC00F50435 /* BackgroundView.swift */; };
 		5C21D1DE2B99E8E4009C0A6B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C21D1DD2B99E8E4009C0A6B /* HomeView.swift */; };
 		5C21D1E32B99E8E6009C0A6B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C21D1E22B99E8E6009C0A6B /* Preview Assets.xcassets */; };
+		5C28C57F2C876B7600B742F7 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C28C57E2C876B7600B742F7 /* NotificationManager.swift */; };
 		5C2E2CD12C7256A100A18F4D /* TimeInterval+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2E2CD02C7256A100A18F4D /* TimeInterval+Extension.swift */; };
 		5C3016F22B9B5F340012542D /* AddNewTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3016F12B9B5F340012542D /* AddNewTextView.swift */; };
 		5C3016FB2B9E0E140012542D /* TextData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3016FA2B9E0E140012542D /* TextData.swift */; };
@@ -36,6 +37,7 @@
 		5C4654A22C4D041500375CF5 /* Completed.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C4654A12C4D041500375CF5 /* Completed.json */; };
 		5C49EC792C41A89900B15B82 /* LinearProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C49EC782C41A89900B15B82 /* LinearProgressBar.swift */; };
 		5C4D0A592C08601C00726969 /* TextDataPreviewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4D0A582C08601C00726969 /* TextDataPreviewProvider.swift */; };
+		5C5556D12C8CB25E00EF3DCB /* ReminderViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5556D02C8CB25E00EF3DCB /* ReminderViewViewModel.swift */; };
 		5C5E5B782BE8C2F300A9ED86 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5E5B772BE8C2F300A9ED86 /* TextView.swift */; };
 		5C77D1EF2C5AAEE800AA1223 /* NotoFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C77D1EE2C5AAEE800AA1223 /* NotoFont.swift */; };
 		5C77D1F22C5AB0E800AA1223 /* NotoSerif-VariableFont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5C77D1F02C5AB0E800AA1223 /* NotoSerif-VariableFont.ttf */; };
@@ -68,6 +70,9 @@
 		5CE2A8F32B9F781300665B1F /* AddNewTextOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE2A8F22B9F781300665B1F /* AddNewTextOptionsView.swift */; };
 		5CE8E82A2C131436009FDAE2 /* DataCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE8E8292C131436009FDAE2 /* DataCoordinator.swift */; };
 		5CF861102BD793C200D8474F /* OfficeFileReader in Frameworks */ = {isa = PBXBuildFile; productRef = 5CF8610F2BD793C200D8474F /* OfficeFileReader */; };
+		5CFA8E912C90AB5F0088833A /* MainSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFA8E902C90AB5F0088833A /* MainSettingsView.swift */; };
+		5CFA8E932C90C1850088833A /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFA8E922C90C1850088833A /* Bundle+Extensions.swift */; };
+		5CFA8E952C90C4F90088833A /* LeaveReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFA8E942C90C4F90088833A /* LeaveReviewView.swift */; };
 		5CFAF9502BC2FBFA003726AA /* Voice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFAF94F2BC2FBFA003726AA /* Voice.swift */; };
 		5CFAF9522BC3BE91003726AA /* AddNewTextViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFAF9512BC3BE91003726AA /* AddNewTextViewModel.swift */; };
 		5CFAF9542BC522DB003726AA /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFAF9532BC522DB003726AA /* SettingsView.swift */; };
@@ -82,6 +87,7 @@
 		5C21D1D82B99E8E4009C0A6B /* SwiftTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C21D1DD2B99E8E4009C0A6B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		5C21D1E22B99E8E6009C0A6B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		5C28C57E2C876B7600B742F7 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		5C2E2CD02C7256A100A18F4D /* TimeInterval+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Extension.swift"; sourceTree = "<group>"; };
 		5C3016F12B9B5F340012542D /* AddNewTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewTextView.swift; sourceTree = "<group>"; wrapsLines = 1; };
 		5C3016F32B9B64770012542D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -106,6 +112,7 @@
 		5C4654A12C4D041500375CF5 /* Completed.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Completed.json; sourceTree = "<group>"; };
 		5C49EC782C41A89900B15B82 /* LinearProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearProgressBar.swift; sourceTree = "<group>"; };
 		5C4D0A582C08601C00726969 /* TextDataPreviewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextDataPreviewProvider.swift; sourceTree = "<group>"; };
+		5C5556D02C8CB25E00EF3DCB /* ReminderViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderViewViewModel.swift; sourceTree = "<group>"; };
 		5C5E5B772BE8C2F300A9ED86 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		5C77D1EE2C5AAEE800AA1223 /* NotoFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotoFont.swift; sourceTree = "<group>"; };
 		5C77D1F02C5AB0E800AA1223 /* NotoSerif-VariableFont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSerif-VariableFont.ttf"; sourceTree = "<group>"; };
@@ -136,6 +143,9 @@
 		5CDF5F0F2BD0EB6E00534B6B /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		5CE2A8F22B9F781300665B1F /* AddNewTextOptionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewTextOptionsView.swift; sourceTree = "<group>"; };
 		5CE8E8292C131436009FDAE2 /* DataCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCoordinator.swift; sourceTree = "<group>"; };
+		5CFA8E902C90AB5F0088833A /* MainSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSettingsView.swift; sourceTree = "<group>"; };
+		5CFA8E922C90C1850088833A /* Bundle+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extensions.swift"; sourceTree = "<group>"; };
+		5CFA8E942C90C4F90088833A /* LeaveReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveReviewView.swift; sourceTree = "<group>"; };
 		5CFAF94F2BC2FBFA003726AA /* Voice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Voice.swift; sourceTree = "<group>"; };
 		5CFAF9512BC3BE91003726AA /* AddNewTextViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewTextViewModel.swift; sourceTree = "<group>"; };
 		5CFAF9532BC522DB003726AA /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -237,6 +247,7 @@
 				5C308BDA2C37060B0054886B /* CustomAlertView.swift */,
 				5C308C112C3F0D320054886B /* CircularProgressView.swift */,
 				5C49EC782C41A89900B15B82 /* LinearProgressBar.swift */,
+				5CFA8E942C90C4F90088833A /* LeaveReviewView.swift */,
 				5C99E3AF2C4807530083A507 /* ConfettiView.swift */,
 				5C87CC3E2C2895700010363F /* CustomSwitch.swift */,
 				5C87CC3C2C2828180010363F /* BannerButton.swift */,
@@ -277,6 +288,7 @@
 				5CFAF9512BC3BE91003726AA /* AddNewTextViewModel.swift */,
 				5C308BD82C358A160054886B /* AddNewTextOptionsViewModel.swift */,
 				5C7FD2082C7E41FB00987133 /* HomeViewModel.swift */,
+				5C5556D02C8CB25E00EF3DCB /* ReminderViewViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -286,6 +298,7 @@
 			children = (
 				5C77D1F82C5C023F00AA1223 /* Components */,
 				5C21D1DD2B99E8E4009C0A6B /* HomeView.swift */,
+				5CFA8E902C90AB5F0088833A /* MainSettingsView.swift */,
 				5C99E39C2C47ACF30083A507 /* MainTabbedView.swift */,
 				5C3016FC2B9E16D20012542D /* ListItemView.swift */,
 				5CE2A8F22B9F781300665B1F /* AddNewTextOptionsView.swift */,
@@ -312,6 +325,7 @@
 				5C79B3862C4AD86400EDCD0E /* ModelContext+Extension.swift */,
 				5C46549D2C4BEC7200375CF5 /* String+Extension.swift */,
 				5C2E2CD02C7256A100A18F4D /* TimeInterval+Extension.swift */,
+				5CFA8E922C90C1850088833A /* Bundle+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -338,6 +352,7 @@
 			isa = PBXGroup;
 			children = (
 				5CFAF9582BC6D376003726AA /* SpeechSynthesizer.swift */,
+				5C28C57E2C876B7600B742F7 /* NotificationManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -441,12 +456,15 @@
 				5C308BDB2C37060B0054886B /* CustomAlertView.swift in Sources */,
 				5C308C0A2C3EF9400054886B /* Constants.swift in Sources */,
 				5C308BD92C358A160054886B /* AddNewTextOptionsViewModel.swift in Sources */,
+				5CFA8E932C90C1850088833A /* Bundle+Extensions.swift in Sources */,
 				5C87CC3D2C2828180010363F /* BannerButton.swift in Sources */,
 				5C77D1EF2C5AAEE800AA1223 /* NotoFont.swift in Sources */,
 				5C7FD2092C7E41FB00987133 /* HomeViewModel.swift in Sources */,
+				5C28C57F2C876B7600B742F7 /* NotificationManager.swift in Sources */,
 				5C3016FD2B9E16D20012542D /* ListItemView.swift in Sources */,
 				5C308BE72C3BDCDA0054886B /* FontSelectorView.swift in Sources */,
 				5CE2A8F32B9F781300665B1F /* AddNewTextOptionsView.swift in Sources */,
+				5C5556D12C8CB25E00EF3DCB /* ReminderViewViewModel.swift in Sources */,
 				5C3016FB2B9E0E140012542D /* TextData.swift in Sources */,
 				5C7F4FE32C5D42D30018C6C0 /* InfoCardView.swift in Sources */,
 				5C99E3162C463F0D0083A507 /* DailyStats.swift in Sources */,
@@ -473,11 +491,13 @@
 				5C21D1DE2B99E8E4009C0A6B /* HomeView.swift in Sources */,
 				5C308C122C3F0D320054886B /* CircularProgressView.swift in Sources */,
 				5C9A42002BBF0BF3001F4744 /* NavigationStateViewModel.swift in Sources */,
+				5CFA8E952C90C4F90088833A /* LeaveReviewView.swift in Sources */,
 				5C49EC792C41A89900B15B82 /* LinearProgressBar.swift in Sources */,
 				5C7F4FE52C5EA7FB0018C6C0 /* CustomTabView.swift in Sources */,
 				5C99E3B02C4807530083A507 /* ConfettiView.swift in Sources */,
 				5CDF5F102BD0EB6E00534B6B /* ImagePicker.swift in Sources */,
 				5C99E3AE2C47FD540083A507 /* StatsViewModel.swift in Sources */,
+				5CFA8E912C90AB5F0088833A /* MainSettingsView.swift in Sources */,
 				5C99E3142C4594ED0083A507 /* Color+Extension.swift in Sources */,
 				5C9CA2972C68F88100F72FB3 /* ProcessProgressCardView.swift in Sources */,
 				5CFAF95B2BC99C08003726AA /* VoiceSelectorListItemView.swift in Sources */,
