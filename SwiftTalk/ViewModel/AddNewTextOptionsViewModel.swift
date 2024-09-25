@@ -17,15 +17,12 @@ import Vision
 
 enum FileImportTypes {
     case text
-    case doc
     case pdf
 
     var allowedContentType: [UTType] {
         switch self {
         case .text:
             return [.text, .plainText, .utf8PlainText]
-        case .doc:
-            return [UTType(importedAs: "com.amanbind.swifttalk.doc", conformingTo: .data)]
         case .pdf:
             return [.pdf]
         }
@@ -35,7 +32,6 @@ enum FileImportTypes {
 enum TextSource: String, CaseIterable, Identifiable, Codable {
 //    case camera = "Camera Scan"
     case photoLibrary = "Photo Library"
-    case wordDocument = "Word Documents"
     case textInput = "Text"
     case pdfDocument = "PDF Documents"
     case webpage = "Webpage"
@@ -48,7 +44,6 @@ enum TextSource: String, CaseIterable, Identifiable, Codable {
         switch self {
 //        case .camera: return "Scan physical text using your camera"
         case .photoLibrary: return "Get text from the photos in your library"
-        case .wordDocument: return "Add documents from your local storage or cloud"
         case .textInput: return "Input or paste text to read"
         case .pdfDocument: return "Add PDFs from your local storage or cloud"
         case .webpage: return "Listen to the contents of a webpage"
@@ -60,7 +55,6 @@ enum TextSource: String, CaseIterable, Identifiable, Codable {
         switch self {
 //        case .camera: return Constants.Icons.cameraIcon
         case .photoLibrary: return Constants.Icons.imageFileIcon
-        case .wordDocument: return Constants.Icons.wordFileIcon
         case .textInput: return Constants.Icons.textFileInputIcon
         case .pdfDocument: return Constants.Icons.pdfFileIcon
         case .webpage: return Constants.Icons.webIcon
@@ -72,7 +66,6 @@ enum TextSource: String, CaseIterable, Identifiable, Codable {
         switch self {
 //        case .camera: return Color.pink
         case .photoLibrary: return Color.green
-        case .wordDocument: return Color.blue
         case .textInput: return Color.purple
         case .pdfDocument: return Color.red
         case .webpage: return Color.mint
@@ -165,8 +158,6 @@ class AddNewTextOptionsViewModel {
         switch self.fileType {
         case .pdf:
             self.convertPDFToText(pdfDocumentURL: documentURL)
-        case .doc:
-            self.convertDocToText(wordDocumentURL: documentURL)
         case .text:
             self.getTextFromTextFile(textFileURL: documentURL)
         case .none:
@@ -198,31 +189,6 @@ class AddNewTextOptionsViewModel {
         } else {
             self.showParseAlert = true
             self.errorMessage = "Couldn't parse the PDF"
-        }
-    }
-    
-    func convertDocToText(wordDocumentURL: URL) {
-        var text = ""
-        do {
-            let data = try Data(contentsOf: wordDocumentURL)
-            let file = try DocFile(data: data)
-            
-            if let characters = file.characters {
-                // print(characters.text.trimmingCharacters(in: .whitespaces) as Any)
-                text = characters.text.trimmingCharacters(in: .whitespaces)
-                DispatchQueue.main.async {
-                    let currentDate = Date()
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "dd-MM-yy HH.mm.ss"
-                    let formattedDate = dateFormatter.string(from: currentDate)
-                    let title = "DocText "+formattedDate
-                    DataCoordinator.shared.saveObject(text: text.trimEndWhitespaceAndNewlines(), title: title, textSource: .wordDocument)
-                }
-            }
-            
-        } catch {
-            self.showParseAlert = true
-            self.errorMessage = error.localizedDescription
         }
     }
     

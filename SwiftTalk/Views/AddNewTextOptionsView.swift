@@ -16,8 +16,6 @@ struct AddNewTextOptionsView: View {
 
     @State var viewModel = AddNewTextOptionsViewModel()
 
-    let docUTType = UTType(importedAs: "com.amanbind.swifttalk.doc", conformingTo: .data)
-
     var body: some View {
         NavigationView {
             List {
