@@ -6,13 +6,8 @@
 //
 
 import Foundation
-import OfficeFileReader
-import PDFKit
-import SwiftSoup
 import SwiftUI
-import UIKit
-import UniformTypeIdentifiers
-import Vision
+
 
 @Observable
 class AddNewTextViewModel {
