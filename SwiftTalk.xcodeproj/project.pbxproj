@@ -37,10 +37,12 @@
 		5C4D0A592C08601C00726969 /* TextDataPreviewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4D0A582C08601C00726969 /* TextDataPreviewProvider.swift */; };
 		5C5556D12C8CB25E00EF3DCB /* ReminderViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5556D02C8CB25E00EF3DCB /* ReminderViewViewModel.swift */; };
 		5C5E5B782BE8C2F300A9ED86 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5E5B772BE8C2F300A9ED86 /* TextView.swift */; };
+		5C6982112CA9BDE4001648C0 /* YouTubePlayerKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5C6982102CA9BDE4001648C0 /* YouTubePlayerKit */; };
+		5C6982142CA9BE0D001648C0 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 5C6982132CA9BE0D001648C0 /* SwiftSoup */; };
+		5C6982172CA9BE72001648C0 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 5C6982162CA9BE72001648C0 /* Lottie */; };
 		5C77D1EF2C5AAEE800AA1223 /* NotoFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C77D1EE2C5AAEE800AA1223 /* NotoFont.swift */; };
 		5C77D1F22C5AB0E800AA1223 /* NotoSerif-VariableFont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5C77D1F02C5AB0E800AA1223 /* NotoSerif-VariableFont.ttf */; };
 		5C77D1F32C5AB0E800AA1223 /* NotoSerif-Italic-VariableFont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5C77D1F12C5AB0E800AA1223 /* NotoSerif-Italic-VariableFont.ttf */; };
-		5C79B3852C4991DC00EDCD0E /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 5C79B3842C4991DC00EDCD0E /* Lottie */; };
 		5C79B3872C4AD86400EDCD0E /* ModelContext+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C79B3862C4AD86400EDCD0E /* ModelContext+Extension.swift */; };
 		5C7F4FE32C5D42D30018C6C0 /* InfoCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7F4FE22C5D42D30018C6C0 /* InfoCardView.swift */; };
 		5C7F4FE52C5EA7FB0018C6C0 /* CustomTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7F4FE42C5EA7FB0018C6C0 /* CustomTabView.swift */; };
@@ -61,7 +63,6 @@
 		5C9A42002BBF0BF3001F4744 /* NavigationStateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9A41FF2BBF0BF3001F4744 /* NavigationStateViewModel.swift */; };
 		5C9CA2972C68F88100F72FB3 /* ProcessProgressCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9CA2962C68F88100F72FB3 /* ProcessProgressCardView.swift */; };
 		5C9CA29B2C6907CC00F72FB3 /* GearsAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C9CA29A2C6907CC00F72FB3 /* GearsAnimation.json */; };
-		5CAABB782CA087250051AB4E /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 5CAABB772CA087250051AB4E /* SwiftSoup */; };
 		5CAC44FE2C0639EB001E13CA /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAC44FD2C0639EB001E13CA /* Binding+Extension.swift */; };
 		5CB0EA9F2BA2B67500648414 /* VoiceSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB0EA9E2BA2B67500648414 /* VoiceSelectorView.swift */; };
 		5CDF5F102BD0EB6E00534B6B /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDF5F0F2BD0EB6E00534B6B /* ImagePicker.swift */; };
@@ -72,7 +73,6 @@
 		5CFA8E932C90C1850088833A /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFA8E922C90C1850088833A /* Bundle+Extensions.swift */; };
 		5CFA8E952C90C4F90088833A /* LeaveReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFA8E942C90C4F90088833A /* LeaveReviewView.swift */; };
 		5CFA8E972C92E75D0088833A /* GetNeuralVoicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFA8E962C92E75D0088833A /* GetNeuralVoicesView.swift */; };
-		5CFA8E9A2C92E9170088833A /* YouTubePlayerKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5CFA8E992C92E9170088833A /* YouTubePlayerKit */; };
 		5CFAF9502BC2FBFA003726AA /* Voice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFAF94F2BC2FBFA003726AA /* Voice.swift */; };
 		5CFAF9522BC3BE91003726AA /* AddNewTextViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFAF9512BC3BE91003726AA /* AddNewTextViewModel.swift */; };
 		5CFAF9542BC522DB003726AA /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFAF9532BC522DB003726AA /* SettingsView.swift */; };
@@ -160,9 +160,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5CFA8E9A2C92E9170088833A /* YouTubePlayerKit in Frameworks */,
-				5CAABB782CA087250051AB4E /* SwiftSoup in Frameworks */,
-				5C79B3852C4991DC00EDCD0E /* Lottie in Frameworks */,
+				5C6982112CA9BDE4001648C0 /* YouTubePlayerKit in Frameworks */,
+				5C6982142CA9BE0D001648C0 /* SwiftSoup in Frameworks */,
+				5C6982172CA9BE72001648C0 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,9 +375,9 @@
 			);
 			name = SwiftTalk;
 			packageProductDependencies = (
-				5C79B3842C4991DC00EDCD0E /* Lottie */,
-				5CFA8E992C92E9170088833A /* YouTubePlayerKit */,
-				5CAABB772CA087250051AB4E /* SwiftSoup */,
+				5C6982102CA9BDE4001648C0 /* YouTubePlayerKit */,
+				5C6982132CA9BE0D001648C0 /* SwiftSoup */,
+				5C6982162CA9BE72001648C0 /* Lottie */,
 			);
 			productName = SwiftTalk;
 			productReference = 5C21D1D82B99E8E4009C0A6B /* SwiftTalk.app */;
@@ -408,9 +408,9 @@
 			);
 			mainGroup = 5C21D1CF2B99E8E4009C0A6B;
 			packageReferences = (
-				5C79B3832C4991DC00EDCD0E /* XCRemoteSwiftPackageReference "lottie-spm" */,
-				5CFA8E982C92E9170088833A /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */,
-				5CAABB762CA087250051AB4E /* XCRemoteSwiftPackageReference "SwiftSoup" */,
+				5C69820F2CA9BDE4001648C0 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */,
+				5C6982122CA9BE0D001648C0 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
+				5C6982152CA9BE72001648C0 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = 5C21D1D92B99E8E4009C0A6B /* Products */;
 			projectDirPath = "";
@@ -646,8 +646,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -678,8 +678,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -718,15 +718,15 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		5C79B3832C4991DC00EDCD0E /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
+		5C69820F2CA9BDE4001648C0 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
+			repositoryURL = "https://github.com/SvenTiigi/YouTubePlayerKit";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 4.5.0;
+				minimumVersion = 1.9.0;
 			};
 		};
-		5CAABB762CA087250051AB4E /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
+		5C6982122CA9BE0D001648C0 /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scinfu/SwiftSoup";
 			requirement = {
@@ -734,31 +734,31 @@
 				minimumVersion = 2.7.5;
 			};
 		};
-		5CFA8E982C92E9170088833A /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */ = {
+		5C6982152CA9BE72001648C0 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SvenTiigi/YouTubePlayerKit.git";
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.9.0;
+				minimumVersion = 4.5.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		5C79B3842C4991DC00EDCD0E /* Lottie */ = {
+		5C6982102CA9BDE4001648C0 /* YouTubePlayerKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 5C79B3832C4991DC00EDCD0E /* XCRemoteSwiftPackageReference "lottie-spm" */;
-			productName = Lottie;
+			package = 5C69820F2CA9BDE4001648C0 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */;
+			productName = YouTubePlayerKit;
 		};
-		5CAABB772CA087250051AB4E /* SwiftSoup */ = {
+		5C6982132CA9BE0D001648C0 /* SwiftSoup */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 5CAABB762CA087250051AB4E /* XCRemoteSwiftPackageReference "SwiftSoup" */;
+			package = 5C6982122CA9BE0D001648C0 /* XCRemoteSwiftPackageReference "SwiftSoup" */;
 			productName = SwiftSoup;
 		};
-		5CFA8E992C92E9170088833A /* YouTubePlayerKit */ = {
+		5C6982162CA9BE72001648C0 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 5CFA8E982C92E9170088833A /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */;
-			productName = YouTubePlayerKit;
+			package = 5C6982152CA9BE72001648C0 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
