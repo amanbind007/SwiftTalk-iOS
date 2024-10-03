@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MainSettingsView: View {
     var body: some View {
-        VStack {
+        NavigationStack {
             List {
                 Section {
                     NavigationLink {
@@ -19,17 +19,25 @@ struct MainSettingsView: View {
                             Text("Voice Selection")
                         }
                     }
-
                     NavigationLink {
-                        SettingsView()
+                        Form {
+                            TextDisplayCustomizationView()
+                        }
+                        .navigationBarTitleDisplayMode(.inline)
+                        .navigationTitle("Text Display Customization")
+
                     } label: {
                         HStack {
                             Text("Text Display Customization")
                         }
                     }
-
                     NavigationLink {
-                        SettingsView()
+                        Form {
+                            VoiceSettingsView()
+                        }
+                        .navigationBarTitleDisplayMode(.inline)
+                        .navigationTitle("Voice Settings")
+
                     } label: {
                         HStack {
                             Text("Voice Setting")
@@ -38,9 +46,14 @@ struct MainSettingsView: View {
                 }
 
                 Section {
-                    HStack {
-                        Text("How to Get Free Premium & Enhanced Neural Voices")
+                    NavigationLink {
+                        GetNeuralVoicesView()
+                    } label: {
+                        HStack {
+                            Text("How to get free Premium & Enhanced Neural Voices")
+                        }
                     }
+
                     Link(destination: URL(string: "https://forms.gle/D1dEGQqCryQYaZqh8")!) {
                         HStack {
                             Text("Give feedback to developer(me)")
@@ -52,7 +65,6 @@ struct MainSettingsView: View {
                     }
                 }
 
-                GroupBox {}
                 Section {
                     HStack {
                         Text("About")
@@ -65,6 +77,7 @@ struct MainSettingsView: View {
                     }
                 }
             }
+                .navigationTitle("Settings")
         }
     }
 }

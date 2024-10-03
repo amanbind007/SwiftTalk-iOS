@@ -77,7 +77,7 @@ struct HomeView: View {
                 .presentationDetents([.medium])
         })
         .sheet(isPresented: $viewModel.showSettingsView, content: {
-            SettingsView()
+            MainSettingsView()
         })
         .sheet(isPresented: $viewModel.showAddNewTextOptionsView, content: {
             AddNewTextOptionsView(
