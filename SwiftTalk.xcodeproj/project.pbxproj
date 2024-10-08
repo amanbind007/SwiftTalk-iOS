@@ -50,6 +50,7 @@
 		5C7F4FE32C5D42D30018C6C0 /* InfoCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7F4FE22C5D42D30018C6C0 /* InfoCardView.swift */; };
 		5C7F4FE52C5EA7FB0018C6C0 /* CustomTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7F4FE42C5EA7FB0018C6C0 /* CustomTabView.swift */; };
 		5C7FD2092C7E41FB00987133 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7FD2082C7E41FB00987133 /* HomeViewModel.swift */; };
+		5C82EB5E2CB5A13600A7B32D /* ResetSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C82EB5D2CB5A12F00A7B32D /* ResetSettingsView.swift */; };
 		5C87CC3D2C2828180010363F /* BannerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C87CC3C2C2828180010363F /* BannerButton.swift */; };
 		5C87CC3F2C2895700010363F /* CustomSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C87CC3E2C2895700010363F /* CustomSwitch.swift */; };
 		5C99E3142C4594ED0083A507 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C99E3132C4594ED0083A507 /* Color+Extension.swift */; };
@@ -127,6 +128,7 @@
 		5C7F4FE22C5D42D30018C6C0 /* InfoCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCardView.swift; sourceTree = "<group>"; };
 		5C7F4FE42C5EA7FB0018C6C0 /* CustomTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabView.swift; sourceTree = "<group>"; };
 		5C7FD2082C7E41FB00987133 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		5C82EB5D2CB5A12F00A7B32D /* ResetSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetSettingsView.swift; sourceTree = "<group>"; };
 		5C87CC3C2C2828180010363F /* BannerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerButton.swift; sourceTree = "<group>"; };
 		5C87CC3E2C2895700010363F /* CustomSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSwitch.swift; sourceTree = "<group>"; };
 		5C99E3132C4594ED0083A507 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
@@ -305,6 +307,7 @@
 			children = (
 				5C77D1F82C5C023F00AA1223 /* Components */,
 				5C21D1DD2B99E8E4009C0A6B /* HomeView.swift */,
+				5C82EB5D2CB5A12F00A7B32D /* ResetSettingsView.swift */,
 				5CFA8E902C90AB5F0088833A /* MainSettingsView.swift */,
 				5C99E39C2C47ACF30083A507 /* MainTabbedView.swift */,
 				5C3016FC2B9E16D20012542D /* ListItemView.swift */,
@@ -517,6 +520,7 @@
 				5C99E3202C477AF10083A507 /* SwiftTalkApp.swift in Sources */,
 				5C1B5CAB2C6341FC00F50435 /* BackgroundView.swift in Sources */,
 				5C46549E2C4BEC7200375CF5 /* String+Extension.swift in Sources */,
+				5C82EB5E2CB5A13600A7B32D /* ResetSettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
