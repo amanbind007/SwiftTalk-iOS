@@ -48,6 +48,9 @@ struct MainSettingsView: View {
                 Section {
                     NavigationLink {
                         GetNeuralVoicesView()
+                            .navigationBarTitleDisplayMode(.inline)
+                            .navigationTitle("Get free Neural Voices")
+                        
                     } label: {
                         HStack {
                             Text("How to get free Premium & Enhanced Neural Voices")
@@ -64,6 +67,21 @@ struct MainSettingsView: View {
                         LeaveReviewView(label: "Leave a review")
                     }
                 }
+                
+                Section {
+                    NavigationLink {
+                        Form {
+                            ResetSettingsView()
+                        }
+                        .navigationBarTitleDisplayMode(.inline)
+                        .navigationTitle("Voice Settings")
+
+                    } label: {
+                        HStack {
+                            Text("Reset")
+                        }
+                    }
+                }
 
                 Section {
                     HStack {
@@ -78,6 +96,7 @@ struct MainSettingsView: View {
                 }
             }
                 .navigationTitle("Settings")
+                .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
