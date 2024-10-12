@@ -22,7 +22,7 @@ class DataCoordinator {
         }
     }()
 
-    init() {}
+    init() { }
 
     func getObject(id: UUID) -> TextData? {
         do {
@@ -84,6 +84,15 @@ class DataCoordinator {
 
         } catch {
             print("Delete Error: \(error)")
+        }
+    }
+
+    func resetContainer() {
+        do {
+            try persistantContainer.mainContext.delete(model: TextData.self)
+            try persistantContainer.mainContext.delete(model: DailyStats.self)
+        } catch {
+            print(error)
         }
     }
 }
