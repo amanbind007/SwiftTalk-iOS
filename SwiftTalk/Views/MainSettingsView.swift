@@ -23,8 +23,8 @@ struct MainSettingsView: View {
                         Form {
                             TextDisplayCustomizationView()
                         }
-                        .navigationBarTitleDisplayMode(.inline)
-                        .navigationTitle("Text Display Customization")
+                            .navigationBarTitleDisplayMode(.inline)
+                            .navigationTitle("Text Display Customization")
 
                     } label: {
                         HStack {
@@ -35,8 +35,8 @@ struct MainSettingsView: View {
                         Form {
                             VoiceSettingsView()
                         }
-                        .navigationBarTitleDisplayMode(.inline)
-                        .navigationTitle("Voice Settings")
+                            .navigationBarTitleDisplayMode(.inline)
+                            .navigationTitle("Voice Settings")
 
                     } label: {
                         HStack {
@@ -50,7 +50,7 @@ struct MainSettingsView: View {
                         GetNeuralVoicesView()
                             .navigationBarTitleDisplayMode(.inline)
                             .navigationTitle("Get free Neural Voices")
-                        
+
                     } label: {
                         HStack {
                             Text("How to get free Premium & Enhanced Neural Voices")
@@ -67,14 +67,14 @@ struct MainSettingsView: View {
                         LeaveReviewView(label: "Leave a review")
                     }
                 }
-                
+
                 Section {
                     NavigationLink {
                         Form {
                             ResetSettingsView()
                         }
-                        .navigationBarTitleDisplayMode(.inline)
-                        .navigationTitle("Voice Settings")
+                            .navigationBarTitleDisplayMode(.inline)
+                            .navigationTitle("Voice Settings")
 
                     } label: {
                         HStack {
@@ -84,9 +84,18 @@ struct MainSettingsView: View {
                 }
 
                 Section {
-                    HStack {
-                        Text("About")
+                    NavigationLink {
+
+                        AboutView()
+                            .navigationBarTitleDisplayMode(.inline)
+                            .navigationTitle("About")
+
+                    } label: {
+                        HStack {
+                            Text("About")
+                        }
                     }
+
                     HStack {
                         Text("Version")
                         Spacer()
