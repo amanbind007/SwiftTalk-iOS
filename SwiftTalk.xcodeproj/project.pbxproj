@@ -73,6 +73,7 @@
 		5CE2A8F32B9F781300665B1F /* AddNewTextOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE2A8F22B9F781300665B1F /* AddNewTextOptionsView.swift */; };
 		5CE37DE02CA85757001686DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CE37DDF2CA85757001686DF /* Assets.xcassets */; };
 		5CE8E82A2C131436009FDAE2 /* DataCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE8E8292C131436009FDAE2 /* DataCoordinator.swift */; };
+		5CF19E702CBD8BE500C55940 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF19E6F2CBD8BE500C55940 /* AboutView.swift */; };
 		5CFA8E912C90AB5F0088833A /* MainSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFA8E902C90AB5F0088833A /* MainSettingsView.swift */; };
 		5CFA8E932C90C1850088833A /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFA8E922C90C1850088833A /* Bundle+Extensions.swift */; };
 		5CFA8E952C90C4F90088833A /* LeaveReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFA8E942C90C4F90088833A /* LeaveReviewView.swift */; };
@@ -151,6 +152,7 @@
 		5CE2A8F22B9F781300665B1F /* AddNewTextOptionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewTextOptionsView.swift; sourceTree = "<group>"; };
 		5CE37DDF2CA85757001686DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5CE8E8292C131436009FDAE2 /* DataCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCoordinator.swift; sourceTree = "<group>"; };
+		5CF19E6F2CBD8BE500C55940 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		5CFA8E902C90AB5F0088833A /* MainSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSettingsView.swift; sourceTree = "<group>"; };
 		5CFA8E922C90C1850088833A /* Bundle+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extensions.swift"; sourceTree = "<group>"; };
 		5CFA8E942C90C4F90088833A /* LeaveReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveReviewView.swift; sourceTree = "<group>"; };
@@ -264,6 +266,7 @@
 				5C7F4FE22C5D42D30018C6C0 /* InfoCardView.swift */,
 				5C9CA2962C68F88100F72FB3 /* ProcessProgressCardView.swift */,
 				5CFA8E962C92E75D0088833A /* GetNeuralVoicesView.swift */,
+				5CF19E6F2CBD8BE500C55940 /* AboutView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -496,6 +499,7 @@
 				5CFAF9522BC3BE91003726AA /* AddNewTextViewModel.swift in Sources */,
 				5CAC44FE2C0639EB001E13CA /* Binding+Extension.swift in Sources */,
 				5C4454052BA35D34006DB2F5 /* AddNewTextOptionCardView.swift in Sources */,
+				5CF19E702CBD8BE500C55940 /* AboutView.swift in Sources */,
 				5C87CC3F2C2895700010363F /* CustomSwitch.swift in Sources */,
 				5C4D0A592C08601C00726969 /* TextDataPreviewProvider.swift in Sources */,
 				5C99E3BE2C482C9C0083A507 /* ConfettiScene.swift in Sources */,
