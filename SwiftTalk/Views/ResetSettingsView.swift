@@ -11,13 +11,13 @@ enum ResetOption {
     case data
     case setting
     case dataAndSetting
-    
-    var message : String {
+
+    var message: String {
         switch self {
         case .data: return "Are you sure you want to reset all the reading texts and progress stats in the app"
         case .setting: return "Are you sure you want to reset all the settings like text view customization, voice speech, rate, text color, backgroung color, etc."
         case .dataAndSetting: return "Are you sure you want to resets all the everything in the app, both data and settings"
-        
+
         }
     }
 }
@@ -34,7 +34,7 @@ struct ResetSettingsView: View {
     @AppStorage("backgroundColor") var backgroundColor: Color = .init(UIColor(red: 1.00, green: 0.97, blue: 0.42, alpha: 1.00))
     @AppStorage("foregroundColor") var foregroundColor: Color = .init(UIColor(red: 0.83, green: 0.00, blue: 0.00, alpha: 1.00))
     @AppStorage("autoScroll") var autoScroll = true
-    
+
     @State var showResetAlert: Bool = false
     @State var selectedResetOption: ResetOption? = nil
 
@@ -49,7 +49,8 @@ struct ResetSettingsView: View {
                         Text("Reset Settings")
                             .font(.headline)
                         Spacer()
-                        Image(systemName: "gearshape.arrow.trianglehead.2.clockwise.rotate.90")
+                        Image(systemName: "gear.badge.xmark")
+                            .foregroundStyle(Color(uiColor: UIColor.label))
                     }
                 }
             } footer: {
@@ -67,7 +68,8 @@ struct ResetSettingsView: View {
                         Text("Reset Data")
                             .font(.headline)
                         Spacer()
-                        Image(systemName: "swiftdata")
+                        Image(systemName: "internaldrive.fill")
+                            .foregroundStyle(Color(uiColor: UIColor.label))
                     }
 
                 }
@@ -85,21 +87,27 @@ struct ResetSettingsView: View {
                         Text("Reset Data & Settings")
                             .font(.headline)
                         Spacer()
-                        Image(systemName: "gearshape.arrow.trianglehead.2.clockwise.rotate.90")
-                        Text("+")
-                        Image(systemName: "swiftdata")
+                        HStack{
+                            Image(systemName: "gear.badge.xmark")
+                            Text("+")
+                            Image(systemName: "internaldrive.fill")
+                        }
+                        .foregroundStyle(Color(uiColor: UIColor.label))
+                        
                     }
+                    
+
                 }
             } footer: {
                 Text("Resets all the everything in the app, both data and settings")
                     .font(.caption)
             }
         }
-        .alert("Warning", isPresented: $showResetAlert) {
+            .alert("Warning", isPresented: $showResetAlert) {
             Button("cancel", role: .cancel) {
                 // no action required
             }
-            
+
             Button("I'm Sure!", role: .destructive) {
                 switch selectedResetOption {
                 case .data:
@@ -119,8 +127,8 @@ struct ResetSettingsView: View {
 
 
     }
-    
-    func resetAppSettings(){
+
+    func resetAppSettings() {
         selectedVoiceIdentifier = "com.apple.speech.synthesis.voice.Samantha"
         selectedVoiceFlagIcon = "usa"
         voiceSpeedSliderValue = 0.5
