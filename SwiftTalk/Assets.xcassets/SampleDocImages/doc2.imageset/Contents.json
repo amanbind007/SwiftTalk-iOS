@@ -1,0 +1,21 @@
+{
+  "images" : [
+    {
+      "filename" : "CamScanner 06-30-2024 22.37_1 - Copy.jpg",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
