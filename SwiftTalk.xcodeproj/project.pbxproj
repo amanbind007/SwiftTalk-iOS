@@ -69,6 +69,8 @@
 		5C9CA29B2C6907CC00F72FB3 /* GearsAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C9CA29A2C6907CC00F72FB3 /* GearsAnimation.json */; };
 		5CAC44FE2C0639EB001E13CA /* Binding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAC44FD2C0639EB001E13CA /* Binding+Extension.swift */; };
 		5CB0EA9F2BA2B67500648414 /* VoiceSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB0EA9E2BA2B67500648414 /* VoiceSelectorView.swift */; };
+		5CD5FD782CC4174500A5430B /* AutoImageCropperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CD5FD772CC4174500A5430B /* AutoImageCropperView.swift */; };
+		5CD5FD7B2CC4207500A5430B /* WeScan in Frameworks */ = {isa = PBXBuildFile; productRef = 5CD5FD7A2CC4207500A5430B /* WeScan */; };
 		5CDF5F102BD0EB6E00534B6B /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDF5F0F2BD0EB6E00534B6B /* ImagePicker.swift */; };
 		5CE2A8F32B9F781300665B1F /* AddNewTextOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE2A8F22B9F781300665B1F /* AddNewTextOptionsView.swift */; };
 		5CE37DE02CA85757001686DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CE37DDF2CA85757001686DF /* Assets.xcassets */; };
@@ -149,6 +151,7 @@
 		5C9CA29A2C6907CC00F72FB3 /* GearsAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = GearsAnimation.json; sourceTree = "<group>"; };
 		5CAC44FD2C0639EB001E13CA /* Binding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Extension.swift"; sourceTree = "<group>"; };
 		5CB0EA9E2BA2B67500648414 /* VoiceSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceSelectorView.swift; sourceTree = "<group>"; };
+		5CD5FD772CC4174500A5430B /* AutoImageCropperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoImageCropperView.swift; sourceTree = "<group>"; };
 		5CDF5F0F2BD0EB6E00534B6B /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		5CE2A8F22B9F781300665B1F /* AddNewTextOptionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewTextOptionsView.swift; sourceTree = "<group>"; };
 		5CE37DDF2CA85757001686DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -175,6 +178,7 @@
 				5C6982112CA9BDE4001648C0 /* YouTubePlayerKit in Frameworks */,
 				5C6982142CA9BE0D001648C0 /* SwiftSoup in Frameworks */,
 				5C6982172CA9BE72001648C0 /* Lottie in Frameworks */,
+				5CD5FD7B2CC4207500A5430B /* WeScan in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,6 +318,7 @@
 				5C21D1DD2B99E8E4009C0A6B /* HomeView.swift */,
 				5C82EB5D2CB5A12F00A7B32D /* ResetSettingsView.swift */,
 				5CFA8E902C90AB5F0088833A /* MainSettingsView.swift */,
+				5CD5FD772CC4174500A5430B /* AutoImageCropperView.swift */,
 				5C99E39C2C47ACF30083A507 /* MainTabbedView.swift */,
 				5C3016FC2B9E16D20012542D /* ListItemView.swift */,
 				5C69821C2CADB8E8001648C0 /* TextDisplayCustomizationView.swift */,
@@ -396,6 +401,7 @@
 				5C6982102CA9BDE4001648C0 /* YouTubePlayerKit */,
 				5C6982132CA9BE0D001648C0 /* SwiftSoup */,
 				5C6982162CA9BE72001648C0 /* Lottie */,
+				5CD5FD7A2CC4207500A5430B /* WeScan */,
 			);
 			productName = SwiftTalk;
 			productReference = 5C21D1D82B99E8E4009C0A6B /* SwiftTalk.app */;
@@ -429,6 +435,7 @@
 				5C69820F2CA9BDE4001648C0 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */,
 				5C6982122CA9BE0D001648C0 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
 				5C6982152CA9BE72001648C0 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				5CD5FD792CC4207500A5430B /* XCRemoteSwiftPackageReference "WeScan" */,
 			);
 			productRefGroup = 5C21D1D92B99E8E4009C0A6B /* Products */;
 			projectDirPath = "";
@@ -477,6 +484,7 @@
 				5C69821D2CADB8E8001648C0 /* TextDisplayCustomizationView.swift in Sources */,
 				5C87CC3D2C2828180010363F /* BannerButton.swift in Sources */,
 				5C77D1EF2C5AAEE800AA1223 /* NotoFont.swift in Sources */,
+				5CD5FD782CC4174500A5430B /* AutoImageCropperView.swift in Sources */,
 				5C7FD2092C7E41FB00987133 /* HomeViewModel.swift in Sources */,
 				5C28C57F2C876B7600B742F7 /* NotificationManager.swift in Sources */,
 				5C3016FD2B9E16D20012542D /* ListItemView.swift in Sources */,
@@ -766,6 +774,14 @@
 				minimumVersion = 4.5.0;
 			};
 		};
+		5CD5FD792CC4207500A5430B /* XCRemoteSwiftPackageReference "WeScan" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/WeTransfer/WeScan.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -783,6 +799,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5C6982152CA9BE72001648C0 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		5CD5FD7A2CC4207500A5430B /* WeScan */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5CD5FD792CC4207500A5430B /* XCRemoteSwiftPackageReference "WeScan" */;
+			productName = WeScan;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

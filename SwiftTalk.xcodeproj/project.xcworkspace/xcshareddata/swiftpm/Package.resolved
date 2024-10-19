@@ -1,5 +1,5 @@
 {
-  "originHash" : "69c7383927b48689895c3646d286c5c753b07d1f199885c9b5d979d0ac86af01",
+  "originHash" : "19c4feb4053bdb14380c32b73fcf5fea02f1bed69048518c44595a6b386c4f12",
   "pins" : [
     {
       "identity" : "lottie-ios",
@@ -17,6 +17,15 @@
       "state" : {
         "revision" : "3c2c7e1e72b8abd96eafbae80323c5c1e5317437",
         "version" : "2.7.5"
+      }
+    },
+    {
+      "identity" : "wescan",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/WeTransfer/WeScan.git",
+      "state" : {
+        "revision" : "5eee784d8233bc209e8fc38980fd847293c96ebc",
+        "version" : "3.0.0"
       }
     },
     {
