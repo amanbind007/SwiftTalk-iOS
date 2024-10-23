@@ -10,6 +10,10 @@ import SwiftUI
 struct ImageSorterView: View {
     @State var docImages: [UIImage] = [.doc1, .doc2, .doc3, .doc4, .doc5, .doc6, .doc7, .doc8]
     @State var draggingImage: UIImage?
+    
+    @State private var showImageCropper: Bool = false
+    @State private var selectedImage: UIImage?
+    
     var body: some View {
         VStack {
             Text("Re-arrange the Order")
@@ -35,6 +39,7 @@ struct ImageSorterView: View {
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .padding(5)
+                                        
                                         .draggable(image) {
                                         Image(uiImage: image)
                                             .resizable()
@@ -45,6 +50,7 @@ struct ImageSorterView: View {
                                         }
 
                                     }
+                                        
 
                                     VStack {
                                         HStack {
@@ -64,6 +70,7 @@ struct ImageSorterView: View {
                                         }
                                             .padding(7)
                                         Spacer()
+                                        
                                     }
 
 
@@ -83,6 +90,12 @@ struct ImageSorterView: View {
                                     }
                                 }
                             }
+                            .onTapGesture {
+                                
+                                //show a sheet using the showImageCropper.toggle() and assign selected image
+                                selectedImage = image
+                                showImageCropper.toggle()
+                            }
                         }
                             .frame(height: 250)
 
@@ -91,6 +104,16 @@ struct ImageSorterView: View {
                     .padding()
             }
         }
+        .sheet(isPresented: $showImageCropper) {
+            if let selectedImage {
+                ImageCropperView(showCropperView: $showImageCropper, image: selectedImage) { croppedImage in
+                    if let index = docImages.firstIndex(of: selectedImage) {
+                        docImages[index] = croppedImage
+                    }
+                }
+            }
+        }
+        
     }
 }
 
