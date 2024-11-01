@@ -14,6 +14,7 @@
 ![Vision Framework](https://img.shields.io/badge/Vision_Framework-28B463)
 ![SwiftData](https://img.shields.io/badge/SwiftData-7D3C98)
 ![Lottie](https://img.shields.io/badge/Lottie-2874E1)
+![WeScan](https://img.shields.io/badge/WeScan-1315E1)
 
 # SwiftTalk
 It is fully SwiftUI based TTS app with many userful features. It tracks your progress with daily and weekly stats. It allows to set reminder to read book or whatever you want to read. It also provides free to use Neural Voices that are already availble in your phone. You can also download many vices with differrent accent for different languages (thanks to Apple Accessibility). 
