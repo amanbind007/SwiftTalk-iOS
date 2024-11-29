@@ -28,9 +28,9 @@ public struct LeaveReviewView: View {
         }, label: {
             HStack{
                 Text(label)
-                    .font(.callout.weight(.medium))
-                Spacer()
-                Image(systemName: "chevron.right")
+//                    .font(.callout.weight(.medium))
+//                Spacer()
+//                Image(systemName: "chevron.right")
             }
         })
         
