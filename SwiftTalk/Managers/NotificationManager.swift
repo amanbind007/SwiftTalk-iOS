@@ -13,6 +13,17 @@ class NotificationManager {
     
     private init() {}
     
+    func requestAuthorization() {
+            let options: UNAuthorizationOptions = [.alert, .sound, .badge]
+            UNUserNotificationCenter.current().requestAuthorization(options: options) { (success, error) in
+                if let error = error {
+                    print("Notification Authorization ERROR: \(error)")
+                } else {
+                    print("Successfully Authorized Notification")
+                }
+            }
+        }
+    
     func scheduleNotifications(for textData: TextData) {
         let content = UNMutableNotificationContent()
         content.title = "Reminder: \(textData.textTitle!)"
