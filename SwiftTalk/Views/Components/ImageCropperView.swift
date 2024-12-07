@@ -50,16 +50,16 @@ struct ImageCropperView: UIViewControllerRepresentable {
 
     func makeUIViewController(context: Context) -> WeScan.ImageScannerController {
         let vc = ImageScannerController(image: image)
+        
 
         return vc
     }
 
-    func updateUIViewController(_ uiViewController: WeScan.ImageScannerController, context: Context) {
+    func updateUIViewController(_ imgScanController: WeScan.ImageScannerController, context: Context) {
 
     }
 
 }
-
 
 
 #Preview {

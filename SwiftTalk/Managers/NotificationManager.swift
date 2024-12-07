@@ -34,7 +34,7 @@ class NotificationManager {
         
         for day in textData.selectedDays {
             let identifier = self.createIdentifier(noteId: textData.id, weekday: day)
-            let trigger = self.createTrigger(weekday: day, time: textData.reminderTime)
+            let trigger = self.createTrigger(weekday: day, time: textData.reminderTime!)
             
             let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
             
@@ -47,7 +47,7 @@ class NotificationManager {
         
         if textData.selectedDays.isEmpty {
             let identifier = self.createIdentifier(noteId: textData.id, weekday: 0)
-            let trigger = self.createTrigger(weekday: 0, time: textData.reminderTime)
+            let trigger = self.createTrigger(weekday: 0, time: textData.reminderTime!)
             
             let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
             

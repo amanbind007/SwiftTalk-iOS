@@ -51,7 +51,7 @@ struct ReminderView: View {
                 .padding(.bottom, 15)
                 
                 HStack(alignment: .center) {
-                    DatePicker("Time", selection: $textData.reminderTime ?? viewModel.reminderTime, displayedComponents: .hourAndMinute)
+                    DatePicker("Time", selection: $viewModel.reminderTime, displayedComponents: .hourAndMinute)
                         .pickerStyle(.wheel)
                         .disabled(textData.hasReminder)
                         .onTapGesture {
