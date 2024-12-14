@@ -91,29 +91,52 @@ class StatsViewModel {
             lastSevenDaysMedianTimeSpend = (lowerMiddle + upperMiddle) / 2
         }
     }
-
+    
     func calculateStreaks() {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        
+        // Sort stats by date in descending order
         let sortedStats = dailyStats.sorted { $0.date > $1.date }
-        var lastDate: Date?
-
-        for stat in sortedStats {
-            let calendar = Calendar.current
-            if let last = lastDate {
-                let daysBetween = calendar.dateComponents([.day], from: stat.date, to: last).day ?? 0
-                if daysBetween == 1 {
-                    currentStreak += 1
+        currentStreak = 0
+        largestStreak = 0
+        
+        var streak = 0
+        var isReadingToday = false
+        
+        for (index, stat) in sortedStats.enumerated() {
+            let statDate = calendar.startOfDay(for: stat.date)
+            
+            // Check if the user read today
+            if index == 0, calendar.isDate(statDate, inSameDayAs: today) {
+                isReadingToday = true
+            }
+            
+            if index > 0 {
+                let previousDate = calendar.startOfDay(for: sortedStats[index - 1].date)
+                let daysDifference = calendar.dateComponents([.day], from: statDate, to: previousDate).day ?? 0
+                
+                // If consecutive day, increase streak
+                if daysDifference == 1 {
+                    streak += 1
                 } else {
-                    largestStreak = max(largestStreak, currentStreak)
-                    currentStreak = 1
+                    // Not consecutive, end current streak
+                    largestStreak = max(largestStreak, streak)
+                    streak = 0
                 }
             } else {
-                currentStreak = 1
+                // First day, start the streak
+                streak = 1
             }
-            lastDate = stat.date
         }
-
-        largestStreak = max(largestStreak, currentStreak)
+        
+        // Update largest streak for the last streak in the list
+        largestStreak = max(largestStreak, streak)
+        
+        // If user read today, set current streak, otherwise reset to 0
+        currentStreak = isReadingToday ? streak : 0
     }
+
 
     func displayTimeSpend() -> String {
         switch selectedStat {
