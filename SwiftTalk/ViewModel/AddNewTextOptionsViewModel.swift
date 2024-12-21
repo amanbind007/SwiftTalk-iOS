@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import OfficeFileReader
 import PDFKit
 import SwiftData
 import SwiftSoup
@@ -244,7 +243,20 @@ class AddNewTextOptionsViewModel {
                 recognizeRequest.automaticallyDetectsLanguage = true
                 recognizeRequest.progressHandler = { _, value, _ in
                     
-                    // show progress bar or something
+                    let overallProgress = (Double(index)+value) / Double(totalImages)
+                    // self.progressValue = overallProgress
+                    
+                    progress(overallProgress)
+                    print(overallProgress)
+                    
+//                    if overallProgress == 0.0 {
+//                        self.isProcessingImages = true
+//                    }
+                    if overallProgress == 1.0 {
+                        self.isProcessingImages = false
+                    }
+//
+                    // print("ProgressValue: \(self.progressValue)")
                 }
                 
                 do {

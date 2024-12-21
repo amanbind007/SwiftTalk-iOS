@@ -23,6 +23,8 @@ struct HomeView: View {
     @Query var textDatas: [TextData]
     @AppStorage("sortOrder") var selectedSortOrder: SortOrder = .recent
     @State private var reminder = NotificationManager.shared
+    
+    @State var showSomeView: Bool = false
 
     init(modelContext: ModelContext, showTabView: Binding<Bool>) {
         _viewModel = State(wrappedValue: HomeViewModel(modelContext: modelContext))
@@ -71,7 +73,23 @@ struct HomeView: View {
                     }
                 }
             })
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    // Button for testing Sheet
+                    Button {
+                        showSomeView = true
+                    } label: {
+                        Image(systemName: "questionmark.circle.fill")
+                    }
+                }
+            }
         }
+        
+        //testing sheet for a View
+        .sheet(isPresented: $showSomeView, content: {
+            ImageSorterView()
+        })
+        
         .sheet(isPresented: $viewModel.showReminderView, content: {
             ReminderView(textData: viewModel.selectedTextData!)
                 .presentationDetents([.medium])
