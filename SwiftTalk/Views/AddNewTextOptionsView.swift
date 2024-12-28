@@ -26,9 +26,6 @@ struct AddNewTextOptionsView: View {
 //                            break
                         case .photoLibrary:
                             viewModel.showImagePickerSheet = true
-                        case .wordDocument:
-                            viewModel.fileType = .doc
-                            viewModel.showFileImporterSheet = true
                         case .textInput:
                             self.showAddNewTextOptionsView = false
 
@@ -85,6 +82,15 @@ struct AddNewTextOptionsView: View {
                 Alert(title: Text("Error!"), message: Text(viewModel.errorMessage ?? "Could'nt parse the text"), dismissButton: .default(Text("OK")))
             })
         }
+//        .overlay {
+//            ProcessProgressCardView(addNewTextOptionVM: $addNewTextOptionsVM)
+//        }
+//        .onChange(of: addNewTextOptionsVM.isProcessingImages) {
+//            print("ANTOV: isProcessingImages Value: \(addNewTextOptionsVM.isProcessingImages)")
+//        }
+//        .onAppear(perform: {
+//            print("On Appear value of progressValue: \(addNewTextOptionsVM.progressValue)")
+//        })
     }
 }
 

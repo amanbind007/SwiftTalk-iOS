@@ -20,7 +20,6 @@ struct SwiftTalkApp: App {
 
             } else {
                 MainTabbedView()
-                    .font(NotoFont.Regular(13))
                     .tint(tintColor)
             }
         }

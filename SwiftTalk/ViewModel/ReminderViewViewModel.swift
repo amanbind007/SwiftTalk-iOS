@@ -9,7 +9,7 @@ import Foundation
 
 @Observable
 class ReminderViewViewModel {
-    var reminderTime: Date = .init()
+    var reminderTime = Date()
     let weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     
     func selectedWeekDaysString(textData: TextData) -> String {
@@ -18,11 +18,13 @@ class ReminderViewViewModel {
                 // calculate today or tommorrow
                 let calendar = Calendar.current
                 let now = Date()
-                print("Time Now : \(now.description)")
+                print("Time Now : \(Date().formatted(date: .complete, time: .complete))")
                         
                 let dateComponents = calendar.dateComponents([.hour, .minute, .second], from: reminderTime)
                 let nowComponents = calendar.dateComponents([.hour, .minute, .second], from: now)
-                        
+//                print(dateComponents.description)
+//                print(nowComponents.description)
+//                        
                 if let dateTime = calendar.date(from: dateComponents),
                    let nowTime = calendar.date(from: nowComponents)
                 {

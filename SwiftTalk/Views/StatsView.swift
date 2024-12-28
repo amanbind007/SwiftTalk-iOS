@@ -130,6 +130,7 @@ extension StatsView {
                 }
             } header: {
                 Text("DAILY USAGE")
+                
             }
             
             Section {
@@ -148,6 +149,7 @@ extension StatsView {
                             .font(NotoFont.Regular(15))
                             .foregroundStyle(.secondary)
                     }
+                    .padding(.top)
                     
                     HStack {
                         Text(statsVM.displayTimeSpend())
