@@ -10,17 +10,17 @@ import SwiftUI
 
 @main
 struct SwiftTalkApp: App {
-    @AppStorage("isOnboarding") var isOnboarding: Bool = false
+    @AppStorage("hasCompletedOnboarding") var hasCompletedOnboarding: Bool = false
     @AppStorage("appTintColor") var tintColor: Color = .appTint
 
     var body: some Scene {
         WindowGroup {
-            if isOnboarding {
-                // Some Onboarding View
-
-            } else {
+            if hasCompletedOnboarding {
                 MainTabbedView()
                     .tint(tintColor)
+            } else {
+
+                OnboardingView(hasCompletedOnboarding: $hasCompletedOnboarding)
             }
         }
         .modelContainer(for: [TextData.self, DailyStats.self])

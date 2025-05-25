@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5C0586DB2C4D84F9007915F2 /* StatsChartAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 5C0586DA2C4D84F9007915F2 /* StatsChartAnimation.json */; };
+		5C163A272DDCF2EB00FFDBF8 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C163A262DDCF2EB00FFDBF8 /* OnboardingView.swift */; };
 		5C1B5CAB2C6341FC00F50435 /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1B5CAA2C6341FC00F50435 /* BackgroundView.swift */; };
 		5C21D1DE2B99E8E4009C0A6B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C21D1DD2B99E8E4009C0A6B /* HomeView.swift */; };
 		5C21D1E32B99E8E6009C0A6B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C21D1E22B99E8E6009C0A6B /* Preview Assets.xcassets */; };
@@ -92,6 +93,7 @@
 
 /* Begin PBXFileReference section */
 		5C0586DA2C4D84F9007915F2 /* StatsChartAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = StatsChartAnimation.json; sourceTree = "<group>"; };
+		5C163A262DDCF2EB00FFDBF8 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		5C1B5CAA2C6341FC00F50435 /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
 		5C21D1D82B99E8E4009C0A6B /* SwiftTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C21D1DD2B99E8E4009C0A6B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 		5C77D1F82C5C023F00AA1223 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				5C163A262DDCF2EB00FFDBF8 /* OnboardingView.swift */,
 				5CBAD8EC2CC6B540008F9FAE /* ImageCropperView.swift */,
 				5C308BDA2C37060B0054886B /* CustomAlertView.swift */,
 				5C308C112C3F0D320054886B /* CircularProgressView.swift */,
@@ -531,6 +534,7 @@
 				5C99E3B02C4807530083A507 /* ConfettiView.swift in Sources */,
 				5CDF5F102BD0EB6E00534B6B /* ImagePicker.swift in Sources */,
 				5CFA8E972C92E75D0088833A /* GetNeuralVoicesView.swift in Sources */,
+				5C163A272DDCF2EB00FFDBF8 /* OnboardingView.swift in Sources */,
 				5C99E3AE2C47FD540083A507 /* StatsViewModel.swift in Sources */,
 				5CFA8E912C90AB5F0088833A /* MainSettingsView.swift in Sources */,
 				5C99E3142C4594ED0083A507 /* Color+Extension.swift in Sources */,
