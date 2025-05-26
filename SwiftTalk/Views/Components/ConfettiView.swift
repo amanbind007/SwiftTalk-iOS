@@ -24,13 +24,10 @@ struct ConfettiView: View {
                 VStack {
                     LottieView(animation: .named("Completed"))
                         .playing(loopMode: .loop)
-                        .shadow(color: .white, radius: 30)
                         .offset(y: -70)
 
                     LottieView(animation: .named("CompleteAnimation"))
                         .playing(loopMode: .playOnce)
-
-                        .shadow(color: .white, radius: 30)
                         .frame(width: 350, height: 350)
                         .offset(y: -100)
                 }
