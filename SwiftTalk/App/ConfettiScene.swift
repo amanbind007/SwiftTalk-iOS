@@ -29,8 +29,40 @@ class ConfettiScene: SKScene {
     override init(size: CGSize) {
         super.init(size: size)
         backgroundColor = .clear
-        var numToEmitRange: ClosedRange<Int> = 100...120
+        
+//        Style 1: Emitters from the bottom
 
+//        let numToEmitRange: ClosedRange<Int> = 100...120
+//        for texture in textures {
+//            if let emitter = SKEmitterNode(fileNamed: "Confetti") {
+//                emitter.name = texture
+//                emitter.particleTexture = .init(imageNamed: texture)
+//                emitter.particleSize = CGSize(width: 40, height: 40)
+//                emitter.particleColorSequence = nil
+//                emitter.particleBirthRate = 100
+//                emitter.numParticlesToEmit = .random(in: numToEmitRange)
+//                emitter.particleLifetime = 5
+//                emitter.particlePosition = CGPoint(x: size.width/2, y: -200)
+//                emitter.emissionAngle = CGFloat.pi / 2
+//                emitter.emissionAngleRange = CGFloat.pi / 2
+//                emitter.particleSpeed = 500
+//                emitter.particleSpeedRange = 300
+//                emitter.yAcceleration = -200
+//                emitter.particleAlpha = 2.5
+//                emitter.particleAlphaRange = 0.3
+//                emitter.particleScale = 0.3
+//                emitter.particleScaleRange = 0.2
+//                emitter.particleRotationSpeed = .pi / 6
+//                emitter.particleRotationRange = .pi * 2
+//                emitter.particleColorBlendFactor = 1
+//                emitter.particleBlendMode = .alpha
+//                addChild(emitter)
+//            }
+//        }
+        
+//       Style 2: Emitters from the bottom left and right
+        
+        let numToEmitRange: ClosedRange<Int> = 60...70
         for texture in textures {
             if let emitter = SKEmitterNode(fileNamed: "Confetti") {
                 emitter.name = texture
@@ -40,9 +72,36 @@ class ConfettiScene: SKScene {
                 emitter.particleBirthRate = 100
                 emitter.numParticlesToEmit = .random(in: numToEmitRange)
                 emitter.particleLifetime = 5
-                emitter.particlePosition = CGPoint(x: size.width / 2, y: -200)
-                emitter.emissionAngle = CGFloat.pi / 2
-                emitter.emissionAngleRange = CGFloat.pi / 2
+                emitter.particlePosition = CGPoint(x: 0, y: -200)
+                emitter.emissionAngle = CGFloat.pi / 3
+                emitter.emissionAngleRange = CGFloat.pi / 3
+                emitter.particleSpeed = 500
+                emitter.particleSpeedRange = 300
+                emitter.yAcceleration = -200
+                emitter.particleAlpha = 2.5
+                emitter.particleAlphaRange = 0.3
+                emitter.particleScale = 0.3
+                emitter.particleScaleRange = 0.2
+                emitter.particleRotationSpeed = .pi / 6
+                emitter.particleRotationRange = .pi * 2
+                emitter.particleColorBlendFactor = 1
+                emitter.particleBlendMode = .alpha
+                addChild(emitter)
+            }
+        }
+        
+        for texture in textures {
+            if let emitter = SKEmitterNode(fileNamed: "Confetti") {
+                emitter.name = texture
+                emitter.particleTexture = .init(imageNamed: texture)
+                emitter.particleSize = CGSize(width: 40, height: 40)
+                emitter.particleColorSequence = nil
+                emitter.particleBirthRate = 100
+                emitter.numParticlesToEmit = .random(in: numToEmitRange)
+                emitter.particleLifetime = 5
+                emitter.particlePosition = CGPoint(x: size.width, y: -200)
+                emitter.emissionAngle = CGFloat.pi / 1
+                emitter.emissionAngleRange = CGFloat.pi / 1
                 emitter.particleSpeed = 500
                 emitter.particleSpeedRange = 300
                 emitter.yAcceleration = -200
