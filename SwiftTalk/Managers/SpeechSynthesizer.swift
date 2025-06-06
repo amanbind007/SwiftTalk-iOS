@@ -33,13 +33,17 @@ class SpeechSynthesizer: NSObject {
     
     var currentCompletedIndex: Int = 0
     
+    // if file is pdf
+    var currentPage: Int = 0
+    
     private var startTime: Date?
     private var endTime: Date?
     private(set) var totalPlayTime: TimeInterval = 0
     
     // Background playback properties
     private var currentText: String = ""
-    private var currentTitle: String = "SwiftTalk"
+    private var currentTitle: String = ""
+    private var textSource: TextSource = .textInput
     
     @ObservationIgnored @AppStorage("voiceSpeed") var voiceSpeedSliderValue = 0.5
     @ObservationIgnored @AppStorage("voicePitch") var voicePitchSliderValue = 1.0
@@ -125,7 +129,7 @@ class SpeechSynthesizer: NSObject {
         nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = speechState == .speaking ? playbackRate : 0.0
         
         // Optional: Add artwork
-        if let image = UIImage(named: "app_icon") {
+        if let image = UIImage(named: textSource.imageName) {
             nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: image.size) { _ in image }
         }
         
@@ -152,15 +156,18 @@ class SpeechSynthesizer: NSObject {
         currentlyPlayingVoice = nil
     }
     
-    func play(text: String, voice: String, from startIndex: Int = 0, title: String = "SwiftTalk") {
+    func play(textData: TextData, pageNumber pageIndex: Int = 0, from startIndex: Int = 0,) {
         stopSpeakingText()
         speechState = .speaking
         self.startIndex = startIndex
-        self.currentText = text
-        self.currentTitle = title
+        self.currentText = textData.text
+        self.currentTitle = textData.textTitle ?? "SwiftData" // there will always be a default
+        self.textSource = textData.textSource
         
         startTime = Date() // Record start time
         totalPlayTime = 0 // Reset total play time
+        
+        let text = textData.text
         
         if !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             let textToSpeak = String(text.dropFirst(startIndex))
@@ -174,6 +181,7 @@ class SpeechSynthesizer: NSObject {
             updateNowPlayingInfo()
         }
     }
+    
     
     func pauseSpeaking() {
         synthesizer.pauseSpeaking(at: .immediate)
@@ -215,6 +223,7 @@ extension SpeechSynthesizer: AVSpeechSynthesizerDelegate {
         highlightedRange = NSRange(location: 0, length: 0)
         updateTotalPlayTime()
         clearNowPlayingInfo()
+        
         
         // Deactivate audio session when done
         try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)

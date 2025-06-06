@@ -95,7 +95,7 @@ struct AddNewTextView: View {
                     GeometryReader { proxy in
                         TextView(text: $textData.text, highlightedRange: $speechManager.highlightedRange, editing: $isEditing, focused: $isFocused) { startIndex in
                             if !isEditing {
-                                speechManager.play(text: textData.text, voice: selectedVoiceIdentifier, from: startIndex)
+                                speechManager.play(textData: textData, from: startIndex)
                             }
                             
                             showContinue = false
@@ -296,7 +296,7 @@ extension AddNewTextView {
                 
                 if showContinue {
                     Button {
-                        speechManager.play(text: textData.text, voice: selectedVoiceIdentifier, from: textData.progress)
+                        speechManager.play(textData: textData)
                         showContinue = false
                     } label: {
                         VStack(spacing: 0) {
@@ -318,7 +318,7 @@ extension AddNewTextView {
                             if speechManager.speechState == .speaking || speechManager.speechState == .paused {
                                 speechManager.stopSpeakingText()
                             } else {
-                                speechManager.play(text: textData.text, voice: selectedVoiceIdentifier)
+                                speechManager.play(textData: textData)
                             }
                         } else {
                             showAlertNoText = true

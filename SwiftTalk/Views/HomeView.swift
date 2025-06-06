@@ -160,7 +160,12 @@ extension HomeView {
             List {
                 ForEach(viewModel.filteredAndSortedTextData(textDatas), id: \.id) { textData in
                     NavigationLink(destination: {
-                        AddNewTextView(textData: textData, isEditing: false, isFocused: false, isSaved: true, showTabView: $showTabView)
+                        if textData.textSource == .pdfDocument {
+                            PDFReaderView(textData: textData, showTabView: $showTabView)
+                            
+                        } else {
+                            AddNewTextView(textData: textData, isEditing: false, isFocused: false, isSaved: true, showTabView: $showTabView)
+                        }
                     }, label: {
                         ListItemView(textData: textData, parentListType: .HomeViewList)
                             .contextMenu {
@@ -256,7 +261,7 @@ extension HomeView {
         }
         .navigationDestination(for: TextSource.self) { target in
             if target == .textInput {
-                AddNewTextView(textData: TextData(textTitle: nil, text: "", textSource: .textInput), isEditing: true, isFocused: true, isSaved: false, showTabView: $showTabView)
+                AddNewTextView(textData: TextData(textTitle: nil, text: "", textSource: .textInput, pdfFileURL: nil), isEditing: true, isFocused: true, isSaved: false, showTabView: $showTabView)
             }
         }
     }
